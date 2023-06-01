@@ -1,0 +1,10 @@
+.inner {
+  border-radius: 100%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.inner:hover {
+  box-shadow: 2px 3px 2px -1px beige;
+}

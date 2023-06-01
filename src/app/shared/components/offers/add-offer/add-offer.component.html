@@ -1,0 +1,13 @@
+<button
+  *ngIf="
+    authRoleService.userType == 'respondent' &&
+    viewType == 'c' &&
+    offers.length < 2
+  "
+  nz-button
+  nzType="primary"
+  (click)="createOffer()"
+  [disabled]="disabled"
+>
+  {{ buttonLabel }}
+</button>

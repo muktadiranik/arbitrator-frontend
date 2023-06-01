@@ -1,0 +1,91 @@
+::ng-deep .dispute-timeline .ant-steps-item-tail {
+  top: 25%;
+  left: 19%;
+}
+
+::ng-deep .dispute-timeline .ant-steps-item-content {
+  width: 100% !important; //now the content is shown inline
+}
+
+::ng-deep
+  .dispute-timeline
+  .deadline-description
+  > .ant-steps-item-container
+  > .ant-steps-item-content
+  > .ant-steps-item-description,
+.ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content {
+  color: #e46363 !important;
+}
+
+::ng-deep .timeline .ant-steps-item-tail::after {
+  height: 2px;
+}
+
+::ng-deep .timeline .ant-steps-item-title {
+  font-family: "Lato";
+  font-weight: 700;
+  font-size: 20px;
+  color: #141414;
+}
+
+::ng-deep .timeline .ant-steps-label-vertical .ant-steps-item-icon {
+  margin: 0;
+}
+
+::ng-deep .timeline .ant-steps-item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+::ng-deep .timeline .start > .ant-steps-item-container .ant-steps-item-tail {
+  width: 70%;
+  left: 47%;
+}
+
+::ng-deep
+  .timeline
+  .last-step
+  > .ant-steps-item-container
+  .ant-steps-item-tail {
+  width: 62%;
+  left: 12%;
+  padding-right: 0px;
+}
+
+.description,
+.note {
+  color: #8b8b8b;
+}
+
+.parent-img-container {
+  width: 110px;
+  height: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 36px;
+  font-weight: 100;
+}
+
+[nz-carousel-content] {
+  text-align: center;
+  height: 160px;
+  line-height: 160px;
+  color: #fff;
+  overflow: hidden;
+  width: 200px;
+}

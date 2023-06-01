@@ -1,0 +1,92 @@
+<nz-layout>
+  <nz-header>
+    <div nz-row nzJustify="center">
+      <div nz-col [nzLg]="{ span: 2 }">
+        <img src="assets/logo.svg" alt="logo" />
+      </div>
+    </div>
+  </nz-header>
+
+  <nz-layout>
+    <nz-sider
+      [nzWidth]="'65%'"
+      nzCollapsible
+      nzBreakpoint="lg"
+      [nzCollapsedWidth]="0"
+      [nzTrigger]="null"
+      [nzTheme]="'light'"
+    >
+      <div nz-row nzAlign="middle" nzJustify="center" class="auth-sider">
+        <!--class="container" -->
+        <nz-space nzDirection="vertical" [nzSize]="35">
+          <div *nzSpaceItem nz-row>
+            <div nz-col>
+              <h2>Let us help you settle this!</h2>
+            </div>
+          </div>
+
+          <div *nzSpaceItem nz-row nzJustify="center">
+            <nz-space nzDirection="horizontal" [nzSize]="25">
+              <div *nzSpaceItem nz-col nzSpan="">
+                <app-multi-direction-card
+                  style="cursor: pointer"
+                  [imgClass]="'settlement-image'"
+                  [imageURL]="'/assets/dispute/create-dispute.svg'"
+                  [alt]="'Create Dispute'"
+                  [title]="'Create'"
+                  [description]="'your dispute'"
+                  titleClass="big-bold"
+                  descriptionClass="subtitle"
+                ></app-multi-direction-card>
+              </div>
+              <!-- <div *nzSpaceItem nz-col nzSpan="">
+                <img
+                  src="/assets/dispute/create-dispute.svg"
+                  alt="create_dispute"
+                />
+              </div> -->
+
+              <div *nzSpaceItem nz-col nzSpan="">
+                <img src="assets/arrow-black.svg" alt="arrow" class="arrow" />
+              </div>
+              <div *nzSpaceItem nz-col nzSpan="">
+                <app-multi-direction-card
+                  style="cursor: pointer"
+                  [imgClass]="'settlement-image'"
+                  [imageURL]="'/assets/dispute/accept-offer.svg'"
+                  [alt]="'Accept Offer'"
+                  [title]="'Agree'"
+                  [description]="'with the other party'"
+                  titleClass="big-bold"
+                  descriptionClass="subtitle"
+                ></app-multi-direction-card>
+                <!-- <img src="/assets/dispute/accept-offer.svg" alt="image_2" /> -->
+              </div>
+              <div *nzSpaceItem nz-col nzSpan="">
+                <img src="assets/arrow-black.svg" alt="arrow" class="arrow" />
+              </div>
+
+              <div *nzSpaceItem nz-col nzSpan="">
+                <app-multi-direction-card
+                  style="cursor: pointer"
+                  [imgClass]="'settlement-image'"
+                  [imageURL]="'assets/dispute/dollar-bill-green.svg'"
+                  [alt]="'Accept Offer'"
+                  [title]="'Claim'"
+                  [description]="'your money'"
+                  titleClass="big-bold"
+                  descriptionClass="subtitle"
+                ></app-multi-direction-card>
+                <!-- <img src="/assets/dispute/green-dollar.svg" alt="dollar" /> -->
+              </div>
+            </nz-space>
+          </div>
+        </nz-space>
+      </div>
+    </nz-sider>
+
+    <nz-content class="auth-container">
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

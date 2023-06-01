@@ -1,0 +1,172 @@
+<nz-spin [nzSpinning]="loading">
+  <nz-row
+    [nzGutter]="[0, 32]"
+    class="px-[20px]"
+    *ngIf="timelineSteps == null || (timelineSteps && timelineSteps.length)"
+    nzJustify="center"
+  >
+    <div nz-col nzSpan="24" class="mt-[25px]">
+      <h3 nz-typography class="text-center text-[#8b8b8b]">
+        Current Status
+        <span
+          *ngIf="authRoleService.isArbitrator && currrentStep > 0"
+          (click)="openStatusEditModal()"
+          nz-icon
+          nzType="edit"
+          nzTheme="twotone"
+        ></span>
+
+        <nz-tag
+          *ngIf="
+            authRoleService.isArbitrator &&
+            currrentStep == 0 &&
+            loading == false
+          "
+          [nzColor]="'#34A853'"
+          >Completed</nz-tag
+        >
+      </h3>
+    </div>
+    <div nz-col nzXs="0" nzLg="24" class="timeline right-[60px]">
+      <nz-steps
+        class="dispute-timeline"
+        [nzCurrent]="currrentStep"
+        [nzLabelPlacement]="'vertical'"
+      >
+        <nz-step class="start" [nzIcon]="startIcon"> </nz-step>
+
+        <nz-step
+          *ngFor="
+            let timelineStep of timelineSteps;
+            let timelineStepIndex = index
+          "
+          [nzTitle]="descriptionTemplate"
+          [class.deadline-description]="timelineStep.end_date === null"
+          [nzIcon]="defaultTemplate"
+          [class]="
+            timelineStepIndex == timelineSteps.length - 1 ? 'last-step' : ''
+          "
+        >
+          <ng-container [ngTemplateOutlet]="defaultTemplate"></ng-container>
+          <ng-template #defaultTemplate>
+            <div
+              class="parent-img-container"
+              [ngStyle]="{
+                'background-image': timelineStep.current_step
+                  ? 'url(../../../../../assets/timeline/ellipse.png)'
+                  : ''
+              }"
+            >
+              <div class="img-container">
+                <img
+                  *ngIf="timelineStep.current_step"
+                  class="image-2"
+                  [src]="
+                    timelineStepIndex != timelineSteps.length - 1
+                      ? 'assets/timeline/blue-dark.png'
+                      : 'assets/timeline/green.png'
+                  "
+                  alt="image_2"
+                />
+                <img
+                  *ngIf="!timelineStep.current_step"
+                  class="image-2"
+                  [src]="
+                    timelineStepIndex < currrentStep
+                      ? 'assets/timeline/blue.png'
+                      : timelineStepIndex == timelineSteps.length - 1
+                      ? 'assets/timeline/green.png'
+                      : 'assets/timeline/gray.png'
+                  "
+                />
+                <div class="centered">
+                  {{
+                    dateDayPipe.transform(
+                      timelineStep.end_date ?? timelineStep.deadline_date
+                    )
+                  }}
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-container [ngTemplateOutlet]="descriptionTemplate"></ng-container>
+          <ng-template #descriptionTemplate>
+            <div
+              [class]="
+                timelineStep.current_step &&
+                timelineStepIndex == timelineSteps.length - 1
+                  ? 'text-[#34A853] text-[24px] w-[150px]'
+                  : timelineStepIndex == timelineSteps.length - 1
+                  ? 'text-[#34A853] w-[150px]'
+                  : timelineStep.current_step
+                  ? 'text-[24px] w-[150px]'
+                  : 'text-[#8b8b8b] w-[150px]'
+              "
+            >
+              <div class="title">
+                {{ timelineStep.name.replace(" ", "\n") }}
+              </div>
+              <div
+                [class]="
+                  timelineStep.current_step
+                    ? 'text-[24px] font-thin'
+                    : 'text-[16px] font-thin'
+                "
+              >
+                {{
+                  dateMonthDayPipe.transform(
+                    timelineStep.end_date ?? timelineStep.deadline_date
+                  )
+                }}
+              </div>
+            </div>
+          </ng-template>
+        </nz-step>
+
+        <nz-step class="end" [nzIcon]="finishIcon"> </nz-step>
+
+        <ng-template #startIcon>
+          <img
+            class="image-2 mt-[36px] ml-[146px]"
+            src="assets/location.svg"
+            alt="Location"
+          />
+        </ng-template>
+
+        <ng-template #finishIcon>
+          <span>
+            <img
+              class="image-2 mt-[36px] mr-[34px]"
+              src="assets/flag/flag-green.svg"
+              alt="image_8"
+            />
+          </span>
+        </ng-template>
+      </nz-steps>
+    </div>
+
+    <div nz-col nzXs="24" nzLg="0">
+      <div nz-row>
+        <div nz-col>
+          <dispute-timeline-swiper
+            [timelineSteps]="timelineSteps"
+            [currentStep]="currrentStep"
+          ></dispute-timeline-swiper>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="currrentStep == 1"
+      nz-col
+      nzOffset="2"
+      class="note"
+      style="font-size: 16px; margin: 0 68px"
+    >
+      <b>Note</b>:&nbsp;We are still waiting for the other side to sign up and
+      will keep you updated. If they don't sign up by the deadline (typically 5
+      -7 days), we'll email you with more info about next steps.
+    </div>
+  </nz-row>
+</nz-spin>

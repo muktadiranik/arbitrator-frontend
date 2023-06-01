@@ -1,0 +1,72 @@
+<swiper-container
+  fmSwiper
+  [config]="config"
+  init="false"
+  class="w-full h-[140px]"
+>
+  <swiper-slide
+    style="display: flex; justify-content: center"
+    *ngFor="let timelineStep of timelineSteps; let timelineStepIndex = index"
+    key="{{ timelineStepIndex }}"
+  >
+    <!-- <ng-container *ngTemplateOutlet="content"> </ng-container> -->
+    <div
+      class="parent-img-container"
+      [ngStyle]="{
+        'background-image': timelineStep.current_step
+          ? 'url(../../../../../assets/timeline/ellipse.png)'
+          : ''
+      }"
+    >
+      <div class="img-container">
+        <img
+          *ngIf="timelineStep.current_step"
+          class="image-2"
+          [src]="
+            timelineStepIndex != timelineSteps.length - 1
+              ? 'assets/timeline/blue-dark.png'
+              : 'assets/timeline/green.png'
+          "
+          alt="image_2"
+        />
+        <img
+          *ngIf="!timelineStep.current_step"
+          class="image-2"
+          [src]="
+            timelineStepIndex < currentStep
+              ? 'assets/timeline/blue.png'
+              : timelineStepIndex == timelineSteps.length - 1
+              ? 'assets/timeline/green.png'
+              : 'assets/timeline/gray.png'
+          "
+        />
+        <div class="centered">
+          {{
+            dateDayPipe.transform(
+              timelineStep.end_date ?? timelineStep.deadline_date
+            )
+          }}
+        </div>
+      </div>
+    </div>
+    <div
+      style="margin-top: 18px; margin-left: 8px"
+      [class]="
+        timelineStepIndex == timelineSteps.length - 1
+          ? 'text-[24px] text-[#34A853]'
+          : 'text-[24px] text-[#141414]'
+      "
+    >
+      <div class="font-bold">
+        {{ timelineStep.name.replace(" ", "\n") }}
+      </div>
+      <div class="date">
+        {{
+          dateMonthDayPipe.transform(
+            timelineStep.end_date ?? timelineStep.deadline_date
+          )
+        }}
+      </div>
+    </div>
+  </swiper-slide>
+</swiper-container>

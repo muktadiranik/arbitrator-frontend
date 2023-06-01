@@ -1,0 +1,73 @@
+<div class="p-8">
+  <nz-skeleton
+    [nzActive]="true"
+    [nzParagraph]="{ rows: 5 }"
+    [nzLoading]="isLoading"
+  >
+    <nz-table
+      #evidenceTable
+      nzBordered
+      [nzData]="evidences"
+      [nzScroll]="{ x: '700px' }"
+      [nzShowPagination]="true"
+      [nzNoResult]="empty"
+    >
+      <thead>
+        <tr>
+          <th
+            *ngFor="let column of listOfColumns"
+            nzAlign="center"
+            [nzSortOrder]="column.sortOrder"
+            [nzSortFn]="column.sortFn"
+            [nzSortDirections]="column.sortDirections"
+            [nzFilterMultiple]="column.filterMultiple"
+            [nzFilters]="column.listOfFilter"
+            [nzFilterFn]="column.filterFn"
+          >
+            {{ column.name }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let evidence of evidenceTable.data">
+          <td nzAlign="center">
+            <nz-tag
+              class="rounded-[12px]"
+              [nzColor]="getColorByType(evidence.creator.type)"
+            >
+              {{ evidence.creator.type | titlecase }}
+            </nz-tag>
+          </td>
+          <td nzAlign="center">
+            {{ dateUtil.replaceDash(datePipe.transform(evidence.created_at)) }}
+          </td>
+          <td nzAlign="center">
+            <a
+              class="title"
+              nz-typography
+              [nz-tooltip]="fileUtil.getFileNameFromUrl(evidence.attachment)"
+              (click)="downloadEvidence(evidence)"
+            >
+              {{ fileUtil.getFileNameFromUrl(evidence.attachment) }}
+            </a>
+          </td>
+          <td nzAlign="center">
+            <view-dispute-button
+              [dispute]="{
+                id: evidence.dispute,
+                claim: evidence.claim,
+                claimer: evidence.creator,
+                respondent: evidence.creator
+              }"
+            >
+            </view-dispute-button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+    <ng-template #empty>
+      <nz-empty nzNotFoundContent="No Data"></nz-empty
+    ></ng-template>
+  </nz-skeleton>
+</div>

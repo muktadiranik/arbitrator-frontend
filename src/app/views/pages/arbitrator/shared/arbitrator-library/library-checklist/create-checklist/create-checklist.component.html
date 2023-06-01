@@ -1,0 +1,149 @@
+<div [formGroup]="checkListForm">
+  <div class="select">
+    <nz-form-label [nzSpan]="24">
+      <app-input-label>Category</app-input-label>
+    </nz-form-label>
+    <nz-select
+      nzSize="large"
+      nzShowSearch
+      nzAllowClear
+      [nzDropdownRender]="renderTemplate"
+      nzPlaceHolder="Select Cateogry"
+      [nzLoading]="isCategoryLoading"
+      formControlName="category"
+    >
+      <nz-option
+        *ngFor="let category of categoryList"
+        [nzLabel]="category.name"
+        [nzValue]="category.id"
+      ></nz-option>
+    </nz-select>
+    <ng-template #renderTemplate>
+      <nz-divider></nz-divider>
+      <div class="">
+        <input
+          nz-input
+          type="text"
+          placeholder="Category name"
+          #inputElement
+          style="width: 80%"
+        />
+        <a class="add-item" (click)="addCategoryItem()">
+          <span nz-icon nzType="plus"></span>
+          Add item
+        </a>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="input-field">
+    <nz-form-label [nzSpan]="24">
+      <app-input-label>Name</app-input-label>
+    </nz-form-label>
+    <input
+      nz-input
+      nzSize="large"
+      placeholder="Checklist name"
+      formControlName="name"
+    />
+  </div>
+
+  <div class="textarea">
+    <nz-form-label [nzSpan]="24">
+      <app-input-label>Description</app-input-label>
+    </nz-form-label>
+    <textarea
+      nz-input
+      placeholder="Enter checklist description"
+      [nzAutosize]="{ minRows: 4, maxRows: 6 }"
+      style="font-size: 16px"
+      formControlName="description"
+    ></textarea>
+  </div>
+
+  <div class="firm-select" *ngIf="firmsList.length">
+    <nz-form-label [nzSpan]="24">
+      <app-input-label>Firm</app-input-label>
+    </nz-form-label>
+    <app-select
+      placeholder="Select firm"
+      [selectedValue]="firmControlValue()"
+      [optionList]="firmsList"
+      (selectedValueChange)="selectedFirmChange($event)"
+    ></app-select>
+  </div>
+
+  <div class="input-field">
+    <nz-form-label *ngIf="getItemsControls().length" [nzSpan]="24">
+      <app-input-label>Checklist Item(s)</app-input-label>
+    </nz-form-label>
+    <div
+      formArrayName="items"
+      *ngFor="let item of getItemsControls(); let index = index"
+    >
+      <div [formGroupName]="index">
+        <nz-input-group [nzSuffix]="suffixTemplateInfo" class="input-group">
+          <input
+            nz-input
+            class="input"
+            style="height: 30px !important"
+            formControlName="text"
+            placeholder="Checklist Item"
+          />
+        </nz-input-group>
+        <ng-template #suffixTemplateInfo>
+          <span
+            *ngIf="index + 1 != getItemsControls().length"
+            style="font-size: 17px"
+            nz-icon
+            nzType="edit"
+            nzTheme="twotone"
+            (click)="editChecklistItem(item, index)"
+          ></span>
+          <span
+            #deleteIcon
+            *ngIf="index + 1 != getItemsControls().length"
+            nz-icon
+            nzType="delete"
+            nz-tooltip
+            nzTooltipTitle="Delete Checklist Item"
+            nzTheme="twotone"
+            [nzTwotoneColor]="'#eb2f96'"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure delete this checklist item?"
+            nzOkText="Yes"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="deleteChecklistItem(item, index)"
+          ></span>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-checklist">
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="isButtonLoading"
+      [disabled]="!getItemsValidity()"
+      (click)="addChecklistItem()"
+    >
+      Add checklist item
+    </button>
+  </div>
+
+  <div class="button-container">
+    <button nz-button nzType="default" nzDanger (click)="destroyModal()">
+      Cancel
+    </button>
+    &nbsp;
+    <button
+      nz-button
+      nzType="primary"
+      (click)="submitForm()"
+      [disabled]="!getValidity()"
+    >
+      Submit
+    </button>
+  </div>
+</div>

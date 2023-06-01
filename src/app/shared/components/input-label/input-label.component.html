@@ -1,0 +1,6 @@
+<h5 [style.color]="fontColor" class="inputlabel">
+  <ng-content></ng-content>
+  <ng-container *ngIf="required">
+    <sup class="required">*</sup>
+  </ng-container>
+</h5>

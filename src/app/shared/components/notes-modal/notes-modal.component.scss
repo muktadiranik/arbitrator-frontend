@@ -1,0 +1,76 @@
+.body > h5 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #141414;
+  margin-bottom: 25px;
+}
+
+.tableHeading > h5 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  color: #bfbdbd;
+
+  margin: 20px 0 0 15px;
+}
+
+.body {
+  max-width: 775px;
+  margin: 0 auto;
+  padding: 0px 40px;
+  margin-top: 55px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.desc-body {
+  padding: 5px 10px;
+  color: #141414;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+
+  height: 90px;
+  width: 675px;
+}
+
+.img {
+  height: 31px;
+  width: 31px;
+}
+
+.added-notes > h5 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+  color: #bfbdbd;
+  margin-bottom: -65px;
+}
+
+.added-notes {
+  margin-top: 60px;
+}
+
+.notes-table {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+}

@@ -1,0 +1,43 @@
+<div>
+  <nz-tabset
+    [nzCentered]="true"
+    [nzTabBarStyle]="{
+      'padding-left': '15px',
+      'padding-right': '15px',
+      'background-color': '#f6f6f6',
+      'border-top': '1px solid #d7d5d5',
+      'border-bottom': '1px solid #d7d5d5'
+    }"
+    [nzTabBarExtraContent]="newDispute"
+    nzSize="large"
+    nzLinkRouter
+  >
+    <nz-tab *ngFor="let tabTitle of tabTitles">
+      <a *nzTabLink nz-tab-link [routerLink]="tabTitle.path" class="tab-style">
+        {{ tabTitle.value }}
+      </a>
+    </nz-tab>
+    <!-- <nz-tab [nzDisabled]="true">
+      <button
+        *nzTabLink
+        nz-tab-link
+        nz-button
+        nzType="primary"
+        [routerLink]="'../new-dispute'"
+      >
+        New Dispute
+      </button>
+    </nz-tab> -->
+    <ng-template #newDispute>
+      <button
+        nzGhost
+        nz-button
+        nzType="primary"
+        [routerLink]="'../new-dispute'"
+      >
+        New Dispute
+      </button>
+    </ng-template>
+  </nz-tabset>
+</div>
+<router-outlet></router-outlet>

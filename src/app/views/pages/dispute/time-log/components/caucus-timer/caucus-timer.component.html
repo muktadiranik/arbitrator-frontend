@@ -1,0 +1,143 @@
+<!-- <div class="flex"> -->
+<nz-spin [nzSpinning]="isSpinning" [nzIndicator]="indicatorTemplate">
+  <button nz-button>
+    <div class="flex">
+      <ng-container *ngIf="!isCaucusTimerStopped">
+        <span
+          class="mt-[5px]"
+          nz-icon
+          nzType="message"
+          nzTheme="outline"
+          (click)="showModal()"
+        ></span>
+        &nbsp;&nbsp;
+      </ng-container>
+
+      <h5 class="font-bold" style="color: #369fff" nz-typography>Caucus:</h5>
+      &nbsp;
+
+      <cd-timer
+        format="hms"
+        #caucustimer
+        [autoStart]="false"
+        (onTick)="onTickCaucus($event)"
+        (onStop)="stopCaucusTimer($event)"
+        (onStart)="startCaucusTime($event)"
+      ></cd-timer>
+      &nbsp;
+      <span *ngIf="activeParticipant.type != ''">
+        &nbsp;
+        <nz-tag style="height: 23px" [nzColor]="activeParticipant.color">{{
+          activeParticipant.type
+        }}</nz-tag>
+      </span>
+
+      &nbsp;
+      <a
+        *ngIf="activeParticipant.type == ''; else showStopButton"
+        class="mt-[-3px]"
+        nz-dropdown
+        nzTrigger="click"
+        [nzDropdownMenu]="menu"
+        [(nzVisible)]="visibility"
+      >
+        <span nz-icon nzType="down-circle" nzTheme="fill"></span>
+      </a>
+
+      <ng-template #showStopButton>
+        <button
+          class="mt-[-4px]"
+          nz-icon
+          nzType="stop"
+          nzTheme="twotone"
+          nzTwotoneColor="red"
+          nz-tooltip="Stop Time"
+          (click)="endTimer($event)"
+        ></button>
+      </ng-template>
+
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li
+            nz-menu-item
+            [style.color]="claimer.color"
+            [nzDisabled]="!claimer.enable"
+          >
+            {{ claimer.name }} &nbsp;
+            <button
+              nz-icon
+              nzType="play-circle"
+              nzTheme="twotone"
+              nzTwotoneColor="green"
+              (click)="beginTimer($event, claimer)"
+            ></button>
+          </li>
+          <li nz-menu-item [style.color]="respondent.color">
+            {{ respondent.name }} &nbsp;
+            <button
+              nz-icon
+              nzType="play-circle"
+              nzTheme="twotone"
+              nzTwotoneColor="green"
+              (click)="beginTimer($event, respondent)"
+            ></button>
+          </li></ul
+      ></nz-dropdown-menu>
+    </div>
+  </button>
+</nz-spin>
+<!-- </div> -->
+
+<ng-template #indicatorTemplate
+  ><span nz-icon nzType="loading"></span
+></ng-template>
+
+<ng-template #Notificationtemplate let-notification>
+  <div class="ant-notification-notice-content">
+    <div>
+      <div class="ant-notification-notice-message">Active Timer</div>
+      <div class="ant-notification-notice-description">
+        A timer is in progress. Please confirm that the timer should stop before
+        navigation
+      </div>
+      <span class="ant-notification-notice-btn">
+        <button
+          nz-button
+          nzType="primary"
+          nzSize="small"
+          (click)="confirmExit()"
+        >
+          <span>Confirm</span>
+        </button>
+      </span>
+    </div>
+  </div>
+</ng-template>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzFooter]="null"
+  nzTitle="Time log Note"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <ng-container *nzModalContent>
+    <nz-space nzDirection="vertical" style="width: -moz-available">
+      <textarea
+        *nzSpaceItem
+        nz-input
+        placeholder="Note for time log"
+        [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+        [formControl]="note"
+      ></textarea>
+      <button
+        *nzSpaceItem
+        nz-button
+        type="submit"
+        (click)="sendCaucusTimerlog()"
+      >
+        Submit
+      </button>
+    </nz-space>
+  </ng-container>
+</nz-modal>

@@ -1,0 +1,378 @@
+<!-- <nz-layout>
+  <nz-header *ngIf="!isActor">
+    <div nz-row nzJustify="center">
+      <div nz-col [nzLg]="{ span: 2 }">
+        <img src="{{ imagePath }}" alt="logo" />
+      </div>
+    </div>
+  </nz-header> -->
+
+<form nz-form [formGroup]="profileForm" nz-row>
+  <nz-layout style="background-color: white">
+    <nz-sider
+      nzTheme="light"
+      [nzWidth]="'25%'"
+      nzCollapsible
+      nzBreakpoint="lg"
+      [nzCollapsedWidth]="0"
+      (nzCollapsedChange)="siderCollapsed($event)"
+    >
+      <div nz-row nzAlign="middle" nzJustify="center" style="height: 100%">
+        <nz-space nzDirection="vertical" [nzSize]="'large'">
+          <div *nzSpaceItem nz-row [nzJustify]="'center'">
+            <div nz-col>
+              <user-avatar
+                [actor]="userInfo?.actor"
+                [showCard]="false"
+                [canEdit]="true"
+                [size]="250"
+                [editSize]="54"
+              ></user-avatar>
+            </div>
+          </div>
+          <div *nzSpaceItem nz-row [nzJustify]="'center'">
+            <div *ngIf="isActor" nz-col>
+              <a [routerLink]="['change-password/']">Change Password</a>
+            </div>
+          </div>
+        </nz-space>
+      </div>
+    </nz-sider>
+    <nz-layout
+      [ngStyle]="{
+        'margin-left': siderIsCollapsed ? '0px' : '380px'
+      }"
+    >
+      <nz-content>
+        <div class="auth-container p-6">
+          <nz-space class="w-9/12" nzDirection="vertical" [nzSize]="'large'">
+            <div *nzSpaceItem>
+              <h1 class="heading-1 blue-heading justify-center">
+                Your Profile
+              </h1>
+              <h4 class="heading-2 justify-center">
+                Complete the rest of the information to have a complete profile
+              </h4>
+            </div>
+
+            <div *nzSpaceItem>
+              <div formGroupName="user" nz-row [nzGutter]="10">
+                <div nz-col nzXs="24" nzSm="12">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="24" nzFor="first_name">
+                      <ng-container *ngIf="!isCompany; else notFirstName">
+                        <app-input-label [required]="true">
+                          First Name
+                        </app-input-label>
+                      </ng-container>
+                      <ng-template #notFirstName>
+                        <app-input-label> First Name </app-input-label>
+                      </ng-template>
+                    </nz-form-label>
+
+                    <nz-form-control [nzSpan]="22">
+                      <input
+                        class="first_name"
+                        nz-input
+                        [nzSize]="'large'"
+                        placeholder="Enter your first name"
+                        type="text"
+                        id="first_name"
+                        formControlName="first_name"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzXs="24" nzSm="12">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="24" nzFor="last_name">
+                      <ng-container *ngIf="!isCompany; else notLastName">
+                        <app-input-label [required]="true">
+                          Last Name
+                        </app-input-label>
+                      </ng-container>
+                      <ng-template #notLastName>
+                        <app-input-label> Last Name </app-input-label>
+                      </ng-template>
+                    </nz-form-label>
+                    <nz-form-control [nzSpan]="22">
+                      <input
+                        class="first_name"
+                        nz-input
+                        [nzSize]="'large'"
+                        placeholder="Enter your last name"
+                        type="text"
+                        id="last_name"
+                        formControlName="last_name"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-col nzXs="24" nzSm="23">
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="24" nzFor="account">
+                    <app-input-label [required]="true"
+                      >Account Type
+                    </app-input-label>
+                  </nz-form-label>
+                  <nz-form-control [nzSpan]="24">
+                    <nz-select
+                      formControlName="account"
+                      nzPlaceHolder="Select account type"
+                      [nzSize]="'large'"
+                      (ngModelChange)="accTypeChange($event)"
+                    >
+                      <nz-option
+                        nzValue="individual"
+                        nzLabel="Individual"
+                      ></nz-option>
+                      <nz-option
+                        nzValue="organization"
+                        nzLabel="Organization (Must fill)"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzXs="24" nzSm="23">
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="24" nzFor="company">
+                    <app-input-label [required]="isCompany"
+                      >Organization</app-input-label
+                    >
+                  </nz-form-label>
+                  <nz-form-control [nzSpan]="24" [nzErrorTip]="errorTpl">
+                    <input
+                      nz-input
+                      [nzSize]="'large'"
+                      placeholder="Enter your organization"
+                      id="company"
+                      formControlName="company"
+                    />
+                    <ng-template #errorTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')"
+                        >Please enter your organization.</ng-container
+                      >
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-row [nzGutter]="10">
+                <div nz-col nzXs="24" nzSm="12">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="24" nzFor="phone_number">
+                      <app-input-label [required]="true"
+                        >Phone Number</app-input-label
+                      ></nz-form-label
+                    >
+                    <nz-form-control [nzSpan]="22">
+                      <input
+                        class="phone_number"
+                        nz-input
+                        [nzSize]="'large'"
+                        placeholder="Enter phone number"
+                        type="number"
+                        id="phone_number"
+                        formControlName="phone_number"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzXs="24" nzSm="12">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="24" nzFor="category">
+                      <app-input-label>Category</app-input-label>
+                    </nz-form-label>
+                    <nz-form-control [nzSpan]="22">
+                      <nz-select
+                        class="category"
+                        formControlName="category"
+                        nzPlaceHolder="Select category"
+                        [nzSize]="'large'"
+                      >
+                        <nz-option
+                          nzValue="general_contractor"
+                          nzLabel="General Contractor"
+                        ></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div formGroupName="address">
+                <div nz-col nzXs="24" nzSm="23">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="24" nzFor="first_address">
+                      <app-input-label [required]="true"
+                        >Street Address</app-input-label
+                      >
+                    </nz-form-label>
+                    <nz-form-control [nzSpan]="24">
+                      <input
+                        nz-input
+                        [nzSize]="'large'"
+                        placeholder="Enter address"
+                        id="first_address"
+                        formControlName="first_address"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzXs="24" nzSm="23">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="24" nzFor="second_address">
+                      <app-input-label>Address 2</app-input-label>
+                    </nz-form-label>
+                    <nz-form-control [nzSpan]="24">
+                      <input
+                        nz-input
+                        [nzSize]="'large'"
+                        placeholder="Enter address"
+                        id="second_address"
+                        formControlName="second_address"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-row [nzGutter]="10">
+                  <div nz-col nzXs="24" nzSm="8">
+                    <nz-form-item>
+                      <nz-form-label [nzSpan]="24" nzFor="city">
+                        <app-input-label [required]="true"
+                          >City</app-input-label
+                        ></nz-form-label
+                      >
+                      <nz-form-control [nzSpan]="21">
+                        <input
+                          nz-input
+                          [nzSize]="'large'"
+                          placeholder="Enter city"
+                          id="city"
+                          formControlName="city"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div nz-col nzXs="24" nzSm="8">
+                    <nz-form-item>
+                      <nz-form-label [nzSpan]="24" nzFor="state">
+                        <app-input-label [required]="true"
+                          >State</app-input-label
+                        ></nz-form-label
+                      >
+                      <nz-form-control [nzSpan]="21">
+                        <input
+                          nz-input
+                          [nzSize]="'large'"
+                          placeholder="Enter state"
+                          id="state"
+                          formControlName="state"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div nz-col nzXs="24" nzSm="8">
+                    <nz-form-item>
+                      <nz-form-label [nzSpan]="24" nzFor="zip">
+                        <app-input-label [required]="true"
+                          >Zip</app-input-label
+                        ></nz-form-label
+                      >
+                      <nz-form-control [nzSpan]="21">
+                        <input
+                          nz-input
+                          [nzSize]="'large'"
+                          placeholder="Enter zip"
+                          id="zip"
+                          formControlName="zip"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="!isActor" nz-row [nzGutter]="[8, 8]">
+                <div nz-col nzXs="24" nzSm="23">
+                  <button
+                    [disabled]="!profileForm.valid"
+                    nzBlock
+                    nz-button
+                    [nzSize]="'large'"
+                    nzType="primary"
+                    (click)="submitForm('dispute')"
+                  >
+                    Save and Submit a dispute
+                  </button>
+                </div>
+
+                <div nz-col nzXs="24" nzSm="23">
+                  <button
+                    [disabled]="!profileForm.valid"
+                    nzBlock
+                    nz-button
+                    [nzSize]="'large'"
+                    nzType="primary"
+                    (click)="submitForm('dashboard')"
+                  >
+                    Save and go to Dashboard
+                  </button>
+                </div>
+
+                <div nz-col nzXs="24" nzSm="23">
+                  <button
+                    nzBlock
+                    nz-button
+                    [nzSize]="'large'"
+                    nzType="primary"
+                    (click)="signOut()"
+                  >
+                    Log out
+                  </button>
+                </div>
+              </div>
+
+              <div *ngIf="isActor" nz-row [nzGutter]="[8, 8]">
+                <div nz-col nzXs="24" nzSm="23">
+                  <button
+                    [disabled]="!profileForm.valid"
+                    nzBlock
+                    nz-button
+                    [nzSize]="'large'"
+                    nzType="primary"
+                    (click)="submitUpdatedForm()"
+                  >
+                    Update Profile
+                  </button>
+                </div>
+
+                <div nz-col nzXs="24" nzSm="23">
+                  <button
+                    nzBlock
+                    nz-button
+                    [nzSize]="'large'"
+                    nzType="primary"
+                    (click)="location.back()"
+                  >
+                    Back
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nz-space>
+        </div>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</form>
+<!-- </nz-layout> -->

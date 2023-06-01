@@ -1,0 +1,12 @@
+<nz-select
+  [nzSize]="placeholder == 'Select firm' ? 'large' : 'default'"
+  [nzPlaceHolder]="placeholder"
+  [ngModel]="selectedValue?.id"
+  (ngModelChange)="selectionValueChange($event)"
+>
+  <nz-option
+    *ngFor="let option of optionList"
+    [nzValue]="option.id"
+    [nzLabel]="option.name"
+  ></nz-option>
+</nz-select>

@@ -1,0 +1,38 @@
+<div style="margin: auto; width: 90%">
+  <div class="tabs">
+    <nz-tabset nzLinkRouter [nzSize]="'large'">
+      <nz-tab>
+        <a
+          *nzTabLink
+          nz-tab-link
+          [routerLink]="['/arbitrator/library/document']"
+        >
+          Document
+        </a>
+        <ng-template nz-tab>
+          <app-library-document></app-library-document>
+        </ng-template>
+      </nz-tab>
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['/arbitrator/library/clause']">
+          Clause
+        </a>
+        <ng-template nz-tab>
+          <app-library-clause></app-library-clause>
+        </ng-template>
+      </nz-tab>
+      <nz-tab>
+        <a
+          *nzTabLink
+          nz-tab-link
+          [routerLink]="['/arbitrator/library/template']"
+        >
+          Checklist
+        </a>
+        <ng-template nz-tab>
+          <app-library-checklist></app-library-checklist>
+        </ng-template>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>

@@ -1,0 +1,402 @@
+<div nz-row nzJustify="center" class="bg-white" [formGroup]="registrationForm">
+  <div nz-col class="w-[700px] p-4">
+    <!-- <div nz-row *ngIf="type != 'witness'; else isWitness"> -->
+    <heading
+      nz-row
+      nzJustify="center"
+      [h1]="heading"
+      [h2]="h2Template"
+    ></heading>
+    <!-- </div> -->
+
+    <ng-template #h2Template>
+      <div *ngIf="type != 'admin'" nz-col>
+        Let us help you settle the dispute with &nbsp;<b>{{
+          respondent ? respondent : "respondent"
+        }}</b
+        >, please fill the following form to start the process.
+      </div>
+    </ng-template>
+
+    <!-- <ng-template #isWitness>
+      <heading
+        class="m-[15px]"
+        nz-row
+        nzJustify="center"
+        [h1]="'Witness Registration'"
+      ></heading>
+    </ng-template> -->
+
+    <div nz-row nzJustify="center">
+      <div nz-col>
+        <img
+          src="assets/edit/edit-pencil.svg"
+          (click)="uploadImage()"
+          class="w-8 relative top-[120px] left-[90px]"
+          alt="edit"
+        />
+        <img
+          class="w-[120px] h-[120px] rounded-full"
+          [src]="url ? url : 'assets/profile_img.png'"
+        />
+      </div>
+
+      <input
+        id="input"
+        type="file"
+        style="display: none"
+        formControlName="file"
+        (change)="onChange($event)"
+      />
+    </div>
+
+    <form nz-form [formGroup]="registrationForm" class="my-6">
+      <div nz-row [nzGutter]="[16, 0]">
+        <div nz-col nzXs="24" nzSm="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="first_name">
+              <ng-container *ngIf="!isCompany; else notFirstName">
+                <app-input-label [required]="true">
+                  First Name
+                </app-input-label>
+              </ng-container>
+              <ng-template #notFirstName>
+                <app-input-label> First Name </app-input-label>
+              </ng-template>
+            </nz-form-label>
+
+            <nz-form-control>
+              <input
+                [nzSize]="'large'"
+                nz-input
+                placeholder="Enter your first name"
+                type="text"
+                id="first_name"
+                formControlName="first_name"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzXs="24" nzSm="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="last_name">
+              <ng-container *ngIf="!isCompany; else notLastName">
+                <app-input-label [required]="true"> Last Name </app-input-label>
+              </ng-container>
+              <ng-template #notLastName>
+                <app-input-label> Last Name </app-input-label>
+              </ng-template>
+            </nz-form-label>
+
+            <nz-form-control>
+              <input
+                [nzSize]="'large'"
+                nz-input
+                placeholder="Enter your last name"
+                type="text"
+                id="last_name"
+                formControlName="last_name"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row [nzGutter]="[16, 0]">
+        <div nz-col nzXs="24" nzSm="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="email">
+              <app-input-label [required]="true">Email</app-input-label>
+            </nz-form-label>
+
+            <nz-form-control nzErrorTip="The input is not valid Email!">
+              <input
+                nz-input
+                [nzSize]="'large'"
+                placeholder="Enter your email"
+                type="text"
+                id="email"
+                formControlName="email"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzXs="24" nzSm="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="confirm_email">
+              <app-input-label [required]="true">Confirm Email</app-input-label>
+            </nz-form-label>
+            <nz-form-control [nzErrorTip]="errorEmail">
+              <input
+                nz-input
+                [nzSize]="'large'"
+                placeholder="Confirm email"
+                type="text"
+                id="confirm_email"
+                formControlName="confirm_email"
+              />
+              <ng-template #errorEmail let-control>
+                <ng-container *ngIf="control.hasError('confirm')"
+                  >Emails must match.</ng-container
+                >
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row [nzGutter]="[16, 0]">
+        <div nz-col nzXs="24" nzSm="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="password">
+              <app-input-label [required]="true">Password</app-input-label>
+            </nz-form-label>
+
+            <nz-form-control>
+              <nz-input-group [nzSuffix]="passwordEye">
+                <input
+                  style="height: 30px"
+                  nz-input
+                  [nzSize]="'large'"
+                  placeholder="Please create a password"
+                  [type]="showPassword ? 'text' : 'password'"
+                  id="password"
+                  formControlName="password"
+                />
+              </nz-input-group>
+              <ng-template #passwordEye>
+                <span
+                  nz-icon
+                  [nzType]="showPassword ? 'eye-invisible' : 'eye'"
+                  (click)="showPassword = !showPassword"
+                ></span>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzXs="24" nzSm="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="confirm_password">
+              <app-input-label [required]="true"
+                >Confirm Password</app-input-label
+              >
+            </nz-form-label>
+
+            <nz-form-control [nzErrorTip]="errorPass">
+              <nz-input-group [nzSuffix]="passwordEye1">
+                <input
+                  style="height: 30px"
+                  nz-input
+                  [nzSize]="'large'"
+                  placeholder="Please confirm password"
+                  [type]="showConfirmPassword ? 'text' : 'password'"
+                  id="confirm_password"
+                  formControlName="confirm_password"
+                />
+              </nz-input-group>
+
+              <ng-template #passwordEye1>
+                <span
+                  nz-icon
+                  [nzType]="showConfirmPassword ? 'eye-invisible' : 'eye'"
+                  (click)="showConfirmPassword = !showConfirmPassword"
+                ></span>
+              </ng-template>
+
+              <ng-template #errorPass let-control>
+                <ng-container *ngIf="control.hasError('notEquivalent')"
+                  >Passwords must match.</ng-container
+                >
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row [nzGutter]="[16, 0]">
+        <div nz-col nzXs="24" [nzSm]="type == 'admin' ? '12' : '24'">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="account">
+              <app-input-label [required]="true">Account Type</app-input-label>
+            </nz-form-label>
+
+            <nz-form-control>
+              <nz-select
+                formControlName="account"
+                nzPlaceHolder="Select account type"
+                [nzSize]="'large'"
+                (ngModelChange)="accTypeChange($event)"
+              >
+                <nz-option
+                  nzValue="individual"
+                  nzLabel="Individual"
+                ></nz-option>
+                <nz-option
+                  nzValue="organization"
+                  nzLabel="Organization (Must fill)"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div *ngIf="type == 'admin'" nz-col nzXs="24" nzSm="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="phone_number">
+              <app-input-label [required]="true"
+                >Phone Number</app-input-label
+              ></nz-form-label
+            >
+            <nz-form-control>
+              <input
+                nz-input
+                [nzSize]="'large'"
+                placeholder="Enter phone number"
+                type="number"
+                id="phone_number"
+                formControlName="phone_number"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-col *ngIf="type == 'admin'">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="24" nzFor="category">
+            <app-input-label>Category</app-input-label>
+          </nz-form-label>
+          <nz-form-control [nzSpan]="24">
+            <nz-select
+              class="category"
+              formControlName="category"
+              nzPlaceHolder="Select category"
+              [nzSize]="'large'"
+            >
+              <nz-option
+                nzValue="general_contractor"
+                nzLabel="General Contractor"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="24" nzFor="company">
+            <app-input-label [required]="isCompany"
+              >Organization</app-input-label
+            >
+          </nz-form-label>
+
+          <nz-form-control [nzSpan]="24" [nzErrorTip]="errorTpl">
+            <input
+              nz-input
+              [nzSize]="'large'"
+              placeholder="Enter your organization"
+              id="company"
+              formControlName="company"
+            />
+            <ng-template #errorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')"
+                >Please enter you organization.</ng-container
+              >
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="24" nzFor="first_address">
+            <app-input-label [required]="true">Address</app-input-label>
+          </nz-form-label>
+
+          <nz-form-control [nzSpan]="24" [nzErrorTip]="errorTpl">
+            <input
+              nz-input
+              [nzSize]="'large'"
+              placeholder="Enter your address"
+              id="first_address"
+              formControlName="first_address"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col>
+        <app-address-subform></app-address-subform>
+      </div>
+
+      <div nz-col nzSpan="24">
+        <p nz-typography>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
+          turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec
+          fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus
+          elit sed risus. Maecenas eget condimentum velit, sit amet feugiat
+          lectus. Class aptent taciti sociosqu ad litora torquent per conubia
+          nostra, per inceptos himenaeos. Praesent auctor purus luctus enim
+          egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex.
+          Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum
+          lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in
+          elementum tellus.
+        </p>
+      </div>
+
+      <div nz-col nzSpan="24">
+        <span
+          style="padding-right: 0px"
+          nz-checkbox
+          formControlName="read_terms"
+          >I have read the</span
+        >
+        <a
+          style="padding-left: 0px"
+          nz-button
+          target="_blank"
+          [routerLink]="['/auth', 'agreement']"
+          nzType="link"
+          >Terms and Conditions of Arbitration Agreement.</a
+        >
+      </div>
+
+      <div nz-col nzSpan="24">
+        <span
+          nz-checkbox
+          style="padding-right: 0px !important"
+          formControlName="agree_terms"
+          >I agree with the</span
+        >
+        <a
+          nz-button
+          target="_blank"
+          [routerLink]="['/auth', 'agreement']"
+          style="padding-left: 0px"
+          nzType="link"
+          >Terms and Conditions of Arbitration Agreement.</a
+        >
+      </div>
+      <br />
+      <button
+        nz-col
+        nzSpan="24"
+        [disabled]="
+          !registrationForm.valid ||
+          !getControl('read_terms').value ||
+          !getControl('agree_terms').value
+        "
+        nzSize="large"
+        nz-button
+        nzBlock
+        nzType="primary"
+        (click)="submitForm()"
+      >
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

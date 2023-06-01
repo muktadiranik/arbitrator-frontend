@@ -1,0 +1,81 @@
+<nz-card
+  [nzTitle]="headerTemplate"
+  [nzExtra]="extraTemplate"
+  style="margin-bottom: 15px"
+  [nzLoading]="isLoading"
+>
+  <nz-table
+    #basicTable
+    #outBordered
+    nzOuterBordered
+    [nzData]="tableData"
+    #virtualTable
+    [nzVirtualItemSize]="54"
+    [nzFrontPagination]="false"
+    [nzShowPagination]="false"
+    [nzFooter]="footerTemplate"
+    [nzScroll]="{ x: '253px', y: '300px' }"
+    nzSize="small"
+  >
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Created By</th>
+        <th>Note</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data; let ind = index">
+        <td>{{ dateUtil.replaceDash(data.date | mm_dd_yyyy) }}</td>
+        <td>{{ getCreatedBy() }}</td>
+        <td>
+          <span
+            *ngIf="data.note != ''"
+            style="cursor: pointer"
+            [nz-tooltip]="data.note"
+            ><nz-tag nzColor="default"> View Note</nz-tag></span
+          >
+        </td>
+        <td>{{ transformDuration(data.duration) }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <!-- <nz-space>
+    <span
+      *nzSpaceItem
+      nz-icon
+      nzType="edit"
+      nzTheme="twotone"
+      [nzTwotoneColor]="'gray'"
+      nz-tooltip="View/Edit all entries"
+      (click)="editEntries()"
+    ></span>
+
+    <span
+      *nzSpaceItem
+      nz-icon
+      nzType="plus"
+      nzTheme="outline"
+      nz-tooltip="Add manual entry"
+      (click)="addManualEntry()"
+    ></span>
+  </nz-space> -->
+</ng-template>
+
+<ng-template #headerTemplate>
+  <div class="heading">
+    <h5 nz-typography style="color: gray">General</h5>
+  </div>
+</ng-template>
+
+<ng-template #footerTemplate>
+  <div style="display: flex; justify-content: center">
+    <span style="font-weight: 700"
+      >Total: {{ totalHours }}h:{{ totalMinutes }}m</span
+    >
+  </div>
+</ng-template>

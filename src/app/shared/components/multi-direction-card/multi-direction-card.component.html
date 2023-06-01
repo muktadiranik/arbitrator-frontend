@@ -1,0 +1,27 @@
+<!-- <div [class]="['avatar-information', headingClass]">
+  <img
+    [class]="['avatar-information-image', imgClass]"
+    [src]="imageURL"
+    [alt]="alt"
+  />
+  <h6 nz-typography [class]="titleClass">{{ title }}</h6>
+  <h5 [class]="descriptionClass">{{ description }}</h5>
+</div> -->
+<nz-space
+  [ngClass]="{
+    'avatar-information': true
+  }"
+  [nzDirection]="direction"
+>
+  <img *nzSpaceItem [class]="imageClasses" [src]="imageURL" [alt]="alt" />
+
+  <span
+    *nzSpaceItem
+    [ngClass]="direction == 'vertical' ? 'text-center' : 'text-left'"
+  >
+    <h6 nz-typography class="title" [class]="titleClass">
+      {{ title }}
+    </h6>
+    <h5 class="description" [class]="descriptionClass">{{ description }}</h5>
+  </span>
+</nz-space>

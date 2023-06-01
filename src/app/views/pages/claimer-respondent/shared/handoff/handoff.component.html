@@ -1,0 +1,144 @@
+<span *ngIf="!dispute[this.type].invitation_url; else handoffTemplate">
+  <nz-result nzStatus="info" [nzTitle]="getTitle()">
+    <div nz-result-extra>
+      <button nz-button nzType="primary" (click)="next()">Next</button>
+    </div>
+  </nz-result>
+</span>
+
+<ng-template #handoffTemplate>
+  <heading [h1]="type + ' Handoff'" [h2]="h2Template"></heading>
+  <ng-template #h2Template>
+    Share all the necessary information with your {{ type }}
+  </ng-template>
+  <div nz-row [nzGutter]="[0, 16]" class="w-[55%] text-[20px] py-5 m-auto">
+    <div nz-col nzSpan="24">
+      <div
+        *ngIf="draftButton == 'edit'"
+        [ngxSummernote]="editorConfig"
+        [(ngModel)]="draftText"
+        (ngModelChange)="draftTextChanged($event)"
+      ></div>
+      <div class="text-center">
+        <nz-spin nzSimple *ngIf="loadingDraft"></nz-spin>
+      </div>
+
+      <div *ngIf="draftButton == 'save'" [innerHTML]="draftText"></div>
+    </div>
+
+    <form nz-col nzSpan="24" nz-form [formGroup]="handOffForm">
+      <div nz-row nzJustify="space-between" class="scode-type">
+        <div nz-col nzXs="24" nzSm="11">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="dispute-type"
+              ><p class="text-lg font-semibold">Dispute Code</p></nz-form-label
+            >
+            <nz-form-control [nzSpan]="23">
+              <input
+                readonly
+                nz-input
+                nzSize="large"
+                placeholder="Dispute code"
+                type="text"
+                id="dispute_code"
+                formControlName="dispute_code"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzXs="24" nzSm="11">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="dispute-type"
+              ><p class="text-lg font-semibold">Dispute Type</p></nz-form-label
+            >
+            <nz-form-control [nzSpan]="24">
+              <input
+                readonly
+                nz-input
+                nzSize="large"
+                placeholder="Dispute Type"
+                id="dispute_type"
+                formControlName="dispute_type"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+
+    <div nz-col nzSpan="24">
+      <p>
+        To get started visit the following link: <br /><a
+          class="text-base"
+          [href]="dispute[type].invitation_url"
+          target="_blank"
+          style="padding: 0"
+          >Invitation Url</a
+        >
+        <span
+          style="font-size: 16px"
+          nz-typography
+          nzCopyable
+          [nzCopyText]="dispute[type].invitation_url"
+        ></span>
+      </p>
+
+      <p nz-col nzSpan="24" class="m-0">Best Regards,</p>
+
+      <div nz-col nzSpan="24">
+        <b>{{ creatorFullName }}</b>
+        <br />
+        <a
+          style="padding-left: 0px; font-size: 20px"
+          nz-button
+          [routerLink]="['/auth', 'agreement']"
+          nzType="link"
+          >Arbitration Agreement</a
+        >
+        <!-- <div nz-row nzJustify="space-between" class="mt-12"> -->
+        <!-- <button
+            (click)="goBack()"
+            nz-button
+            nzSize="large"
+            nzType="primary"
+            nzGhost
+          >
+            Back
+          </button> -->
+        <div nz-row nzJustify="center" class="mt-12">
+          <nz-space [nzSize]="'large'">
+            <button
+              *nzSpaceItem
+              (click)="toggleSaveEdit()"
+              nz-button
+              nzSize="large"
+              nzType="primary"
+              nzGhost
+              [nzLoading]="loading"
+            >
+              {{
+                draftButton == "save" && loading
+                  ? "Saving"
+                  : draftButton == "save"
+                  ? "Edit"
+                  : "Save Draft"
+              }}
+            </button>
+
+            <button
+              *nzSpaceItem
+              (click)="submit()"
+              nz-button
+              nzSize="large"
+              nzType="primary"
+            >
+              Send
+            </button>
+          </nz-space>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+  </div>
+</ng-template>

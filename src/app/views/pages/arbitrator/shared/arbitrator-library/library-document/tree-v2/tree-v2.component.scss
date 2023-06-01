@@ -1,0 +1,12 @@
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+::ng-deep .ant-tree-list-holder {
+  overflow-x: auto;
+}

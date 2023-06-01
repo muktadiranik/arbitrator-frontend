@@ -1,0 +1,65 @@
+<nz-card [nzExtra]="extraTemplate" style="margin-bottom: 15px">
+  <nz-table
+    #basicTable
+    [nzData]="tableData"
+    [nzShowPagination]="false"
+    [nzFooter]="footerTemplate"
+    [nzScroll]="{ x: '253px' }"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="120px">Date</th>
+        <th *ngIf="show" nzWidth="130px">Created By</th>
+        <th></th>
+        <th nzWidth="110px">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data; let ind = index">
+        <td>{{ dateUtil.replaceDash(data.date | mm_dd_yyyy) }}</td>
+        <td *ngIf="show">{{ data.created_by }}</td>
+        <td>
+          <span
+            *ngIf="data.note != ''"
+            style="cursor: pointer"
+            [nz-tooltip]="data.note"
+            ><nz-tag nzColor="default">
+              View <br />
+              Note</nz-tag
+            ></span
+          >
+        </td>
+        <td>{{ data.total }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <nz-space>
+    <span
+      *nzSpaceItem
+      nz-icon
+      nzType="edit"
+      nzTheme="twotone"
+      [nzTwotoneColor]="'gray'"
+      nz-tooltip="View/Edit all entries"
+      (click)="editEntries()"
+    ></span>
+
+    <span
+      *nzSpaceItem
+      nz-icon
+      nzType="plus"
+      nzTheme="outline"
+      nz-tooltip="Add manual entry"
+      (click)="addManualEntry()"
+    ></span>
+  </nz-space>
+</ng-template>
+
+<ng-template #footerTemplate>
+  <div style="display: flex; justify-content: center">
+    <span style="font-weight: 700">Total: 00h:00m</span>
+  </div>
+</ng-template>

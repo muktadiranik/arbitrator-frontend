@@ -1,0 +1,100 @@
+<nz-spin [nzSpinning]="isSpinning" [nzIndicator]="indicatorTemplate">
+  <button nz-button (click)="showModal()">
+    <div class="flex">
+      <ng-container *ngIf="!isPlenaryTimerStopped">
+        <span
+          class="mt-[5px]"
+          nz-icon
+          nzType="message"
+          nzTheme="outline"
+        ></span>
+        &nbsp;&nbsp;
+      </ng-container>
+      <h5 class="font-bold" style="color: #4cb6b8" nz-typography>Timer</h5>
+      &nbsp;
+      <cd-timer
+        format="hms"
+        #timer
+        [autoStart]="false"
+        (onTick)="onTickPlenary($event)"
+        (onStop)="stopPlenaryTimer($event)"
+        (onStart)="startPlenaryTime($event)"
+      ></cd-timer>
+      &nbsp;&nbsp;
+      <span
+        *ngIf="isPlenaryTimerStopped; else stopButton"
+        class="mt-[5px]"
+        nz-icon
+        nzType="play-circle"
+        nzTheme="twotone"
+        nzTwotoneColor="green"
+        nz-tooltip="Start Time"
+        (click)="beginTimer($event)"
+      ></span>
+      <ng-template #stopButton>
+        <span
+          class="mt-[5px]"
+          nz-icon
+          nzType="stop"
+          nzTheme="twotone"
+          nzTwotoneColor="red"
+          nz-tooltip="Stop Time"
+          (click)="endTimer($event)"
+        ></span>
+      </ng-template>
+    </div>
+  </button>
+</nz-spin>
+
+<ng-template #indicatorTemplate
+  ><span nz-icon nzType="loading"></span
+></ng-template>
+
+<ng-template #Notificationtemplate let-notification>
+  <div class="ant-notification-notice-content">
+    <div>
+      <div class="ant-notification-notice-message">Active Timer</div>
+      <div class="ant-notification-notice-description">
+        A timer is in progress. Please confirm that the timer should stop before
+        navigation
+      </div>
+      <span class="ant-notification-notice-btn">
+        <button
+          nz-button
+          nzType="primary"
+          nzSize="small"
+          (click)="confirmExit()"
+        >
+          <span>Confirm</span>
+        </button>
+      </span>
+    </div>
+  </div>
+</ng-template>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Time log Note"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <ng-container *nzModalContent>
+    <nz-space nzDirection="vertical" style="width: -moz-available">
+      <textarea
+        *nzSpaceItem
+        nz-input
+        placeholder="Note for time log"
+        [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+        [formControl]="note"
+      ></textarea>
+      <button
+        *nzSpaceItem
+        nz-button
+        type="submit"
+        (click)="sendPlenaryTimerlog()"
+      >
+        Submit
+      </button>
+    </nz-space>
+  </ng-container>
+</nz-modal>

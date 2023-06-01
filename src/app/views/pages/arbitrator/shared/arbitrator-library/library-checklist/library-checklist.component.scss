@@ -1,0 +1,56 @@
+:host ::ng-deep .ant-collapse-content-box {
+  background: ghostwhite;
+}
+
+.container {
+  padding: 15px 30px;
+}
+
+.select-button {
+  margin-bottom: 15px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.select {
+  width: 100%;
+  max-width: 145px;
+}
+
+.expand {
+  margin-left: 10px;
+  margin-top: 2px;
+}
+
+.multiple {
+  width: 700%;
+  max-width: 271px;
+}
+
+.header-container {
+  display: flex;
+}
+
+.icons {
+  // width: 160%;
+  // max-width: 95px;
+  // font-size: 22px;
+  margin-top: 20px;
+  margin-right: 14px;
+
+  // display: flex;
+  // align-items: center;
+  // // justify-content: space-between;
+  // justify-content: space-around;
+}
+
+.ant-collapse-extra {
+  margin-left: 70%;
+  margin-top: 25px;
+  background: red;
+  width: 100%;
+  max-width: 99px;
+}

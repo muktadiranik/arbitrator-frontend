@@ -1,0 +1,15 @@
+<div nz-row class="notes-input">
+  <div nz-col [nzSpan]="16">
+    <input nz-input placeholder="Enter Note, @ for who" [(ngModel)]="note" />
+  </div>
+  <div nz-col [nzSpan]="8" class="tagtypecol">
+    <nz-radio-group [(ngModel)]="activeLane">
+      <label
+        *ngFor="let lane of laneTypes"
+        nz-radio-button
+        [nzValue]="lane.value"
+        >#{{ lane.label }}</label
+      >
+    </nz-radio-group>
+  </div>
+</div>

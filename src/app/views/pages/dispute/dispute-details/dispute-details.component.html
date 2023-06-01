@@ -1,0 +1,174 @@
+<ng-container
+  *ngIf="dispute && (dispute.claim || viewType == 'r'); else noClaim"
+>
+  <nz-layout class="min-h-[calc(100vh-140px)]">
+    <nz-sider
+      nzTheme="light"
+      nzCollapsible
+      nzBreakpoint="sm"
+      [nzWidth]="'20%'"
+      [nzCollapsedWidth]="0"
+    >
+      <span nz-row nzJustify="center">
+        <nz-space
+          style="max-width: -moz-available; margin-top: 75px"
+          nzAlign="center"
+          nzDirection="vertical"
+        >
+          <user-card *nzSpaceItem [actor]="actor"></user-card>
+          <ng-container *ngIf="viewType == 'c'">
+            <div *nzSpaceItem>
+              <h6 class="amount-claimed">Amount Claimed</h6>
+              <h6
+                class="amount-claimed"
+                style="font-size: 16px; font-weight: 600"
+              >
+                {{ amountUtil.appendCurrency(dispute.claim, "claimed_amount") }}
+              </h6>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="viewType == 'r'">
+            <div *nzSpaceItem>
+              <h6 class="amount-owned">Amount</h6>
+              <h6
+                class="amount-owned"
+                style="font-size: 16px; font-weight: 600"
+              >
+                {{ amountUtil.appendCurrency(dispute.claim, "claimed_amount") }}
+              </h6>
+            </div>
+          </ng-container>
+        </nz-space>
+      </span>
+    </nz-sider>
+    <nz-layout>
+      <nz-header
+        ><h4 class="layout-header">{{ heading }} Details</h4></nz-header
+      >
+      <nz-content>
+        <div class="">
+          <div class="desc-body">
+            <div style="margin-bottom: 70px">
+              <h3 nz-typography style="margin-bottom: 10px">Description</h3>
+              <p
+                *ngIf="dispute.claim; else noClaim"
+                nz-typography
+                nzCopyable
+                [nzContent]="dispute.claim?.description"
+              >
+                {{ dispute.claim?.description }}
+              </p>
+              <ng-template #noClaim
+                ><awaiting-claim-details></awaiting-claim-details
+              ></ng-template>
+            </div>
+
+            <div nz-row [nzGutter]="[8, 8]">
+              <div
+                nz-col
+                nzSpan="12"
+                [nzLg]="12"
+                [nzMd]="24"
+                [nzSm]="24"
+                [nzXs]="24"
+              >
+                <h3 nz-typography>
+                  {{ viewType == "c" ? "Evidence" : "Evidence Submitted" }}
+                </h3>
+                <app-show-evidences
+                  [rowCount]="1.2"
+                  [actor]="actor"
+                  [claim]="dispute.claim"
+                  [disabled]="isDisputeResolved(dispute)"
+                >
+                </app-show-evidences>
+              </div>
+              <div
+                nz-col
+                nzSpan="12"
+                [nzLg]="12"
+                [nzMd]="24"
+                [nzSm]="24"
+                [nzXs]="24"
+              >
+                <h3 nz-typography>Witness</h3>
+                <app-show-witnesses
+                  [rowCount]="1.2"
+                  [actor]="actor"
+                  [claim]="dispute.claim"
+                  [dispute]="dispute"
+                  [canEdit]="false"
+                  [disabled]="isDisputeResolved(dispute)"
+                >
+                </app-show-witnesses>
+              </div>
+            </div>
+
+            <div class="offers">
+              <nz-space
+                [nzSize]="'large'"
+                nzDirection="vertical"
+                style="width: 100%"
+              >
+                <div *nzSpaceItem>
+                  <div nz-row nzJustify="space-between" nzAlign="middle">
+                    <h3 nz-typography>Offers</h3>
+                    <span nz-space>
+                      <ng-container *nzSpaceItem>
+                        <add-offer
+                          *ngIf="isOffersLoaded"
+                          [dispute]="dispute"
+                          [offers]="offers"
+                          (offersUpdate)="updateOffers($event)"
+                          [disabled]="
+                            isDisputeResolved(dispute) || offers.length === 2
+                          "
+                        >
+                        </add-offer>
+                      </ng-container>
+
+                      <ng-container *nzSpaceItem>
+                        <dispute-actions
+                          *ngIf="
+                            dispute &&
+                            (authRoleService.userType == 'claimer' ||
+                              authRoleService.userType == 'respondent')
+                          "
+                          [dispute]="dispute"
+                          [actor]="dispute[authRoleService.userType]"
+                          name="Straight to hearing"
+                          value="Accept"
+                          [disabled]="isDisputeResolved(dispute)"
+                          >Straight to Hearing</dispute-actions
+                        >
+                      </ng-container>
+                      <!-- <dispute-actions
+                        *nzSpaceItem
+                        [dispute]="dispute"
+                        [actor]="actor"
+                        name="Straight to hearing"
+                        value="Reject"
+                        >Straight to Hearing Reject</dispute-actions
+                      > -->
+                    </span>
+                  </div>
+                </div>
+                <div *nzSpaceItem>
+                  <offers-table [offers]="offers"></offers-table>
+                </div>
+              </nz-space>
+            </div>
+          </div>
+        </div>
+      </nz-content>
+      <nz-footer></nz-footer>
+    </nz-layout>
+  </nz-layout>
+</ng-container>
+
+<ng-template #noClaim>
+  <awaiting-claim-details
+    style="height: 60vh"
+    class="flex items-center justify-center"
+  ></awaiting-claim-details>
+</ng-template>

@@ -1,0 +1,176 @@
+<div class="">
+  <heading [h1]="'Witness'" [h2]="h2Template"></heading>
+  <ng-template #h2Template>
+    Only add witnesses that will be joining you at the hearing or be submitting
+    testimonial video statements.
+  </ng-template>
+  <div class="body">
+    <h5 *ngIf="!edit">Add your witness information</h5>
+    <h5 *ngIf="edit">Edit your witness information</h5>
+
+    <form nz-form class="witness-form" [formGroup]="witnessInfoForm">
+      <nz-form-item formGroupName="user">
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <div class="form-control">
+            <span style="width: 7%; max-width: 35px; margin-left: 7px">
+              <img
+                class="witness-form-image"
+                style="margin-top: -5px"
+                src="assets/person/person_avatar.svg"
+                alt="person"
+              />
+            </span>
+            <input
+              nz-input
+              placeholder="First Name"
+              formControlName="first_name"
+              id="first_name"
+              class="input"
+            />
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item formGroupName="user">
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <div class="form-control">
+            <span style="width: 7%; max-width: 35px; margin-left: 7px">
+              <img
+                class="witness-form-image"
+                style="margin-top: -5px"
+                src="assets/person/person_avatar.svg"
+                alt="person"
+              />
+            </span>
+            <input
+              nz-input
+              placeholder="Last Name"
+              formControlName="last_name"
+              id="last_name"
+              class="input"
+            />
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <div class="form-control">
+            <span style="width: 13%; max-width: 42px">
+              <img
+                class="witness-form-image"
+                src="assets/relation.svg"
+                alt="relation"
+              />
+            </span>
+
+            <input
+              nz-input
+              placeholder="Relation to the claimer"
+              formControlName="relation"
+              id="relationToClaimer"
+              class="input"
+            />
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item formGroupName="user">
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;The input is not valid Email!"
+        >
+          <div class="form-control">
+            <span style="width: 9%; max-width: 42px">
+              <img
+                class="witness-form-image"
+                src="assets/email.svg"
+                alt="email"
+              />
+            </span>
+            <input
+              nz-input
+              placeholder="Email"
+              formControlName="email"
+              id="email"
+              class="input"
+            />
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <div class="form-control">
+            <span style="width: 9%; max-width: 40px">
+              <img
+                class="witness-form-image"
+                style="margin-top: -5px; margin-left: 5px"
+                src="assets/phone.svg"
+                alt="phone"
+              />
+            </span>
+            <input
+              nz-input
+              placeholder="Phone number"
+              formControlName="phone_number"
+              id="phone"
+              class="input"
+            />
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-row nzJustify="center">
+        <button
+          style="text-align: center"
+          *ngIf="!edit"
+          (click)="addWitness()"
+          nz-button
+          nzType="primary"
+          [nzLoading]="loading"
+        >
+          Add witness
+        </button>
+        <button
+          *ngIf="edit"
+          (click)="editWitness()"
+          nz-button
+          nzType="primary"
+          [nzLoading]="loading"
+        >
+          Edit witness
+        </button>
+      </div>
+    </form>
+
+    <div *ngIf="link && link != ''">
+      <div class="share-link">
+        <h6>Share this link with your witness to add their statement.</h6>
+        <div nz-row nzJustify="center">
+          <input
+            nz-input
+            [(ngModel)]="link"
+            placeholder="Copy link"
+            id="phone"
+            class="input text"
+            style="max-width: 705px"
+          />
+          <span
+            class="ml-3 text-[20px]"
+            nz-typography
+            nzCopyable
+            [nzCopyText]="link"
+          ></span>
+        </div>
+      </div>
+
+      <div *ngIf="!edit" class="added-witnesses">
+        <h5>Added witnesses</h5>
+        <app-show-witnesses
+          [witnesses]="[witnesses]"
+          [canEdit]="true"
+        ></app-show-witnesses>
+      </div>
+    </div>
+  </div>
+</div>

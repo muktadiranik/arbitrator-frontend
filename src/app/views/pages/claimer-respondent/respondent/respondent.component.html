@@ -1,0 +1,16 @@
+<div class="app-container">
+  <nz-tabset
+    *ngIf="enable"
+    [nzCentered]="true"
+    nzSize="large"
+    nzLinkRouter
+    style="height: 67px !important"
+  >
+    <nz-tab *ngFor="let tabTitle of tabTitles">
+      <a *nzTabLink nz-tab-link [routerLink]="tabTitle.path" class="tab-style">
+        {{ tabTitle.value }}
+      </a>
+    </nz-tab>
+  </nz-tabset>
+  <router-outlet></router-outlet>
+</div>

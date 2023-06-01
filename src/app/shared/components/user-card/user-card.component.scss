@@ -1,0 +1,16 @@
+::ng-deep .user-card,
+.ant-card {
+  background-color: unset;
+}
+
+::ng-deep .user-card .ant-card-cover > * {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: auto;
+}
+
+.email-icon,
+.location-icon {
+  margin-right: 5px;
+}

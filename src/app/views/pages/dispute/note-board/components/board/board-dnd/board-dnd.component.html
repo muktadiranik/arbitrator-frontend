@@ -1,0 +1,11 @@
+<note-add [lanes$]="lanes$" (onNewNote)="onNewNote($event)"></note-add>
+<div class="flex mt-7" cdkDropListGroup>
+  <div
+    class="board-dnd-list"
+    board-dnd-list
+    *ngFor="let lane of lanes$ | async"
+    [lane]="lane"
+    [newNote]="newNote"
+    [filteredNotes]="filteredNotes"
+  ></div>
+</div>

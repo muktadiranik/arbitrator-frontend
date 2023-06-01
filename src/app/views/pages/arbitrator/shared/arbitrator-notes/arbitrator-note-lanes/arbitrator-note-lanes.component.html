@@ -1,0 +1,12 @@
+<div nz-row nzJustify="space-between">
+  <div
+    nz-col
+    *ngFor="let lane of laneTypes"
+    class="note-lane"
+    style="width: calc(25% - 4px)"
+  >
+    <nz-card [nzTitle]="lane.label" nzSize="small" nzBordered>
+      <p>Card content</p>
+    </nz-card>
+  </div>
+</div>

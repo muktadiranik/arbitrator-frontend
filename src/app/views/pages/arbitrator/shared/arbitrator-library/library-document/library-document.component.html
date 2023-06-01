@@ -1,0 +1,116 @@
+<div>
+  <div [formGroup]="form" class="select-button">
+    <div style="display: flex; width: 100%">
+      <div class="select">
+        <app-select
+          [selectedValue]="optionList[0]"
+          [optionList]="optionList"
+          (selectedValueChange)="selectedValueChange($event)"
+        ></app-select>
+      </div>
+      &nbsp;&nbsp;
+      <div class="multiple-select" *ngIf="selectedVal.name == 'Firm Files'">
+        <nz-select
+          class="multiple"
+          [nzMaxTagCount]="2"
+          nzMode="multiple"
+          nzPlaceHolder="Select firm"
+          formControlName="firm"
+          (ngModelChange)="selectedFirmChange($event)"
+        >
+          <nz-option
+            *ngFor="let firm of firmsList"
+            [nzLabel]="firm.name"
+            [nzValue]="firm"
+          ></nz-option>
+        </nz-select>
+      </div>
+    </div>
+
+    <!-- <div class="button">
+      <div *ngIf="isActionButton" style="display: inline-block">
+        <button
+          nz-button
+          nzType="default"
+          nzDanger
+          class="button"
+          (click)="deleteFolder()"
+        >
+          Delete folder
+        </button>
+        &nbsp;
+        <button
+          nz-button
+          nzType="default"
+          class="button"
+          (click)="renameFolder()"
+        >
+          Rename folder
+        </button>
+        &nbsp;
+        <button
+          nz-button
+          nzType="primary"
+          class="button"
+          (click)="uploadFile()"
+        >
+          Upload file
+        </button>
+        <input
+          id="input"
+          type="file"
+          style="display: none"
+          formControlName="file"
+          (change)="onChange($event)"
+        />
+      </div>
+
+      <div *ngIf="showFileButton" style="display: inline-block">
+        <button
+          nz-button
+          nzType="default"
+          nzDanger
+          class="button"
+          (click)="deleteFile()"
+        >
+          Delete File
+        </button>
+        &nbsp;
+        <button
+          nz-button
+          nzType="default"
+          class="button"
+          (click)="renameFile()"
+        >
+          Rename File
+        </button>
+        &nbsp;
+        <button
+          nz-button
+          nzType="primary"
+          class="button"
+          (click)="downloadFile()"
+        >
+          Download File
+        </button>
+      </div>
+      &nbsp;
+      <app-button (addNewItem)="addNewFolder()">Create new folder</app-button>
+    </div> -->
+  </div>
+
+  <div class="tree">
+    <!-- <app-tree
+      [itemList]="folderList"
+      (selectionChange)="treeSelectionChange($event)"
+    ></app-tree> -->
+
+    <app-tree-v2
+      *ngIf="enable"
+      [folderList]="folderList"
+      [firm_id]="firm_id"
+      [selectedVal]="selectedVal"
+      (selectionChange)="treeSelectionChange($event)"
+    ></app-tree-v2>
+  </div>
+</div>

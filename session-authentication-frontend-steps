@@ -1,0 +1,12 @@
+Steps to implement session-authentication using cookies on frontend:
+
+1. backend sends the "set-cookies" header in response, which contains "csrftoken"
+   and "sessionid", and browser automatically sets these cookies.
+
+2. for cross-origin requests, "with-credentials:true" header is required 
+   to force the browser to send cookies in subsequent requsets.
+
+3. and for all the subsequent requsets, "X-CSRF" header is required in 
+   request-headers, otherwise CSRF authentication would gets failed. Value for 
+   X-CSRF can be fetched using seperate api that only returns "csrftoken", not 
+   "sessionid"

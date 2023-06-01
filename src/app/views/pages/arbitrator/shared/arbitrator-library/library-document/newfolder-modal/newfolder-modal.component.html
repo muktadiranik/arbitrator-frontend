@@ -1,0 +1,23 @@
+<div>
+  <input
+    type="text"
+    class="input"
+    placeholder="Enter folder name"
+    [(ngModel)]="inputValue"
+  />
+
+  <div class="button-container">
+    <button nz-button nzType="default" nzDanger (click)="handleCancel()">
+      Cancel
+    </button>
+    &nbsp;&nbsp;&nbsp;
+    <button
+      nz-button
+      nzType="primary"
+      (click)="handleOk()"
+      [disabled]="inputValue == ''"
+    >
+      Submit
+    </button>
+  </div>
+</div>

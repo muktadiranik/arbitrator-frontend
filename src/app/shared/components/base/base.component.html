@@ -1,0 +1,127 @@
+<nz-layout>
+  <nz-header class="header">
+    <div nz-row nzAlign="middle" [nzJustify]="'space-between'">
+      <div nz-col nzXs="20" nzSm="12" nzLg="8">
+        <div nz-row nzAlign="middle">
+          <div nz-col nzSpan="4">
+            <img
+              src="assets/logo.svg"
+              alt="logo"
+              [routerLink]="authRoleService.HOME_PAGE"
+            />
+          </div>
+
+          <div nz-col nzSpan="20">
+            <nz-input-group
+              *ngIf="seachFieldOptions?.placeHolder"
+              class="search-input"
+              [nzPrefix]="prefixTemplateUser"
+            >
+              <input
+                type="text"
+                nz-input
+                (input)="onInput($event)"
+                [placeholder]="seachFieldOptions.placeHolder"
+              />
+            </nz-input-group>
+            <ng-template #prefixTemplateUser
+              ><span nz-icon nzType="search" nzTheme="outline"></span
+            ></ng-template>
+          </div>
+        </div>
+      </div>
+
+      <div nz-col nzXs="0" nzSm="12">
+        <ng-container *ngIf="actor">
+          <div nz-row nzAlign="middle" [nzJustify]="'end'">
+            <div nz-col class="mr-2">
+              <p class="user-name">
+                {{ actorUtil.fullname(actor) }}
+              </p>
+              <p class="user-email">{{ actor.user.email }}</p>
+            </div>
+
+            <user-avatar
+              [actor]="actor"
+              [showCard]="true"
+              [canEdit]="false"
+            ></user-avatar>
+
+            <div class="logout noprint">
+              <span
+                nz-col
+                class="ml-2"
+                nz-icon
+                [nzRotate]="270"
+                nzType="logout"
+                nzTheme="outline"
+                nz-tooltip="Log out"
+                (click)="signOut()"
+              ></span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="noprint" nz-col nzXs="2" nzSm="0">
+        <div nz-row [nzJustify]="'start'">
+          <div nz-col>
+            <ng-template #hamBurger>
+              <span
+                nz-icon
+                nzType="menu"
+                nzTheme="outline"
+                style="font-size: 19px"
+              ></span>
+            </ng-template>
+            <ul
+              nz-menu
+              nzMode="horizontal"
+              style="background: none; border: none"
+            >
+              <li nz-submenu nzPlacement="bottomRight" [nzTitle]="hamBurger">
+                <ul>
+                  <li nz-menu-item [routerLink]="['/profile']">
+                    <div *ngIf="actor">
+                      <nz-avatar
+                        nz-col
+                        [nzSize]="35"
+                        [nzSrc]="
+                          actor.display_picture
+                            ? actor.display_picture
+                            : 'assets/profile_img.png'
+                        "
+                        [routerLink]="['/profile']"
+                      >
+                      </nz-avatar>
+                      <span class="ml-1">{{ actorUtil.fullname(actor) }} </span>
+                    </div>
+                  </li>
+                  <li nz-menu-item>
+                    <div class="logout" (click)="signOut()">
+                      <span
+                        class="ml-3 mr-1"
+                        nz-icon
+                        [nzRotate]="270"
+                        nzType="logout"
+                        nzTheme="outline"
+                      ></span>
+                      <span>Logout</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nz-header>
+
+  <nz-content
+    class="app-container"
+    style="margin-top: 70px; background-color: white"
+  >
+    <router-outlet></router-outlet>
+  </nz-content>
+</nz-layout>

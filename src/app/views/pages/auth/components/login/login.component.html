@@ -1,0 +1,80 @@
+<form nz-form [formGroup]="logInForm">
+  <nz-space nzDirection="vertical" nzSize="large">
+    <div *nzSpaceItem>
+      <h1 class="heading-1">Welcome back!</h1>
+      <h5 class="heading-2">Enter your credentials to enter your account</h5>
+    </div>
+    <div *nzSpaceItem>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="email">
+          <app-input-label>Email</app-input-label>
+        </nz-form-label>
+
+        <nz-form-control
+          [nzSpan]="24"
+          nzErrorTip="The input is not valid Email!"
+        >
+          <input
+            nz-input
+            [nzSize]="'large'"
+            formControlName="email"
+            id="email"
+            placeholder="Enter your email"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <!-- <app-password-subform></app-password-subform> -->
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="password">
+          <app-input-label>Password</app-input-label>
+        </nz-form-label>
+
+        <nz-form-control [nzSpan]="24" nzErrorTip="Please input your password!">
+          <nz-input-group [nzSuffix]="passwordEye">
+            <input
+              style="height: 30px"
+              nz-input
+              placeholder="Enter password"
+              [type]="showPassword ? 'text' : 'password'"
+              [nzSize]="'large'"
+              id="password"
+              formControlName="password"
+            />
+          </nz-input-group>
+          <ng-template #passwordEye>
+            <span
+              nz-icon
+              [nzType]="showPassword ? 'eye-invisible' : 'eye'"
+              (click)="showPassword = !showPassword"
+            ></span>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <button
+        [disabled]="!logInForm.valid"
+        nz-button
+        nzBlock
+        nzSize="large"
+        [nzLoading]="loading"
+        nzType="primary"
+        (click)="submitForm()"
+      >
+        Log in
+      </button>
+    </div>
+
+    <div *nzSpaceItem>
+      <div nz-row>
+        <a class="auth-link" [routerLink]="'../reset-password'"
+          ><u>Forgot your password?</u>
+        </a>
+      </div>
+      <!-- <nz-divider nzText="OR"></nz-divider> -->
+      <div nz-row>
+        <a class="auth-link" [routerLink]="'../signup'"
+          ><u>Don't have an account? Sign up</u>
+        </a>
+      </div>
+    </div>
+  </nz-space>
+</form>

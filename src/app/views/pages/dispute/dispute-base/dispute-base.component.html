@@ -1,0 +1,79 @@
+<nz-tabset
+  class="noprint"
+  *ngIf="tabs.length > 1"
+  [nzCentered]="true"
+  [nzTabBarStyle]="{
+    'background-color': '#f6f6f6',
+    'border-top': '1px solid #d7d5d5',
+    'border-bottom': '1px solid #d7d5d5'
+  }"
+  nzSize="large"
+  nzLinkRouter
+  style="height: 69px !important"
+>
+  <nz-tab *ngFor="let tab of tabs" [nzDisabled]="tab.id == 'witness'">
+    <ng-container *ngIf="tab.id != 'witness'; else witnessMenu">
+      <a
+        *nzTabLink
+        nz-tab-link
+        [routerLink]="tab.path"
+        class="text-[22px] font-light"
+      >
+        {{ tab.value }}
+      </a>
+    </ng-container>
+    <ng-template #witnessMenu>
+      <ul nz-menu nzMode="horizontal">
+        <nz-spin [nzSpinning]="isWitnessLoading">
+          <li
+            *nzTabLink
+            nz-tab-link
+            class="text-[22px] font-light text-[#2897ff]"
+            nz-submenu
+            [nzTitle]="tab.value + '  (' + witnessesLength + ')'"
+          >
+            <ul>
+              <li nz-menu-group nzTitle="Claimer">
+                <ul>
+                  <li
+                    nz-menu-item
+                    *ngFor="let witness of claimerWitness"
+                    (click)="witnessDetail(witness)"
+                  >
+                    <a [routerLink]="['witness', witness.id, 'actions']">
+                      {{ ActorUtil.fullname(witness) }}
+                    </a>
+                  </li>
+                  <span *ngIf="!claimerWitness.length">
+                    <nz-empty nzNotFoundImage="simple"></nz-empty>
+                  </span>
+                </ul>
+              </li>
+              <li nz-menu-group nzTitle="Respondent">
+                <ul>
+                  <li nz-menu-item *ngFor="let witness of respondentWitness">
+                    <a [routerLink]="['witness', witness.id, 'actions']">
+                      {{ ActorUtil.fullname(witness) }}
+                    </a>
+                  </li>
+                  <span *ngIf="!respondentWitness.length">
+                    <nz-empty nzNotFoundImage="simple"></nz-empty>
+                  </span>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </nz-spin>
+      </ul>
+    </ng-template>
+  </nz-tab>
+</nz-tabset>
+
+<ng-container *ngIf="!loading; else loadingTemplate">
+  <router-outlet></router-outlet>
+</ng-container>
+<ng-template #loadingTemplate>
+  <div class="grid h-screen place-items-center" style="text-align: center">
+    <nz-spin [nzSize]="'large'" nzTip="Loading Dispute..." nzSimple></nz-spin>
+  </div>
+</ng-template>

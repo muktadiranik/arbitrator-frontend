@@ -1,0 +1,37 @@
+<form [formGroup]="noteForm">
+  <nz-input-group
+    nzSearch
+    nzSize="default"
+    [nzAddOnAfter]="suffixButton"
+    [nzPrefix]="prefixTemplateNote"
+  >
+    <input type="text" nz-input formControlName="text" placeholder="Add Note" />
+  </nz-input-group>
+
+  <ng-template #prefixTemplateNote
+    ><span nz-icon nzType="audit" nzTheme="outline"></span
+  ></ng-template>
+
+  <ng-template #suffixButton>
+    <nz-radio-group formControlName="lane" nzButtonStyle="solid">
+      <label
+        class="uppercase text-textMedium"
+        *ngFor="let lane of lanes$ | async"
+        nz-radio-button
+        [nzValue]="lane.id"
+        >{{ lane.display_name }}</label
+      >
+      <button
+        nz-button
+        type="submit"
+        nzType="primary"
+        nzSize="default"
+        [nzLoading]="loading"
+        [disabled]="!noteForm.valid"
+        (click)="addNote()"
+      >
+        Add Note
+      </button>
+    </nz-radio-group>
+  </ng-template>
+</form>

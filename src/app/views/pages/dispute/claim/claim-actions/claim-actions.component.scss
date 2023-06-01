@@ -1,0 +1,138 @@
+.heading-color {
+  color: grey;
+}
+
+.claim-step-icon {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  background: #e8ebf0;
+  cursor: pointer;
+}
+
+.active {
+  background: #acd1fc !important;
+  padding: 4px;
+  border-radius: inherit;
+}
+
+.image-1 {
+  position: absolute !important;
+  opacity: 0.7 !important;
+  left: 10% !important;
+  top: 36.1% !important;
+}
+
+.image-2 {
+  position: absolute !important;
+  left: 16% !important;
+  top: -41% !important;
+  margin-left: 12px;
+}
+
+.image-3 {
+  position: absolute !important;
+  left: 22.5% !important;
+  top: -41% !important;
+}
+
+.image-4 {
+  position: absolute !important;
+  left: 37.5% !important;
+  top: -41% !important;
+}
+
+.image-5 {
+  top: 94% !important;
+  left: 89% !important;
+  margin-left: 24px;
+}
+
+.desc-image-2 {
+  top: 68% !important;
+  left: 20% !important;
+}
+
+.desc-image-3 {
+  top: 68% !important;
+  left: 44% !important;
+}
+
+.desc-image-4 {
+  top: 68% !important;
+  left: 68% !important;
+}
+
+.desc-body {
+  padding: 10px 25px;
+  border-radius: 3px;
+  border: 1px solid rgba(191, 189, 189, 0.5);
+}
+
+.desc-body > p {
+  color: #141414;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.desc-amount-image {
+  height: 25px;
+  width: 25px;
+  display: inline;
+}
+
+.actor-claim-timeline .parent-img-container {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.actor-claim-timeline .img-container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.actor-claim-timeline .centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 36px;
+  font-weight: 100;
+}
+
+::ng-deep .actor-claim-timeline .ant-steps-item-tail {
+  top: 38%;
+  left: 5%;
+}
+
+::ng-deep .actor-claim-timeline .ant-steps-item-tail::after {
+  height: 2px;
+}
+
+::ng-deep .actor-claim-timeline .ant-steps-item-title {
+  font-family: "Lato";
+  font-weight: 700;
+  font-size: 24px;
+  color: #141414;
+}
+
+::ng-deep .actor-claim-timeline .ant-steps-label-vertical .ant-steps-item-icon {
+  margin-left: 62px;
+}
+
+::ng-deep .actor-claim-timeline .ant-steps-label-vertical .ant-steps-item-tail {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+::ng-deep .actor-claim-timeline .ant-steps-item-title {
+  width: 184px;
+}

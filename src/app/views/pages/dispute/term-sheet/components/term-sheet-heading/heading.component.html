@@ -1,0 +1,61 @@
+<nz-select
+  style="width: auto; min-width: 211px"
+  class="noprint"
+  [nzDropdownRender]="renderTemplate"
+  [nzShowArrow]="false"
+  [(ngModel)]="selectedValue"
+  (ngModelChange)="titleChange($event)"
+>
+  <nz-option
+    nzCustomContent
+    *ngFor="let item of listOfItem; let ind = index"
+    [nzLabel]="item.title"
+    [nzValue]="item.title"
+  >
+    <div class="flex-container">
+      {{ item.title }}
+      <span
+        *ngIf="!isFirst(ind) && item.title != selectedValue"
+        class="delete-icon"
+        nz-icon
+        nzType="delete"
+        nzTheme="fill"
+        nz-popconfirm
+        nzPopconfirmTitle="Are you sure to delete?"
+        (nzOnConfirm)="deleteOption(item, ind, $event)"
+        (click)="$event.stopPropagation()"
+      ></span>
+    </div>
+  </nz-option>
+</nz-select>
+
+<div class="print-heading">
+  <h3 nz-typography>{{ selectedValue }}</h3>
+</div>
+
+<ng-template #renderTemplate>
+  <nz-divider></nz-divider>
+  <div class="select-container">
+    <nz-input-group class="input-group" [nzSuffix]="suffixIcon">
+      <input
+        nz-input
+        type="text"
+        placeholder="Add an option"
+        [formControl]="headingTitle"
+      />
+    </nz-input-group>
+    <ng-template #suffixIcon>
+      <!-- <a class="add-item" > -->
+      <button
+        [disabled]="!HeadingFormControl.valid"
+        nz-button
+        nzType="default"
+        nzShape="circle"
+        (click)="addItem()"
+      >
+        <span nz-icon nzType="plus"></span>
+      </button>
+      <!-- </a> -->
+    </ng-template>
+  </div>
+</ng-template>

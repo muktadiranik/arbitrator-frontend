@@ -1,0 +1,60 @@
+<div nz-row class="p-4">
+  <ng-template #heading>
+    <div nz-row nzJustify="center">
+      <h1 class="blue-heading text-2xl m-0">Witness</h1>
+    </div>
+  </ng-template>
+  <nz-table
+    class="w-full"
+    #witnessTable
+    nzBordered
+    [nzTitle]="heading"
+    [nzLoading]="loading"
+    [nzScroll]="{ x: '700px' }"
+    [nzData]="witnesses"
+  >
+    <thead>
+      <tr>
+        <th
+          *ngFor="let column of listOfColumns"
+          nzAlign="center"
+          [nzSortOrder]="column.sortOrder"
+          [nzSortFn]="column.sortFn"
+          [nzSortDirections]="column.sortDirections"
+          [nzFilterMultiple]="column.filterMultiple"
+          [nzFilters]="column.listOfFilter"
+          [nzFilterFn]="column.filterFn"
+        >
+          {{ column.name }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let witness of witnessTable.data">
+        <td nzAlign="center">{{ witness.id }}</td>
+        <td nzAlign="center">{{ witness.user.first_name }}</td>
+        <td nzAlign="center">{{ witness.user.last_name }}</td>
+        <td nzAlign="center">
+          <nz-tag
+            class="rounded-[12px]"
+            [nzColor]="witness.creator.type === 'respondent' ? 'blue' : 'green'"
+            >{{ witness.creator.type | titlecase }}</nz-tag
+          >
+        </td>
+
+        <td nzAlign="center">{{ witness.user.email }}</td>
+
+        <td nzAlign="center">
+          <button
+            nz-button
+            nzType="primary"
+            (click)="editWitnessModal(witness)"
+          >
+            View
+            <span nz-icon nzType="eye" nzTheme="outline"></span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

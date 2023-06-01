@@ -1,0 +1,12 @@
+.view-dispute {
+  box-shadow: 1px 1px 3px rgba(20, 20, 20, 0.3);
+  border-radius: 5px; //I think this should be in root css, maybe we want all buttons to be well rounded
+}
+
+.table {
+  width: 100%;
+}
+
+.resolved-row {
+  background-color: #eaf7ea; /* light green */
+}

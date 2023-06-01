@@ -1,0 +1,16 @@
+::ng-deep .evidence-card .ant-card-meta-detail > div:not(:last-child) {
+  margin-bottom: unset;
+}
+
+.title {
+  width: 36%;
+}
+
+.description {
+  font-size: 13px;
+}
+
+.file-details {
+  width: 90%;
+  display: inline-block;
+}

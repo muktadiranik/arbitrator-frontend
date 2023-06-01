@@ -1,0 +1,389 @@
+<!-- <nz-space nzDirection="vertical" nzSize="100"> -->
+<!-- <nz-space [nzAlign]="'start'">  -->
+<!-- <div class="button-container"> -->
+<div nz-row nzJustify="end" class="mb-2">
+  <!-- <div nz-col> -->
+  <nz-button-group nzSize="large">
+    <div nz-row [nzGutter]="[8, 8]" class="">
+      <div nz-col nzSm="24" nzMd="6" class="w-full">
+        <button
+          nzBlock
+          nz-button
+          [disabled]="!isSelected || isFile"
+          (click)="toggleEdit(selectedNode)"
+          nzType="default"
+        >
+          <span
+            [style.font-size.px]="iconSize"
+            nz-icon
+            nzType="folder"
+            nzTheme="twotone"
+            [nzTwotoneColor]="folderColor"
+          ></span>
+          <span class="mr-[18px]">Edit Folder Name</span>
+        </button>
+        <!-- &nbsp;&nbsp; -->
+      </div>
+
+      <div nz-col nzSm="24" nzMd="6" class="w-full">
+        <button
+          nzBlock
+          nz-button
+          [disabled]="isFile"
+          (click)="addNewNode(selectedNode)"
+          nzType="default"
+        >
+          <span
+            [style.font-size.px]="iconSize"
+            nz-icon
+            nzType="folder-add"
+            nzTheme="twotone"
+            [nzTwotoneColor]="folderColor"
+          ></span
+          ><span class="mr-0">Create Folder</span>
+        </button>
+        <!-- &nbsp;&nbsp; -->
+      </div>
+
+      <div nz-col nzSm="24" nzMd="6" class="w-full">
+        <button
+          nzBlock
+          nz-button
+          nzType="default"
+          (click)="addNewFile(selectedNode)"
+        >
+          <span
+            [style.font-size.px]="iconSize"
+            nz-icon
+            nzType="file-add"
+            nzTheme="twotone"
+            [nzTwotoneColor]="fileColor"
+          ></span
+          ><span class="mr-0">Upload File</span>
+        </button>
+        <!-- &nbsp;&nbsp; -->
+      </div>
+
+      <div nz-col nzSm="24" nzMd="6" class="w-full">
+        <button
+          nzBlock
+          nz-popconfirm
+          [nzPopconfirmTitle]="'Are you sure?'"
+          nzPopconfirmPlacement="bottom"
+          [nzOkText]="'Yes'"
+          nz-button
+          nzType="default"
+          [disabled]="!isSelected"
+          (nzOnConfirm)="delete(selectedNode)"
+          (nzOnCancel)="cancel()"
+          nzDanger
+        >
+          <span
+            [style.font-size.px]="iconSize"
+            nz-icon
+            nzType="delete"
+            nzTheme="outline"
+          ></span
+          ><span class="mr-[18px]">Delete file/folder</span>
+        </button>
+        <!-- &nbsp;&nbsp; -->
+      </div>
+    </div>
+  </nz-button-group>
+  <!-- </div> -->
+</div>
+<!-- </div> -->
+
+<!-- </nz-space> -->
+<p></p>
+<nz-tree-view
+  [formGroup]="form"
+  [nzTreeControl]="treeControl"
+  [nzDataSource]="dataSource"
+  [nzDirectoryTree]="true"
+>
+  <div class="overflow-x-auto">
+    <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodePadding>
+      <nz-tree-node-toggle nzTreeNodeNoopToggle></nz-tree-node-toggle>
+      <nz-tree-node-option
+        [nzDisabled]="node.disabled"
+        [nzSelected]="selectListSelection.isSelected(node)"
+        (nzClick)="selectListSelection.toggle(node)"
+        class="self-center"
+      >
+        <ng-container *ngIf="!node.edit">
+          <nz-space>
+            <span
+              *nzSpaceItem
+              [style.font-size.px]="iconSize"
+              nz-icon
+              [nzType]="node.extension ? 'file' : 'folder'"
+              nzTheme="twotone"
+              [nzTwotoneColor]="node.extension ? '#0077b6' : folderColor"
+            ></span>
+            <span *nzSpaceItem>{{ node.name }}</span>
+            <file-size *nzSpaceItem [file]="node"></file-size>
+            <file-extension *nzSpaceItem [file]="node"></file-extension>
+          </nz-space>
+        </ng-container>
+      </nz-tree-node-option>
+      <ng-container *ngIf="node.edit">
+        <input
+          nz-input
+          placeholder="Edit Folder"
+          nzSize="large"
+          [value]="node.name"
+          #editInput
+        />
+        <button
+          nz-button
+          nzSize="large"
+          (click)="saveEdit(node, editInput.value)"
+        >
+          Edit
+        </button>
+        <button nz-button nzSize="large" (click)="toggleEdit(node)">
+          <span
+            [style.font-size.px]="iconSize"
+            nz-icon
+            nzType="close"
+            nzTheme="outline"
+          ></span>
+        </button>
+      </ng-container>
+
+      <button
+        *ngIf="node.extension"
+        nz-button
+        nzType="text"
+        nzSize="large"
+        (click)="downloadFile(node)"
+      >
+        <span
+          [style.font-size.px]="iconSize"
+          nz-icon
+          nzType="download"
+          nz-tooltip="Download File"
+          nzTheme="outline"
+        ></span>
+      </button>
+
+      <button
+        nz-popconfirm
+        nzPopconfirmTitle="Are you sure?"
+        nzPopconfirmPlacement="bottom"
+        [nzOkText]="'Yes'"
+        nz-button
+        nzType="text"
+        nzSize="large"
+        (nzOnConfirm)="delete(node)"
+        (nzOnCancel)="cancel()"
+      >
+        <span
+          nz-icon
+          [style.font-size.px]="iconSize"
+          nzType="delete"
+          nz-tooltip="Delete"
+          [nzTwotoneColor]="'#eb2f96'"
+          nzTheme="twotone"
+        ></span>
+      </button>
+      <ng-container *ngIf="!node.extension && !!!this.inputValue && isValid">
+        <button
+          *ngIf="!node.extension"
+          nz-button
+          nzType="text"
+          nzSize="large"
+          (click)="addNewFile(node)"
+        >
+          <span
+            nz-icon
+            [style.font-size.px]="iconSize"
+            nzType="file-add"
+            nz-tooltip="Add File"
+            nzTheme="twotone"
+            [nzTwotoneColor]="fileColor"
+          ></span>
+          <input
+            [id]="node.id"
+            type="file"
+            style="display: none"
+            formControlName="file"
+            (change)="onChange($event, node)"
+          />
+        </button>
+        <button
+          *ngIf="!node.extension"
+          nz-button
+          nzType="text"
+          nzSize="large"
+          (click)="addNewNode(node)"
+        >
+          <span
+            [style.font-size.px]="iconSize"
+            nz-icon
+            nzType="folder-add"
+            nz-tooltip="Add Folder"
+            nzTheme="twotone"
+            [nzTwotoneColor]="folderColor"
+          ></span>
+        </button>
+      </ng-container>
+    </nz-tree-node>
+
+    <nz-tree-node
+      *nzTreeNodeDef="let node; when: hasNoContent"
+      nzTreeNodeIndentLine
+    >
+      <input
+        [(ngModel)]="inputValue"
+        [ngModelOptions]="{ standalone: true }"
+        nz-input
+        placeholder="Add Folder"
+        minlength="1"
+        nzSize="large"
+        #inputElement="ngModel"
+        (keyup.enter)="onEnter(node, inputElement.value)"
+      />
+      <!-- &nbsp; -->
+      <button
+        nz-button
+        nzSize="large"
+        [disabled]="!isValid"
+        (click)="saveNode(node, inputElement.value)"
+      >
+        Add</button
+      >`
+      <button nz-button nzSize="large" (click)="cancelNewNode(node)">
+        <span
+          [style.font-size.px]="iconSize"
+          nz-icon
+          nzType="close"
+          nzTheme="outline"
+        ></span>
+      </button>
+    </nz-tree-node>
+
+    <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodePadding>
+      <nz-tree-node-toggle class="self-center">
+        <span
+          [style.font-size.px]="iconSize - 5"
+          nz-icon
+          nzType="caret-down"
+          nzTreeNodeToggleRotateIcon
+        ></span>
+      </nz-tree-node-toggle>
+
+      <nz-tree-node-option
+        [nzDisabled]="node.disabled"
+        [nzSelected]="selectListSelection.isSelected(node)"
+        (nzClick)="selectListSelection.toggle(node)"
+        class="self-center"
+      >
+        <ng-container *ngIf="!node.edit">
+          <nz-space>
+            <span
+              *nzSpaceItem
+              [style.font-size.px]="iconSize + 2"
+              nz-icon
+              [nzType]="treeControl.isExpanded(node) ? 'folder-open' : 'folder'"
+              nzTheme="twotone"
+              [nzTwotoneColor]="folderColor"
+            ></span>
+            <span *nzSpaceItem>{{ node.name }}</span>
+            <file-size *nzSpaceItem [file]="node"></file-size>
+            <file-extension *nzSpaceItem [file]="node"></file-extension>
+          </nz-space>
+        </ng-container>
+      </nz-tree-node-option>
+
+      <ng-container *ngIf="node.edit">
+        <input
+          nz-input
+          placeholder="Edit Folder"
+          nzSize="large"
+          [value]="node.name"
+          #editInput
+          (keyup.enter)="saveEdit(node, editInput.value)"
+        />
+        <button
+          nz-button
+          nzSize="large"
+          (click)="saveEdit(node, editInput.value)"
+        >
+          Edit
+        </button>
+        <button nz-button nzSize="large" (click)="toggleEdit(node)">
+          <span nz-icon nzType="close" nzTheme="outline"></span>
+        </button>
+      </ng-container>
+
+      <button
+        nz-popconfirm
+        [nzPopconfirmTitle]="'Are you sure?'"
+        nzPopconfirmPlacement="bottom"
+        [nzOkText]="'Yes'"
+        nz-button
+        nzType="text"
+        nzSize="large"
+        (nzOnConfirm)="delete(node)"
+        (nzOnCancel)="cancel()"
+      >
+        <span
+          [style.font-size.px]="iconSize"
+          nz-icon
+          nzTheme="twotone"
+          [nzTwotoneColor]="'#eb2f96'"
+          nzType="delete"
+          nz-tooltip="Delete"
+        ></span>
+      </button>
+      <ng-container *ngIf="!!!this.inputValue && isValid">
+        <button
+          *ngIf="!node.extension"
+          nz-button
+          nzType="text"
+          nzSize="large"
+          (click)="addNewFile(node)"
+        >
+          <span
+            [style.font-size.px]="iconSize"
+            nz-icon
+            nzType="file-add"
+            nz-tooltip="Add File"
+            nzTheme="twotone"
+            [nzTwotoneColor]="fileColor"
+          ></span>
+          <input
+            [id]="node.id"
+            type="file"
+            style="display: none"
+            formControlName="file"
+            (change)="onChange($event, node)"
+          />
+        </button>
+        <button
+          *ngIf="!node.extension"
+          nz-button
+          nzType="text"
+          nzSize="large"
+          (click)="addNewNode(node)"
+        >
+          <span
+            [style.font-size.px]="iconSize"
+            nz-icon
+            nzType="folder-add"
+            nz-tooltip="Add Folder"
+            nzTheme="twotone"
+            [nzTwotoneColor]="folderColor"
+          ></span>
+        </button>
+      </ng-container>
+    </nz-tree-node>
+  </div>
+</nz-tree-view>
+
+<div *ngIf="treeData.length == 0">
+  <nz-empty nzNotFoundImage="simple"></nz-empty>
+</div>
+<!-- </nz-space> -->

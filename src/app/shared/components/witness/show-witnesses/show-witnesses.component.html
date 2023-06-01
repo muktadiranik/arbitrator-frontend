@@ -1,0 +1,140 @@
+<nz-spin [nzSpinning]="loading">
+  <div *ngIf="witnesses.length; else empty">
+    <nz-space nzDirection="vertical" [nzSize]="'large'" style="width: 100%">
+      <div nz-row [nzGutter]="[8, 8]" *nzSpaceItem>
+        <div
+          nz-col
+          [nzSpan]="24 / rowCount"
+          [nzLg]="24 / rowCount"
+          [nzMd]="24"
+          [nzSm]="24"
+          [nzXs]="24"
+          *ngFor="let witness of witnesses"
+        >
+          <nz-card nzBorderless class="witness-card">
+            <nz-card-meta
+              [nzTitle]="titleTemplate"
+              [nzDescription]="descriptionTemplate"
+              [nzAvatar]="avatarTemplate"
+            ></nz-card-meta>
+            <ng-template #avatarTemplate>
+              <user-avatar
+                [actor]="witness"
+                [showCard]="false"
+                [canEdit]="canEdit"
+                [editSize]="20"
+              ></user-avatar>
+            </ng-template>
+            <ng-template #titleTemplate>
+              <div style="display: flex; justify-content: space-between">
+                <span>{{ ActorUtil.fullname(witness) }} </span>
+                <div *ngIf="canDelete">
+                  <a nz-dropdown [nzTrigger]="'click'" [nzDropdownMenu]="menu">
+                    <span
+                      class="ellipsis-img"
+                      nz-icon
+                      [nzRotate]="90"
+                      nzType="ellipsis"
+                      nzTheme="outline"
+                    ></span>
+                  </a>
+                  <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu>
+                      <li nz-menu-item (click)="viewWitnessDetail(witness)">
+                        <nz-space>
+                          <span
+                            *nzSpaceItem
+                            nz-icon
+                            nzType="eye"
+                            nzTheme="fill"
+                          ></span>
+                          <span *nzSpaceItem>View</span>
+                        </nz-space>
+                      </li>
+                      <li nz-menu-item (click)="editWitnessModal(witness)">
+                        <nz-space>
+                          <span
+                            *nzSpaceItem
+                            nz-icon
+                            nzType="edit"
+                            nzTheme="fill"
+                          ></span>
+                          <span *nzSpaceItem>Edit</span>
+                        </nz-space>
+                      </li>
+                      <li
+                        nz-menu-item
+                        nz-popconfirm
+                        nzPopconfirmTitle="Do you want to delete this witness?"
+                        nzPopconfirmPlacement="bottom"
+                        (nzOnConfirm)="deleteWitness(witness)"
+                        style="color: red"
+                      >
+                        <nz-space>
+                          <span
+                            *nzSpaceItem
+                            nz-icon
+                            nzType="delete"
+                            nzTheme="twotone"
+                            twoToneColor="red"
+                          ></span>
+                          <span *nzSpaceItem>Delete</span>
+                        </nz-space>
+                      </li>
+                    </ul>
+                  </nz-dropdown-menu>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #descriptionTemplate>
+              <p>
+                Added on:
+                {{
+                  dateUtil.formatDate(witness.created_at | mm_dd_yyyy, "MMM Do")
+                }}
+              </p>
+            </ng-template>
+          </nz-card>
+        </div>
+      </div>
+      <ng-container *ngIf="canAdd">
+        <div *nzSpaceItem nz-row nzJustify="center">
+          <button
+            nz-button
+            nzType="primary"
+            (click)="addWitnessModal()"
+            [disabled]="disabled"
+          >
+            Add Witness
+          </button>
+        </div>
+      </ng-container>
+    </nz-space>
+  </div>
+  <ng-template #empty>
+    <nz-empty nzNotFoundContent="No Witness"></nz-empty>
+    <ng-container *ngIf="canAdd">
+      <div nz-row nzJustify="center">
+        <button
+          *ngIf="claim"
+          nz-button
+          nzType="primary"
+          (click)="addWitnessModal()"
+          [disabled]="disabled"
+        >
+          Add Witness
+        </button>
+        <button
+          *ngIf="!dispute.contains_witness && claim"
+          style="width: auto; margin-left: 10px"
+          nz-button
+          nzType="primary"
+          (click)="skipWitnessFunc()"
+          [disabled]="disabled"
+        >
+          Skip Add Witness
+        </button>
+      </div>
+    </ng-container>
+  </ng-template>
+</nz-spin>

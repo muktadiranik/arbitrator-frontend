@@ -1,0 +1,39 @@
+<div [formGroup]="checklistItemFormGroup">
+  <nz-space nzDirection="vertical" style="width: 100%">
+    <input *nzSpaceItem nz-input placeholder="Item" formControlName="text" />
+
+    <textarea
+      *nzSpaceItem
+      nz-input
+      placeholder="Comments"
+      [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+      formControlName="comments"
+    ></textarea>
+
+    <input
+      *nzSpaceItem
+      nz-input
+      placeholder="Initials"
+      formControlName="initials"
+    />
+
+    <nz-date-picker
+      *nzSpaceItem
+      style="width: 100%"
+      formControlName="due_date"
+      [nzDisabledDate]="disabledDate"
+    ></nz-date-picker>
+
+    <div *nzSpaceItem nz-row nzJustify="end">
+      <button
+        [nzLoading]="isButtonLoading"
+        nz-button
+        nzType="primary"
+        [disabled]="checklistItemFormGroup.invalid"
+        (click)="item ? updateChecklistItem() : addChecklistItem()"
+      >
+        Submit
+      </button>
+    </div>
+  </nz-space>
+</div>

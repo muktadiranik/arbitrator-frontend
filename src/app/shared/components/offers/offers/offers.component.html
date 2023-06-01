@@ -1,0 +1,289 @@
+<div class="desc-modal">
+  <heading [h1]="data.offerHeading" [h2]="h2Template"></heading>
+  <ng-template #h2Template>
+    {{ data.offerMsg }}
+  </ng-template>
+  <div class="body">
+    <div class="flex-row" style="margin-bottom: 20px">
+      <img
+        *ngIf="data.type == 'respondent'"
+        style="width: 20px; height: 20px"
+        src="assets/dispute/dollar-bill-green.svg"
+      />&nbsp;
+      <h6
+        *ngIf="data.type == 'respondent'"
+        class="amount-offer"
+        style="font-size: 17px; margin-bottom: 0; color: orange"
+      >
+        Amount claimed: ${{ amountClaimed }}
+      </h6>
+    </div>
+
+    <h5
+      *ngIf="data.offerHeading != 'Offer accepted' && data.type != 'respondent'"
+    >
+      Offers received
+    </h5>
+    <h5 *ngIf="data.type == 'respondent'">Select your offer</h5>
+
+    <div
+      *ngIf="data.offerHeading != 'Offer accepted' && data.type != 'respondent'"
+      class="offer-container"
+    >
+      <div class="offer-status">
+        <div *ngIf="data.offerHeading != 'Accept offer'">
+          <nz-progress
+            [nzPercent]="data.offerPercentage"
+            [nzWidth]="70"
+            nzType="circle"
+            [nzStrokeColor]="'#c7e8d8'"
+          ></nz-progress>
+        </div>
+        <div class="message">
+          <h5
+            class="status"
+            [ngClass]="
+              data.offerAmount == 0 ? 'message-no-offer' : 'message-offer'
+            "
+          >
+            {{ data.status }}
+          </h5>
+          <h5
+            class="reply"
+            [ngClass]="
+              data.offerAmount == 0 ? 'message-no-offer' : 'message-offer'
+            "
+          >
+            {{ data.reply }}
+          </h5>
+        </div>
+        <div class="amount-container flex flex-col items-center">
+          <img
+            *ngIf="data.offerAmount == 0"
+            class="img"
+            src="assets/dollar/disable-dollar.svg"
+          />
+          <img
+            *ngIf="data.offerAmount != 0"
+            class="img"
+            src="assets/dispute/dollar-bill-green.svg"
+          />
+          <div
+            class="amount"
+            [ngClass]="
+              data.offerAmount == 0 ? 'amount-no-offer' : 'amount-offer'
+            "
+          >
+            ${{ data.offerAmount }}
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="data.offerAmount != 0 && data.offerHeading != 'Accept offer'"
+        class="button-container"
+      >
+        <button
+          *ngIf="data.offerHeading != 'Decline offer'"
+          nz-button
+          nzType="primary"
+          nzDanger
+          (click)="offerMade('rejected')"
+          [nzLoading]="loading && buttonLabel == 'rejected'"
+        >
+          Decline offer
+        </button>
+        <button
+          *ngIf="data.offerHeading == 'Decline offer'"
+          nz-button
+          nzType="primary"
+          nzDanger
+          (click)="offerMade('deny-offer')"
+          [nzLoading]="loading && buttonLabel == 'deny-offer'"
+        >
+          Deny offer
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button
+          *ngIf="data.offerHeading == 'Decline offer'"
+          nz-button
+          nzType="primary"
+          (click)="offerMade('counter-offer')"
+          [nzLoading]="loading && buttonLabel == 'counter-offer'"
+        >
+          Counter offer
+        </button>
+        <button
+          *ngIf="data.offerHeading != 'Decline offer'"
+          nz-button
+          nzType="primary"
+          (click)="offerMade('accepted')"
+          [nzLoading]="loading && buttonLabel == 'accepted'"
+        >
+          Accept offer
+        </button>
+      </div>
+      <div
+        class="counter-offer-container"
+        [class.display-flex]="data.offerHeading == 'Accept offer'"
+        *ngIf="
+          data.offerHeading == 'Decline offer' ||
+          data.offerHeading == 'Accept offer'
+        "
+      >
+        <h6 *ngIf="data.offerHeading != 'Accept offer'">
+          Make a counter offer
+        </h6>
+        <input
+          *ngIf="data.offerHeading != 'Accept offer'"
+          type="number"
+          placeholder=" Amount"
+        />
+        <input
+          *ngIf="data.offerHeading == 'Accept offer'"
+          class="accept-here"
+          type="text"
+          placeholder=" Accept here"
+        />
+        <img
+          *ngIf="data.offerHeading != 'Accept offer'"
+          src="assets/send.svg"
+          style="margin-top: -7px; cursor: pointer"
+        />
+        <button
+          *ngIf="data.offerHeading == 'Accept offer'"
+          nz-button
+          nzType="primary"
+          style="margin-top: 10px"
+          (click)="offerMade('offer-accepted')"
+          [nzLoading]="loading && buttonLabel == 'offer-accepted'"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="data.offerHeading == 'Offer accepted'" class="offer-container">
+      <div>
+        <h5 class="h5">Offers received</h5>
+
+        <div class="amount amount-offer">
+          <img class="img" src="assets/dispute/dollar-bill-green.svg" />
+          &nbsp;${{ data.offerAmount }}
+        </div>
+      </div>
+    </div>
+
+    <!-- for respondent  -->
+    <div *ngIf="data.type == 'respondent'" style="width: 100%">
+      <div class="flex-row">
+        <div class="offer-container">
+          <div class="offer-status">
+            <nz-progress
+              [nzPercent]="80"
+              [nzWidth]="70"
+              nzType="circle"
+              [nzStrokeColor]="'#c7e8d8'"
+            ></nz-progress>
+            <div class="message">
+              <h5 class="status message-offer">
+                {{ data.status }}
+              </h5>
+              <h5 class="reply message-offer">
+                {{ data.reply }}
+              </h5>
+            </div>
+            <div class="amount-container">
+              <img class="img" src="assets/dollar/dollar-bill-red.svg" />
+              <div class="amount amount-offer-red">${{ per1 }}</div>
+            </div>
+          </div>
+          <div class="button-container">
+            <button
+              nz-button
+              nzType="primary"
+              (click)="makeOffer(per1)"
+              [nzLoading]="loading && amountOffered == per1"
+            >
+              Make an offer
+            </button>
+          </div>
+        </div>
+
+        <div class="offer-container">
+          <div class="offer-status">
+            <nz-progress
+              [nzPercent]="20"
+              [nzWidth]="70"
+              nzType="circle"
+              [nzStrokeColor]="'#c7e8d8'"
+            ></nz-progress>
+            <div class="message">
+              <h5 class="status message-offer">
+                {{ data.status }}
+              </h5>
+              <h5 class="reply message-offer">
+                {{ data.reply }}
+              </h5>
+            </div>
+            <div class="amount-container">
+              <img class="img" src="assets/dollar/dollar-bill-red.svg" />
+              <div class="amount amount-offer-red">${{ per2 }}</div>
+            </div>
+          </div>
+          <div class="button-container">
+            <button
+              nz-button
+              nzType="primary"
+              (click)="makeOffer(per2)"
+              [nzLoading]="loading && amountOffered == per2"
+            >
+              Make an offer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-row">
+        <div class="offer-container counter-offer-container display-flex">
+          <h5 class="h5">Make your own offer</h5>
+          <div nz-row nzJustify="center" nzAlign="middle" [nzGutter]="[32, 0]">
+            <img
+              nz-col
+              src="assets/dollar/dollar-bill-red.svg"
+              style="width: 91px"
+            />
+            <input
+              nz-col
+              nz-input
+              type="number"
+              class="input"
+              placeholder=" Enter you Amount here"
+              [(ngModel)]="amountOffered"
+            />
+          </div>
+          <button
+            nz-button
+            nzType="primary"
+            style="margin-top: 10px"
+            (click)="makeOffer()"
+            [nzLoading]="
+              loading && amountOffered != per1 && amountOffered != per2
+            "
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- respondent ends here -->
+
+    <div class="offers-history mt-[25px]" *ngIf="data.showTable">
+      <h5 class="mb-4">Previous offers</h5>
+      <div class="offers-table">
+        <offers-table [offers]="inputData"></offers-table>
+      </div>
+    </div>
+  </div>
+</div>

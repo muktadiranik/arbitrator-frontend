@@ -1,0 +1,47 @@
+<form nz-form [formGroup]="disputeFormGroup" (ngSubmit)="createDisputes()">
+  <div nz-row [nzGutter]="[8, 16]">
+    <div nz-col nzSpan="24">
+      <nz-select
+        nzSize="large"
+        formControlName="creator_id"
+        nzPlaceHolder="Select Creator"
+        class="w-full"
+        [nzLoading]="isCreatorsLoading"
+      >
+        <nz-option
+          *ngFor="let creator of creators"
+          [nzLabel]="actorUtil.fullname(creator)"
+          [nzValue]="creator.id"
+        ></nz-option>
+      </nz-select>
+    </div>
+    <div nz-col nzSpan="24">
+      <input
+        nz-input
+        [nzSize]="'large'"
+        placeholder="No of Disputes"
+        id="count"
+        type="number"
+        formControlName="count"
+      />
+    </div>
+    <div nz-col nzSpan="24">
+      <button
+        nzBlock
+        nz-button
+        nzType="primary"
+        nzSize="large"
+        type="submit"
+        [nzLoading]="loading"
+        [disabled]="!disputeFormGroup.valid"
+      >
+        {{ loading ? "Creating Disputes" : "Create Disputes" }}
+        <span nz-icon nzType="check-circle" nzTheme="outline"></span>
+      </button>
+    </div>
+  </div>
+</form>
+
+<ng-template #temp>
+  <span nz-icon nzType="step-backward" nzTheme="outline"></span>
+</ng-template>

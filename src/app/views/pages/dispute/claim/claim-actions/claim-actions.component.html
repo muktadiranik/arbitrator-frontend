@@ -1,0 +1,434 @@
+<div class="app-container">
+  <nz-spin
+    nzSimple
+    [nzSize]="'large'"
+    nzTip="Loading Witness..."
+    *ngIf="loading; else claimActionsTemplate"
+    style="text-align: center"
+  >
+  </nz-spin>
+</div>
+<ng-template #claimActionsTemplate>
+  <div *ngIf="dispute" nz-row nzJustify="center" class="my-10 mx-12">
+    <nz-space nzDirection="vertical" [nzSize]="40" style="width: 100%">
+      <ng-container *ngIf="viewType != 'w'">
+        <h2
+          *nzSpaceItem
+          nz-row
+          nzJustify="center"
+          class="heading-color"
+          nz-typography
+        >
+          Next Steps
+        </h2>
+        <div *nzSpaceItem nz-row nzJustify="center">
+          <div nz-col nzXs="0" nzLg="24">
+            <nz-steps
+              class="actor-claim-timeline mr-[64px]"
+              [nzCurrent]="currentTab"
+              [nzLabelPlacement]="'vertical'"
+            >
+              <nz-step [nzIcon]="image_1" class="start"></nz-step>
+              <nz-step
+                (click)="
+                  isDisputeResolved(dispute) || Evidences.addEvidenceModal()
+                "
+                nzTitle="Upload evidence"
+                [nzIcon]="image_2"
+              ></nz-step>
+              <nz-step
+                (click)="
+                  isDisputeResolved(dispute) || Witnesses.addWitnessModal()
+                "
+                nzTitle="Add witness"
+                [nzIcon]="image_3"
+              ></nz-step>
+              <nz-step
+                (click)="
+                  isDisputeResolved(dispute) || NotesComp.openNotesModal()
+                "
+                nzTitle="Add note"
+                [nzIcon]="image_4"
+                class="last-step"
+              ></nz-step>
+              <nz-step [nzIcon]="image_5"></nz-step>
+              <ng-template #image_1>
+                <span>
+                  <img
+                    class="ml-[40px] mt-[22px]"
+                    src="assets/location.svg"
+                    alt="image_1"
+                  />
+                </span>
+              </ng-template>
+              <ng-template #image_2>
+                <span class="claim-step-icon">
+                  <!-- <img src="assets/claim-action-steps/search.png" alt="image_2" /> -->
+
+                  <div
+                    class="parent-img-container"
+                    [ngStyle]="{
+                      'background-image':
+                        currentTab >= 1
+                          ? 'url(assets/claim-action-steps/blue-background.png)'
+                          : 'url(assets/claim-action-steps/gray-background.png)'
+                    }"
+                  >
+                    <div class="img-container">
+                      <img
+                        src="assets/claim-action-steps/search.svg"
+                        alt="search"
+                      />
+                    </div>
+                  </div>
+                </span>
+              </ng-template>
+              <ng-template #image_3>
+                <span class="claim-step-icon">
+                  <div
+                    class="parent-img-container"
+                    [ngStyle]="{
+                      'background-image':
+                        currentTab >= 2
+                          ? 'url(assets/claim-action-steps/blue-background.png)'
+                          : 'url(assets/claim-action-steps/gray-background.png)'
+                    }"
+                  >
+                    <div class="img-container">
+                      <img
+                        [src]="'assets/claim-action-steps/eye.svg'"
+                        alt="eye"
+                      />
+                    </div>
+                  </div>
+                </span>
+              </ng-template>
+              <ng-template #image_4>
+                <span class="claim-step-icon">
+                  <div
+                    class="parent-img-container"
+                    [ngStyle]="{
+                      'background-image':
+                        currentTab >= 3
+                          ? 'url(assets/claim-action-steps/blue-background.png)'
+                          : 'url(assets/claim-action-steps/gray-background.png)'
+                    }"
+                  >
+                    <div class="img-container">
+                      <img
+                        [src]="'assets/claim-action-steps/edit.svg'"
+                        alt="edit"
+                      />
+                    </div>
+                  </div>
+                </span>
+              </ng-template>
+              <ng-template #image_5>
+                <span>
+                  <img
+                    class="mt-[22px]"
+                    src="assets/flag/flag-gray.svg"
+                    alt="image_5"
+                  />
+                </span>
+              </ng-template>
+            </nz-steps>
+          </div>
+          <div nz-col nzXs="24" nzLg="0">
+            <claim-action-swiper
+              [currentStep]="currentTab"
+              [evidences]="Evidences"
+              [witnesses]="Witnesses"
+              [notes]="NotesComp"
+            ></claim-action-swiper>
+          </div>
+        </div>
+        <nz-divider *nzSpaceItem nzOrientation="left"></nz-divider>
+
+        <div *nzSpaceItem nz-row [nzGutter]="16" nzJustify="center">
+          <div
+            nz-col
+            [nzSpan]="6"
+            [nzLg]="6"
+            [nzMd]="6"
+            [nzSm]="24"
+            [nzXs]="24"
+          >
+            <app-multi-direction-card
+              [imgClass]="'document-img'"
+              [imageURL]="'assets/dispute/create-dispute.svg'"
+              [alt]="'document'"
+              [title]="'Document Review'"
+              [description]="'Not yet scheduled'"
+            ></app-multi-direction-card>
+          </div>
+          <div
+            nz-col
+            [nzSpan]="6"
+            [nzLg]="6"
+            [nzMd]="6"
+            [nzSm]="24"
+            [nzXs]="24"
+          >
+            <app-multi-direction-card
+              [imgClass]="'arbitrator-image'"
+              [imageURL]="'assets/dispute/arbitrator.svg'"
+              [alt]="'arbitrator'"
+              [title]="'Arbitrator'"
+              [description]="
+                authRoleService.fullname(dispute.arbitrator?.user) || '-'
+              "
+            ></app-multi-direction-card>
+          </div>
+          <div
+            nz-col
+            [nzSpan]="6"
+            [nzLg]="6"
+            [nzMd]="6"
+            [nzSm]="24"
+            [nzXs]="24"
+            *ngIf="viewType == 'c'"
+          >
+            <app-multi-direction-card
+              [imgClass]="'amount-image'"
+              [imageURL]="'assets/dispute/dollar-bill-green.svg'"
+              [alt]="'dispute-amount'"
+              [title]="'Dispute Amount'"
+              [description]="amountUtil.appendCurrency(claim, 'claimed_amount')"
+              [titleClass]="'dispute-amount'"
+              [descriptionClass]="'dispute-amount'"
+            ></app-multi-direction-card>
+          </div>
+          <div
+            nz-col
+            [nzSpan]="6"
+            [nzLg]="6"
+            [nzMd]="6"
+            [nzSm]="24"
+            [nzXs]="24"
+            *ngIf="viewType == 'r'"
+          >
+            <app-multi-direction-card
+              [imgClass]="'amount-image'"
+              [imageURL]="'assets/dollar/dollar-bill-red.svg'"
+              [alt]="'dispute-amount'"
+              [title]="'Dispute Amount'"
+              [description]="amountUtil.appendCurrency(claim, 'claimed_amount')"
+              [titleClass]="'dispute-amount-respondent'"
+              [descriptionClass]="'dispute-amount-respondent'"
+            ></app-multi-direction-card>
+          </div>
+          <div
+            *ngIf="dispute[viewType == 'c' ? 'respondent' : 'claimer'] != null"
+            nz-col
+            [nzSpan]="6"
+            [nzLg]="6"
+            [nzMd]="12"
+            [nzSm]="24"
+            [nzXs]="24"
+          >
+            <offers-avatar
+              [dispute]="dispute"
+              [claim]="claim"
+              [actor]="user"
+              [viewType]="viewType"
+            ></offers-avatar>
+          </div>
+        </div>
+
+        <nz-divider *nzSpaceItem nzOrientation="left"></nz-divider>
+
+        <div *nzSpaceItem nz-row nzJustify="center">
+          <user-detail
+            class="mb-[15px]"
+            [align]="'right'"
+            [userType]="'Claimer'"
+            [typeClass]="'h5'"
+            [userName]="authRoleService.fullname(dispute.claimer.user)"
+            [nameClass]="'h4'"
+            [userEmail]="dispute.claimer.user.email"
+            [emailClass]="'p'"
+          ></user-detail>
+          <div class="mb-[15px] versus flex items-center">
+            <img
+              src="assets/person/persona.svg"
+              alt="per1"
+              *ngIf="viewType == 'c'"
+            />
+            <img
+              src="assets/person/persona11.svg"
+              alt="per1"
+              *ngIf="viewType == 'r'"
+            />
+
+            <img src="assets/slash-green.svg" />
+
+            <img
+              src="assets/person/persona112.svg"
+              alt="per2"
+              *ngIf="viewType == 'r'"
+            />
+
+            <img
+              src="assets/person/persona2.svg"
+              alt="per2"
+              *ngIf="viewType == 'c'"
+            />
+          </div>
+          <user-detail
+            class="mb-[15px]"
+            [align]="'left'"
+            [userType]="'Respondent'"
+            [typeClass]="'h5'"
+            [userName]="authRoleService.fullname(dispute.respondent?.user)"
+            [nameClass]="'h4'"
+            [userEmail]="dispute.respondent?.user.email"
+            [emailClass]="'p'"
+          ></user-detail>
+        </div>
+
+        <nz-divider *nzSpaceItem nzOrientation="left"></nz-divider>
+
+        <div *nzSpaceItem class="description">
+          <div nz-row>
+            <h2
+              style="text-align: right"
+              nz-col
+              nzFlex="2.8"
+              nz-typography
+              class="heading-color"
+            >
+              Description
+            </h2>
+            <span style="text-align: right" nz-col nzFlex="2.1">
+              <button
+                *ngIf="viewType == 'c'"
+                nz-button
+                (click)="openDescriptionEditModal()"
+                [disabled]="isDisputeResolved(dispute)"
+              >
+                <span nz-icon nzType="edit"></span>
+                {{ buttonLabel }}
+              </button>
+            </span>
+          </div>
+
+          <div *ngIf="claim; else noClaim" class="desc-body">
+            <p>
+              {{ claim?.description }}
+            </p>
+            <p>
+              <img
+                *ngIf="viewType == 'c'"
+                class="desc-amount-image"
+                src="assets/dispute/dollar-bill-green.svg"
+                alt="claim-amount"
+              />
+              <img
+                *ngIf="viewType == 'r'"
+                class="desc-amount-image"
+                src="assets/dollar/dollar-bill-red.svg"
+                alt="claim-amount"
+              />
+              &nbsp;&nbsp;
+              <span
+                >{{ amountUtil.appendCurrency(claim, "claimed_amount", false) }}
+              </span>
+            </p>
+          </div>
+
+          <ng-template #noClaim
+            ><awaiting-claim-details></awaiting-claim-details
+          ></ng-template>
+        </div>
+
+        <nz-divider *nzSpaceItem nzOrientation="left"></nz-divider>
+      </ng-container>
+      <div *nzSpaceItem>
+        <nz-space nzDirection="vertical" [nzSize]="'large'" style="width: 100%">
+          <h2
+            *nzSpaceItem
+            nz-row
+            nzJustify="center"
+            class="heading-color"
+            nz-typography
+          >
+            Evidence
+          </h2>
+          <app-show-evidences
+            #evidenceComp
+            *nzSpaceItem
+            [actor]="user"
+            [claim]="claim"
+            [canAdd]="authRoleService.checkIfMe(user)"
+            [canDelete]="authRoleService.checkIfMe(user)"
+            [disabled]="isDisputeResolved(dispute)"
+          >
+          </app-show-evidences>
+        </nz-space>
+      </div>
+
+      <nz-divider *nzSpaceItem nzOrientation="left"></nz-divider>
+      <ng-container *ngIf="viewType != 'w'">
+        <div *nzSpaceItem class="witness">
+          <nz-space
+            nzDirection="vertical"
+            [nzSize]="'large'"
+            style="width: 100%"
+          >
+            <h2
+              *nzSpaceItem
+              nz-row
+              nzJustify="center"
+              class="heading-color"
+              nz-typography
+            >
+              Witness
+            </h2>
+            <div *nzSpaceItem class="witness-body">
+              <app-show-witnesses
+                #witnessComp
+                [disabled]="isDisputeResolved(dispute)"
+                [actor]="user"
+                [claim]="claim"
+                [dispute]="dispute"
+                [canAdd]="true"
+                [canEdit]="true"
+                [canDelete]="true"
+              ></app-show-witnesses>
+            </div>
+          </nz-space>
+        </div>
+
+        <nz-divider *nzSpaceItem nzOrientation="left"></nz-divider>
+      </ng-container>
+      <div *nzSpaceItem class="notes">
+        <nz-space nzDirection="vertical" style="width: 100%">
+          <h2
+            *nzSpaceItem
+            nz-row
+            nzJustify="center"
+            class="heading-color"
+            nz-typography
+          >
+            Notes
+            <!-- <span *ngIf="NotesComp.notes && NotesComp.notes.length > 5"> ({{ NotesComp?.notes?.length }}) </span> -->
+          </h2>
+          <div *nzSpaceItem class="notes-table">
+            <notes-table
+              #notesTableComp
+              [actor]="user"
+              [type]="'claim'"
+              [typeObj]="claim"
+              [canAdd]="authRoleService.checkIfMe(user)"
+              [canEdit]="authRoleService.checkIfMe(user)"
+              [canDelete]="authRoleService.checkIfMe(user)"
+              [disabled]="isDisputeResolved(dispute)"
+            ></notes-table>
+          </div>
+        </nz-space>
+      </div>
+      <nz-divider *nzSpaceItem nzOrientation="left"></nz-divider>
+    </nz-space>
+  </div>
+</ng-template>

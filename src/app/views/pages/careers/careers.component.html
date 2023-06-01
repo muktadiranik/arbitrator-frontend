@@ -1,0 +1,184 @@
+<nz-layout>
+  <nz-header style="padding: 0">
+    <div
+      class="cover-img"
+      style="background-image: url('assets/hero-image.svg')"
+    >
+      <div nz-row nzJustify="center">
+        <div class="cover-content" nz-col [nzXs]="24">
+          <h1 class="cover-heading">It's a good day to apply for a job...</h1>
+          <p class="cover-body">
+            We are looking for teammates to join us in shaping the future of
+            licensing and law using the latest technology.
+          </p>
+          <button
+            [nzSize]="size"
+            nz-button
+            nzType="primary"
+            style="margin-top: 20px"
+          >
+            View Positions
+          </button>
+        </div>
+      </div>
+    </div>
+  </nz-header>
+  <nz-content nz-row nzJustify="center" style="margin-top: 330px">
+    <div nz-col [nzXs]="22" [nzLg]="18">
+      <div
+        style="margin-bottom: 24px"
+        nz-row
+        nzJustify="space-between"
+        nzAlign="middle"
+        nzGutter="10"
+      >
+        <div>
+          <h2 class="heading">Current Job Openings</h2>
+        </div>
+        <div>
+          <nz-space>
+            <nz-select
+              [nzSize]="size"
+              *nzSpaceItem
+              nzPlaceHolder="All Contracts"
+              [(ngModel)]="filterByTitle"
+              [nzCustomTemplate]="defaultTemplate"
+            >
+              <nz-option
+                nzValue="All Contracts"
+                nzLabel="All Contracts"
+              ></nz-option>
+              <nz-option
+                nzValue="Full-time employee"
+                nzLabel="Full-time Employee"
+              ></nz-option>
+              <nz-option
+                nzValue="Independent contractor"
+                nzLabel="Independent Contractor"
+              ></nz-option>
+            </nz-select>
+
+            <ng-template #defaultTemplate let-selected>
+              <img
+                class="placeholder-icon"
+                nz-icon
+                src="assets/briefcase.svg"
+              />
+              {{ selected.nzLabel }}
+            </ng-template>
+
+            <nz-select
+              [nzSize]="size"
+              *nzSpaceItem
+              nzPlaceHolder="All Type"
+              [(ngModel)]="filterByType"
+              [nzCustomTemplate]="jobLocationTemplate"
+            >
+              <nz-option nzValue="All Type" nzLabel="All Type"></nz-option>
+              <nz-option nzValue="Remote" nzLabel="Remote Work"></nz-option>
+              <nz-option nzValue="On-site" nzLabel="On-site Work"></nz-option>
+            </nz-select>
+            <ng-template #jobLocationTemplate let-selected>
+              <img
+                class="placeholder-icon"
+                nz-icon
+                src="assets/remote-work.svg"
+              />
+              {{ selected.nzLabel }}
+            </ng-template>
+          </nz-space>
+        </div>
+      </div>
+
+      <nz-list nzItemLayout="vertical" [nzLoading]="isLoading">
+        <ng-container
+          *ngIf="
+            !isLoading &&
+              (jobs | careers : filterByTitle : filterByType).length > 0;
+            else noJobs
+          "
+        >
+          <nz-list-item
+            *ngFor="let job of jobs | careers : filterByTitle : filterByType"
+          >
+            <nz-list-item-meta nz-col>
+              <nz-list-item-meta-title class="job-list-item-title">
+                {{ job.title }}
+              </nz-list-item-meta-title>
+            </nz-list-item-meta>
+            <ul nz-list-item-actions>
+              <nz-list-item-action>
+                <div>
+                  <img
+                    nz-icon
+                    src="assets/briefcase.svg"
+                    style="vertical-align: bottom"
+                  />
+                  <span>{{ job.employment_type }}</span>
+                </div>
+              </nz-list-item-action>
+              <nz-list-item-action>
+                <div>
+                  <img
+                    nz-icon
+                    src="assets/remote-work.svg"
+                    style="vertical-align: bottom"
+                  />
+                  <span>{{ job.position }}</span>
+                </div>
+              </nz-list-item-action>
+              <nz-list-item-action>
+                <div>
+                  <img
+                    nz-icon
+                    src="assets/calendar-career.svg"
+                    style="vertical-align: bottom"
+                  />
+                  <span>Posted {{ job.created_at | date }}</span>
+                </div>
+              </nz-list-item-action>
+            </ul>
+            <nz-list-item-extra
+              nz-col
+              nzOrder="1"
+              [nzXs]="{ span: 24, order: 2 }"
+              [nzSm]="6"
+              [nzLg]="3"
+            >
+              <button
+                nz-button
+                nzBlock
+                nzType="primary"
+                [nzSize]="size"
+                [routerLink]="['/job', job.id]"
+                style="text-align: center"
+              >
+                Apply
+                <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
+              </button>
+            </nz-list-item-extra>
+          </nz-list-item>
+        </ng-container>
+      </nz-list>
+    </div>
+  </nz-content>
+</nz-layout>
+
+<ng-template #noJobs>
+  <div nz-row>
+    <div nz-col [nzSpan]="24" style="margin-top: 200px; margin-bottom: 200px">
+      <nz-empty
+        *ngIf="filterByTitle || filterByType"
+        [nzNotFoundContent]="
+          'Sorry, we are not hiring for those particular filters.'
+        "
+      ></nz-empty>
+      <nz-empty
+        *ngIf="!filterByTitle && !filterByType"
+        [nzNotFoundContent]="'Sorry, we are not hiring at the moment.'"
+      ></nz-empty>
+    </div>
+  </div>
+</ng-template>
+
+<app-footer></app-footer>

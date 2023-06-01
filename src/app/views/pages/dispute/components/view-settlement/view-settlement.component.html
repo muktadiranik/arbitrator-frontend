@@ -1,0 +1,45 @@
+<button
+  nz-button
+  nzType="primary"
+  [nzLoading]="isAgreementLoading"
+  (click)="getSettlementAgreement()"
+>
+  Settlement Agreement
+</button>
+
+<!-- modal -->
+<nz-modal
+  [nzWidth]="'80%'"
+  [nzCentered]="true"
+  [(nzVisible)]="isVisible"
+  [nzTitle]="customTitle"
+  (nzOnCancel)="handleCancel()"
+>
+  <div *nzModalContent>
+    <div
+      [ngxSummernote]="editorConfig"
+      [(ngModel)]="settlementAgreement.content"
+    ></div>
+  </div>
+  <div *nzModalFooter>
+    <nz-space>
+      <button *nzSpaceItem nz-button nzType="default" (click)="handleCancel()">
+        Cancel
+      </button>
+
+      <button
+        *nzSpaceItem
+        nz-button
+        nzType="primary"
+        (click)="submitAgreement()"
+        [nzLoading]="isLoading"
+      >
+        Submit
+      </button>
+    </nz-space>
+  </div>
+</nz-modal>
+
+<ng-template #customTitle>
+  <heading [h3]="'Settlement Agreement'"></heading>
+</ng-template>

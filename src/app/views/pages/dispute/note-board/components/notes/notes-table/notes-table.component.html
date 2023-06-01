@@ -1,0 +1,81 @@
+<nz-spin [nzSpinning]="loading">
+  <nz-space nzDirection="vertical" [nzSize]="40" style="width: 100%">
+    <nz-table
+      *nzSpaceItem
+      class="notes-table"
+      #headerTable
+      [nzData]="notes"
+      [nzShowPagination]="true"
+      nzSize="middle"
+    >
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th [nzWidth]="'85%'" nzAlign="center">Description</th>
+          <th [nzWidth]="'5%'"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of headerTable.data; let ind = index">
+          <td>{{ data.created_at | mm_dd_yyyy }}</td>
+          <td nzAlign="center">{{ data.content }}</td>
+          <td>
+            <nz-space [nzSplit]="spaceSplit">
+              <ng-template #spaceSplit>
+                <nz-divider nzType="vertical"></nz-divider>
+              </ng-template>
+
+              <span *nzSpaceItem>
+                <button
+                  *ngIf="canEdit"
+                  style="border: none"
+                  nz-button
+                  (click)="editNotesModal(data, ind)"
+                >
+                  <span nz-icon nzType="edit"></span>
+                  Edit
+                </button>
+              </span>
+
+              <span *nzSpaceItem>
+                <span
+                  *ngIf="canDelete"
+                  nz-icon
+                  style="color: red"
+                  nzType="delete"
+                  nzTheme="fill"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Are you sure to delete this note?"
+                  nzOkText="Yes"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="onDelete(data, ind)"
+                >
+                </span>
+              </span>
+            </nz-space>
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #titleTemplate>
+        <h2 nz-row nzJustify="center" class="heading-color" nz-typography>
+          Notes
+          <span *ngIf="notes && notes.length > 5">({{ notes.length }})</span>
+        </h2>
+      </ng-template>
+    </nz-table>
+    <ng-container *ngIf="typeObj">
+      <div *nzSpaceItem nz-row nzJustify="center">
+        <button
+          *ngIf="canAdd"
+          nz-button
+          nzType="primary"
+          (click)="openNotesModal()"
+          [disabled]="disabled"
+        >
+          Add note
+        </button>
+      </div>
+    </ng-container>
+  </nz-space>
+</nz-spin>

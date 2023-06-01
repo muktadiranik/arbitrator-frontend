@@ -1,0 +1,54 @@
+<form nz-row [nzGutter]="[16, 0]" [formGroup]="addressFormGroup">
+  <div nz-col [nzSpan]="8">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24" nzFor="city">
+        <app-input-label [required]="true">City</app-input-label>
+      </nz-form-label>
+
+      <nz-form-control>
+        <input
+          nz-input
+          [nzSize]="'large'"
+          placeholder="Enter city"
+          id="city"
+          formControlName="city"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="8">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24" nzFor="state">
+        <app-input-label [required]="true">State</app-input-label>
+      </nz-form-label>
+
+      <nz-form-control>
+        <input
+          nz-input
+          [nzSize]="'large'"
+          placeholder="Enter state"
+          id="state"
+          formControlName="state"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div nz-col [nzSpan]="8">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24" nzFor="zip">
+        <app-input-label [required]="true">Zip</app-input-label>
+      </nz-form-label>
+
+      <nz-form-control>
+        <input
+          nz-input
+          [nzSize]="'large'"
+          placeholder="Enter zip"
+          id="zip"
+          formControlName="zip"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>

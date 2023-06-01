@@ -1,0 +1,9 @@
+<button
+  [nzLoading]="loading || (disputeActionService.loading$ | async)"
+  nz-button
+  nzType="default"
+  (click)="actionTrigger(name, value)"
+  [disabled]="disabled"
+>
+  <ng-content></ng-content>
+</button>

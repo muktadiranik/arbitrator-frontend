@@ -1,0 +1,41 @@
+// Custom Theming for NG-ZORRO
+// For more information: https://ng.ant.design/docs/customize-theme/en
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
+// Override less variables to here
+// View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
+
+// @primary-color: #69ff18;
+
+//table
+
+//generic
+// @border-color-base: #5f6368;
+@border-radius-base: 4px;
+// @border-color-split: #bfbdbd // split border inside a component
+@table-border-color: #d7d5d5;
+@table-header-color: #5f6368; // @table-header-cell-split-color: #bfbdbd;;
+@table-border-radius-base: 0px;
+@background-color-light: #f6f6f6;
+@table-font-size-md: 16px;
+
+//sider
+@layout-sider-background-light: @background-color-light;
+@layout-body-background: #fff;
+@layout-header-background: #fff;
+
+@font-family: -apple-system, BlinkMacSystemFont, "Lato", "Segoe UI", Roboto,
+  "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+//tree
+// @tree-title-height: 35px;
+.ant-table table {
+  border-collapse: collapse;
+}
+.ant-table-thead > .ant-table-row {
+  border-top: 1px solid @table-border-color;
+  border-bottom: 2px solid @table-border-color;
+}
+
+.ant-layout-sider-light {
+  border-right: 1px solid @table-border-color;
+}

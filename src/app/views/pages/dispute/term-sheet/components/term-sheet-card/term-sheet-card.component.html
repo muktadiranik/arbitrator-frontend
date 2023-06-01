@@ -1,0 +1,58 @@
+<nz-space class="noprint" nzDirection="vertical" style="width: 100%">
+  <nz-card
+    class="card-container"
+    [nzTitle]="titleTemplate"
+    [nzExtra]="extraTemplate"
+  >
+    <div class="editor-container noprint">
+      <div
+        [ngxSummernote]="editorConfig"
+        [(ngModel)]="editorValue"
+        (ngModelChange)="sectionValueChange($event)"
+      ></div>
+    </div>
+  </nz-card>
+
+  <ng-template #titleTemplate>
+    <div nz-row class="card-heading">
+      <term-sheet-heading
+        nz-col
+        nzSm="24"
+        [listOfItem]="heading"
+        [selectedValue]="termSheetSectionTitle.title"
+        [termSheetSectionDetail]="termSheetSectionTitle"
+        (itemAdded)="sectionItemAdded($event)"
+        (itemDeleted)="sectionItemDeleted($event)"
+      ></term-sheet-heading>
+    </div>
+  </ng-template>
+
+  <ng-template #extraTemplate>
+    <div class="insert-button noprint">
+      <button
+        nz-button
+        nz-dropdown
+        nzType="primary"
+        nzShape="round"
+        [nzDropdownMenu]="menu"
+      >
+        Insert Clause
+      </button>
+
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li
+            *ngFor="let clause of clauseList"
+            nz-menu-item
+            (click)="insertClause(clause.value)"
+          >
+            {{ clause.title }} - {{ clause ? clause.content.slice(0, 20) : "" }}
+            <span *ngIf="clause && clause.content.length > 20">...</span>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+  </ng-template>
+</nz-space>
+
+<div class="textarea-container" [innerHTML]="editorValue"></div>

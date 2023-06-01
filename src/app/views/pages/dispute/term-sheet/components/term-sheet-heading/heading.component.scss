@@ -1,0 +1,45 @@
+nz-select {
+  width: 240px;
+}
+nz-divider {
+  margin: 4px 0;
+}
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 8px;
+}
+
+.select-container {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0px;
+
+  height: 40px;
+}
+
+.input-group {
+  margin: 2px 0;
+  height: 40px;
+  width: 90%;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.delete-icon {
+  margin-top: 3px;
+}
+
+.print-heading {
+  display: none;
+}
+
+@media print {
+  .print-heading {
+    display: inline;
+  }
+}

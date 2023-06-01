@@ -1,0 +1,51 @@
+<div style="margin-top: 30px">
+  <nz-space nzDirection="vertical" [nzSize]="40" style="width: 100%">
+    <nz-tabset
+      nzCentered
+      class="arbitrator-container"
+      [nzSize]="'large'"
+      *nzSpaceItem
+      [nzSelectedIndex]="selectedTabIndex"
+    >
+      <nz-tab [nzTitle]="pendingDisputesTemplate"
+        ><dispute-table
+          [tableName]="'waiting-for-sign-up'"
+          [tableData]="pendingDisputes"
+          [showEllipsis]="false"
+          [actions]="['dispute-accept-decline']"
+          [actor]="authRoleService.loggedUser.actor"
+          (onAction)="onAction($event)"
+        ></dispute-table
+      ></nz-tab>
+      <nz-tab [nzTitle]="assignedDisputesTemplate"
+        ><dispute-table
+          [tableName]="'waiting-for-sign-up'"
+          [tableData]="assignedDisputes"
+          [showEllipsis]="false"
+        ></dispute-table
+      ></nz-tab>
+      <ng-template #pendingDisputesTemplate>
+        <nz-badge
+          class="pending"
+          nzStatus="processing"
+          [nzText]="'Pending Approval (' + pendingDisputes.length + ')'"
+        ></nz-badge>
+      </ng-template>
+      <ng-template #assignedDisputesTemplate>
+        <nz-badge
+          class="assigned"
+          nzStatus="success"
+          [nzText]="'Assigned  (' + assignedDisputes.length + ')'"
+        ></nz-badge>
+      </ng-template>
+    </nz-tabset>
+
+    <div class="calendar" *nzSpaceItem style="width: 50%; margin: auto">
+      <nz-calendar
+        [(ngModel)]="date"
+        [(nzMode)]="mode"
+        (nzPanelChange)="panelChange($event)"
+      ></nz-calendar>
+    </div>
+  </nz-space>
+</div>

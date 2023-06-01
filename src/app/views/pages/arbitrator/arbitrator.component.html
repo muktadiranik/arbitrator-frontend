@@ -1,0 +1,17 @@
+<div class="arbitrator-tabs">
+  <nz-tabset
+    *ngIf="enable"
+    [nzCentered]="true"
+    nzSize="large"
+    nzLinkRouter
+    [nzLinkExact]="false"
+    style="height: 67px !important"
+  >
+    <nz-tab *ngFor="let tabTitle of tabTitles">
+      <a *nzTabLink nz-tab-link [routerLink]="tabTitle.path" class="tab-style">
+        {{ tabTitle.value }}
+      </a>
+    </nz-tab>
+  </nz-tabset>
+</div>
+<router-outlet></router-outlet>

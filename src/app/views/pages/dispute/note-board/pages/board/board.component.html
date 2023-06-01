@@ -1,0 +1,20 @@
+<div class="flex flex-col w-full h-full py-8 pl-8 pr-6">
+  <nz-page-header [nzBackIcon]="null" class="site-page-header" nzBackIcon>
+    <nz-page-header-extra>
+      <nz-space>
+        <button *nzSpaceItem (click)="openTimelog()" nz-button>
+          <span style="vertical-align: text-top" nz-icon nzType="clock-circle">
+          </span>
+          Time Log
+        </button>
+        <ng-container *ngIf="dispute">
+          <span *nzSpaceItem nz-button
+            ><plenary-timer [dispute]="dispute" #timer></plenary-timer
+          ></span>
+          <!-- <span *nzSpaceItem nz-button><caucus-timer [dispute]="dispute" #caucustimer></caucus-timer></span> -->
+        </ng-container>
+      </nz-space>
+    </nz-page-header-extra>
+  </nz-page-header>
+  <board-dnd *ngIf="dispute"></board-dnd>
+</div>

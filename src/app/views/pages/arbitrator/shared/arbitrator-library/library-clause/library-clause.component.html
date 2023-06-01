@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="select-button">
+    <div style="display: flex; width: 100%">
+      <div class="select">
+        <app-select
+          [selectedValue]="optionList[0]"
+          [optionList]="optionList"
+          (selectedValueChange)="selectedValueChange($event)"
+        ></app-select>
+      </div>
+      &nbsp;&nbsp;
+      <div
+        class="multiple-select"
+        *ngIf="selectedVal.name == 'Firm Clauses'"
+        [formGroup]="form"
+      >
+        <nz-select
+          class="multiple"
+          [nzMaxTagCount]="2"
+          nzMode="multiple"
+          nzPlaceHolder="Select firm"
+          formControlName="firm"
+          (ngModelChange)="selectedFirmChange($event)"
+        >
+          <nz-option
+            *ngFor="let firm of firmsList"
+            [nzLabel]="firm.name"
+            [nzValue]="firm"
+          ></nz-option>
+        </nz-select>
+      </div>
+    </div>
+
+    <div class="button">
+      <app-button (addNewItem)="addNewClause()">Create clause</app-button>
+    </div>
+  </div>
+
+  <nz-divider></nz-divider>
+
+  <div class="list-container">
+    <app-clause-list
+      [selectedValue]="selectedVal"
+      [clauseList]="clauseList"
+      [firmsList]="firmsList"
+      [isClauseListLoading]="isClauseListLoading"
+      (clauseListUpdated)="updateClauseList($event)"
+    ></app-clause-list>
+  </div>
+</div>

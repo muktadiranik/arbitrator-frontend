@@ -1,0 +1,82 @@
+.avatar-information {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.description {
+  font-size: 18px;
+}
+
+.avatar-information-title,
+.dispute-amount {
+  font-size: 20px;
+  margin-bottom: 0px !important;
+  font-weight: 500;
+}
+.avatar-information-description {
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.big-bold {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 0px !important;
+}
+
+.subtitle {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.dispute-amount {
+  color: #34a853;
+}
+
+.dispute-amount-respondent {
+  color: #ea4335;
+}
+
+:host {
+  --ripple-color: 194, 194, 194; // default gray
+  // $color: rgb(0, 139, 252);
+}
+
+.ripple {
+  background: transparent;
+  cursor: pointer;
+  animation: ripple 1.3s linear infinite;
+  transition: all 0.7s ease;
+  border-radius: 100%;
+}
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--ripple-color), 0.3),
+      0 0 0 2px rgba(var(--ripple-color), 0.3),
+      0 0 0 3px rgba(var(--ripple-color), 0.3),
+      0 0 0 5px rgba(var(--ripple-color), 0.3);
+    transform: scale(1.1);
+  }
+  25% {
+    transform: scale(1.025);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  75% {
+    transform: scale(1.075);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--ripple-color), 0.3),
+      0 0 0 0px rgba(var(--ripple-color), 0.3),
+      0 0 0 10px rgba(var(--ripple-color), 0),
+      0 0 0 20px rgba(var(--ripple-color), 0);
+    transform: scale(1.1);
+  }
+}

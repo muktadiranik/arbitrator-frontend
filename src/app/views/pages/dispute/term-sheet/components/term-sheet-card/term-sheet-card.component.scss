@@ -1,0 +1,25 @@
+.card-container {
+  background: #fdfdfd;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.textarea-container {
+  display: none;
+}
+
+@media (max-width: 660px) {
+  :host ::ng-deep .ant-card-head-wrapper {
+    flex-direction: column;
+  }
+}
+
+@media print {
+  .textarea-container {
+    display: inline;
+  }
+}

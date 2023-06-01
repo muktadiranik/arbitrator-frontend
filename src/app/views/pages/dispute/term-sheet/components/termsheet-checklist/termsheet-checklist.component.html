@@ -1,0 +1,121 @@
+<nz-drawer
+  [nzWidth]="'65%'"
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  nzPlacement="right"
+  [nzTitle]="checklistTitle"
+  (nzOnClose)="closeDrawer()"
+>
+  <ng-container *nzDrawerContent>
+    <nz-space nzDirection="vertical" style="width: 100%">
+      <div *nzSpaceItem nz-row>
+        <nz-tree-select
+          style="width: 100%"
+          nzSize="large"
+          [nzNodes]="categoryChecklists"
+          nzShowSearch
+          nzPlaceHolder=" Select Checklist"
+          [(ngModel)]="selectedNode"
+          (ngModelChange)="categoryChecklistChange($event)"
+        ></nz-tree-select>
+      </div>
+
+      <div *nzSpaceItem nz-row nzJustify="center">
+        <button
+          nz-button
+          nzType="primary"
+          [disabled]="selectedChecklist == undefined"
+          (click)="addChecklistItem()"
+        >
+          <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
+          Add Item
+        </button>
+      </div>
+
+      <!-- added checklist list -->
+
+      <div *nzSpaceItem nz-row nzAlign="middle" style="height: 65vh">
+        <ul
+          nz-col
+          nzSpan="24"
+          nz-list
+          [nzDataSource]="
+            selectedChecklist && selectedChecklist.termsheet_items.length != 0
+              ? selectedChecklist.termsheet_items
+              : []
+          "
+          nzBordered
+          nzSize="large"
+        >
+          <li
+            nz-list-item
+            *ngFor="
+              let item of selectedChecklist?.termsheet_items;
+              let index = index
+            "
+            class="flex items-center"
+          >
+            <ul nz-list-item-actions class="m-[0px]">
+              <nz-list-item-action class="m-[0px]">
+                <nz-space>
+                  <span
+                    *nzSpaceItem
+                    style="font-size: 17px"
+                    nz-icon
+                    nzType="edit"
+                    nzTheme="fill"
+                    (click)="editChecklistItem(item, index)"
+                  ></span>
+
+                  <span
+                    *nzSpaceItem
+                    style="font-size: 17px"
+                    nz-icon
+                    nzType="delete"
+                    nzTheme="fill"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Do you want to delete this checklist item?"
+                    nzPopconfirmPlacement="bottom"
+                    nzOkText="Yes"
+                    (nzOnConfirm)="deleteChecklistItem(item, index)"
+                  ></span>
+                </nz-space>
+              </nz-list-item-action>
+            </ul>
+            <label
+              style="width: 66%"
+              nz-checkbox
+              class="items-center"
+              [(ngModel)]="item.checked"
+              (ngModelChange)="toggleItem(item)"
+            >
+              <span>
+                <div>
+                  {{ item.text }}
+                  <nz-tag
+                    *ngIf="item.initials"
+                    [nzColor]="'#2db7f5'"
+                    style="margin-left: 5px"
+                    >{{ item.initials }}</nz-tag
+                  >
+                </div>
+                <div>
+                  {{ item.due_date }} |
+                  {{
+                    item.comments || item.comments != ""
+                      ? item.comments
+                      : "No Comment"
+                  }}
+                </div>
+              </span>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </nz-space>
+  </ng-container>
+</nz-drawer>
+
+<ng-template #checklistTitle>
+  <heading [h3]="'Checklist'"></heading>
+</ng-template>

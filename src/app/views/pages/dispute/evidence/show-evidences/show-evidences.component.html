@@ -1,0 +1,123 @@
+<nz-spin [nzSpinning]="loading">
+  <div *ngIf="evidences.length; else empty">
+    <nz-space nzDirection="vertical" [nzSize]="'large'" style="width: 100%">
+      <div nz-row [nzGutter]="[8, 5]" *nzSpaceItem>
+        <div
+          nz-col
+          [nzSpan]="24 / rowCount"
+          [nzLg]="24 / rowCount"
+          [nzMd]="24"
+          [nzSm]="24"
+          [nzXs]="24"
+          *ngFor="let evidence of evidences"
+        >
+          <nz-card nzBorderless class="evidence-card">
+            <nz-card-meta
+              [nzTitle]="titleTemplate"
+              [nzDescription]="descriptionTemplate"
+              [nzAvatar]="avatarTemplate"
+            ></nz-card-meta>
+            <ng-template #avatarTemplate>
+              <span>
+                <nz-avatar
+                  class="mt-[5px]"
+                  nzSize="large"
+                  [nzShape]="'square'"
+                  [nzSrc]="fileTypeAvatar(evidence)"
+                ></nz-avatar>
+              </span>
+            </ng-template>
+
+            <ng-template #titleTemplate>
+              <span class="file-details">
+                <a
+                  class="title"
+                  nz-typography
+                  nzEllipsis="true"
+                  [nz-tooltip]="
+                    fileUtil.getFileNameFromUrl(evidence.attachment)
+                  "
+                  (click)="downloadEvidence(evidence)"
+                >
+                  {{ fileUtil.getFileNameFromUrl(evidence.attachment) }}
+                </a>
+
+                <file-size
+                  class="mr-[8px] ml-[8px]"
+                  [file]="$any(evidence)"
+                ></file-size>
+
+                <file-extension [file]="evidence"></file-extension>
+
+                <span
+                  *ngIf="canDelete"
+                  nz-icon
+                  nzType="close"
+                  nzTheme="outline"
+                  style="align-self: center"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Do you want to delete this evidence?"
+                  nzPopconfirmPlacement="bottom"
+                  class="cancel-img"
+                  src="assets/cancel.svg"
+                  (nzOnConfirm)="deleteEvidence(evidence)"
+                ></span>
+              </span>
+            </ng-template>
+
+            <ng-template #descriptionTemplate>
+              <span class="description"
+                >Added on:
+                {{
+                  dateUtil.formatDate(
+                    evidence.created_at | mm_dd_yyyy,
+                    "MMM Do"
+                  )
+                }}</span
+              >
+            </ng-template>
+
+            <ng-template #deleteButton>
+              <img
+                nz-popconfirm
+                nzPopconfirmTitle="Do you want to delete this evidence?"
+                nzPopconfirmPlacement="bottom"
+                class="cancel-img"
+                src="assets/cancel.svg"
+                (nzOnConfirm)="deleteEvidence(evidence)"
+              />
+            </ng-template>
+          </nz-card>
+        </div>
+      </div>
+      <ng-container *ngIf="canAdd">
+        <div nz-row nzJustify="center" *nzSpaceItem>
+          <button
+            nz-button
+            nzType="primary"
+            (click)="addEvidenceModal()"
+            [disabled]="disabled"
+          >
+            Add Evidence
+          </button>
+        </div>
+      </ng-container>
+    </nz-space>
+  </div>
+  <ng-template #empty>
+    <nz-empty nzNotFoundContent="No Evidence"></nz-empty>
+    <ng-container *ngIf="canAdd">
+      <div nz-row nzJustify="center">
+        <button
+          *ngIf="claim"
+          nz-button
+          nzType="primary"
+          (click)="addEvidenceModal()"
+          [disabled]="disabled"
+        >
+          Add Evidence
+        </button>
+      </div>
+    </ng-container>
+  </ng-template>
+</nz-spin>

@@ -1,0 +1,39 @@
+.layout {
+  min-height: 100vh;
+}
+
+nz-sider {
+  // overflow: auto;
+  min-height: 100vh;
+  position: fixed;
+  background: #f6f6f6;
+  // display: flex;
+  // flex-direction: column;
+}
+
+ul {
+  // flex-grow: 1;
+  background: #f6f6f6;
+}
+
+nz-content {
+  margin: 24px 16px 0;
+  overflow: initial;
+}
+
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  text-align: center;
+}
+
+.right-layout {
+  margin-left: 200px;
+}
+
+// ::ng-deep body {
+//   min-width: 100%;
+// }
+.menu-item-style {
+  font-size: 17px;
+}

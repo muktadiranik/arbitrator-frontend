@@ -1,0 +1,165 @@
+<!-- <div class="note-wrap">
+    <nz-spin  [nzSpinning]="loading" class="note">
+        <div (click)="openNoteModal(note.id)">
+            <p class="pb-3 text-15 text-textDarkest" [ngStyle]="{'text-decoration': note.is_strike ? 'line-through' : 'none'}">
+                {{ note.text }} <note-delete style="float:right" (onDeleteNote)="deleteNote($event)" [noteID]="note.id"></note-delete>
+            </p>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center ml-1">            
+                    
+                </div>
+                <div class="flex items-center">
+                  
+                </div>            
+            </div>
+        </div>
+    </nz-spin>
+</div> -->
+<!-- [nzExtra]="deleteTemplate" -->
+<nz-ribbon
+  [nzText]="ribbonTemplate"
+  nzColor="white"
+  style="width: 100%; background-color: white"
+>
+  <nz-card
+    [nzLoading]="loading"
+    nzHoverable
+    style="width: 100%"
+    [nzActions]="
+      !isCounter
+        ? [
+            editTemplate,
+            deleteTemplate,
+            strikeThrough,
+            infoTemplate,
+            counterProposalTemplate,
+            actionEllipsis
+          ]
+        : [editTemplate]
+    "
+    [ngStyle]="{ 'text-decoration': note.is_strike ? 'line-through' : 'none' }"
+  >
+    <!-- {{ note.text }} -->
+    <nz-card-meta
+      *ngIf="!note.editable"
+      [ngClass]="{ 'blur-sm': note.is_blur }"
+      [nzDescription]="noteText"
+    ></nz-card-meta>
+    <textarea
+      nzAutosize
+      *ngIf="note.editable"
+      nz-input
+      [(ngModel)]="note.text"
+    ></textarea>
+  </nz-card>
+  <ng-template #counterProposalTemplate>
+    <nz-badge
+      (click)="openCounterProposalDrawer(note)"
+      [nzCount]="note.counter_proposals.length"
+      [nzStyle]="{
+        backgroundColor: '#fff',
+        color: '#999',
+        boxShadow: '0 0 0 1px #d9d9d9 inset'
+      }"
+      ><nz-tag class="counter-proposal-tag" [nzColor]="'processing'"
+        >CN</nz-tag
+      ></nz-badge
+    >
+  </ng-template>
+  <ng-template #infoTemplate>
+    <span
+      nz-icon
+      nzType="info-circle"
+      nzTheme="outline"
+      nz-tooltip
+      [nzTooltipTitle]="titleTemplate"
+      nzTooltipPlacement="bottomLeft"
+    ></span>
+  </ng-template>
+  <ng-template #noteText>
+    <pre nz-tooltip [nzTooltipTitle]="note.text" [nzTooltipColor]="'cyan'">{{
+      note.text
+    }}</pre>
+  </ng-template>
+  <ng-template #ribbonTemplate>
+    <nz-tag *ngIf="note.is_caucus" [nzColor]="'cyan'">C</nz-tag>
+    <nz-tag *ngIf="note.is_mediator" [nzColor]="'lime'">M</nz-tag>
+  </ng-template>
+</nz-ribbon>
+
+<ng-template #titleTemplate let-thing>
+  <span> Created at: {{ note.created_at | date : "dd/MM/yyyy" }}</span>
+</ng-template>
+
+<ng-template #editTemplate>
+  <span
+    nz-icon
+    *ngIf="note.editable"
+    (click)="onEdit(note, true)"
+    nzType="save"
+    nzTheme="outline"
+  ></span>
+  <span
+    nz-icon
+    *ngIf="!note.editable"
+    (click)="onEdit(note, false)"
+    nzType="edit"
+    nzTheme="outline"
+  ></span>
+</ng-template>
+<ng-template #deleteTemplate>
+  <note-delete
+    (onDeleteNote)="deleteNote($event)"
+    [noteID]="note.id"
+  ></note-delete>
+</ng-template>
+<ng-template #strikeThrough>
+  <note-strikethrough
+    [noteID]="note.id"
+    [strike]="!note.is_strike"
+    (onChange)="onChangeNote($event)"
+  ></note-strikethrough>
+</ng-template>
+<ng-template #actionEllipsis>
+  <button
+    nz-button
+    nz-dropdown
+    nzType="text"
+    [nzDropdownMenu]="noteExtraActions"
+  >
+    <span nz-icon nzType="ellipsis"></span>
+  </button>
+</ng-template>
+
+<nz-dropdown-menu #noteExtraActions="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item>
+      <a
+        ><note-blur
+          [noteID]="note.id"
+          [blur]="!note.is_blur"
+          (onChange)="onChangeNote($event)"
+        ></note-blur
+      ></a>
+    </li>
+    <li nz-menu-item>
+      <a
+        ><nz-tag
+          (click)="onEdit(note, true, { is_caucus: !note.is_caucus })"
+          [nzColor]="'cyan'"
+          >{{ note.is_caucus ? "Remove Caucus" : "Caucus Note" }}</nz-tag
+        ></a
+      >
+    </li>
+    <li nz-menu-item>
+      <a
+        ><nz-tag
+          (click)="onEdit(note, true, { is_mediator: !note.is_mediator })"
+          [nzColor]="'lime'"
+          >{{ note.is_mediator ? "Remove Mediator" : "Mediator Note" }}</nz-tag
+        ></a
+      >
+    </li>
+  </ul>
+</nz-dropdown-menu>

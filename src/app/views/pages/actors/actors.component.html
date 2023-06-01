@@ -1,0 +1,26 @@
+<div class="p-8">
+  <nz-tabset
+    [nzTabBarExtraContent]="extraTemplate"
+    (nzSelectedIndexChange)="onTabChange($event)"
+  >
+    <nz-tab *ngFor="let tab of tabs; let i = index" [nzTitle]="tab | titlecase">
+      <actor-table
+        [actors]="actors"
+        [tableName]="tabs[i]"
+        [isloading]="isloading"
+      ></actor-table>
+    </nz-tab>
+  </nz-tabset>
+  <ng-template #extraTemplate>
+    <button
+      nz-button
+      nzType="primary"
+      [routerLink]="['registration/arbitrator']"
+    >
+      Add Arbitrator
+    </button>
+  </ng-template>
+</div>
+
+<!-- *ngIf="selectedTab == 'arbitrators'" -->
+<!-- nzType="card" -->

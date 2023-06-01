@@ -1,0 +1,57 @@
+<nz-space nzDirection="vertical" style="width: 100%">
+  <!-- <h2 class="blue-heading" *nzSpaceItem nz-row nzJustify="center" nz-typography>
+    Note
+  </h2>
+  <h5
+    *nzSpaceItem
+    nz-row
+    nzJustify="center"
+    class="heading-color"
+    nz-typography
+  >
+    {{ mode }} your note and comment about the dispute that you think the
+    arbitrator should know.
+  </h5> -->
+  <heading [h1]="'Note'" [h2]="h2Template"></heading>
+  <ng-template #h2Template>
+    {{ mode }} your note and comment about the dispute that you think the
+    arbitrator should know.
+  </ng-template>
+  <ng-container *nzSpaceItem>
+    <h5 nz-row nzJustify="center" nz-typography>{{ mode }} your note below</h5>
+  </ng-container>
+
+  <div *nzSpaceItem nz-row nzJustify="center">
+    <textarea
+      rows="4"
+      nz-input
+      class="desc-body border-color"
+      placeholder="Enter note"
+      [(ngModel)]="description"
+    ></textarea>
+  </div>
+
+  <div *nzSpaceItem nz-row nzJustify="center">
+    <button
+      nz-button
+      nzType="primary"
+      (click)="edit ? editNotes() : addNotes()"
+      [nzLoading]="loading"
+    >
+      {{ mode }} note
+    </button>
+  </div>
+
+  <div *nzSpaceItem class="tableHeading">
+    <h5 *ngIf="showTable()" nz-typography>Added Notes</h5>
+  </div>
+  <div *nzSpaceItem class="notes-table">
+    <notes-table
+      *ngIf="showTable()"
+      [notes]="notes"
+      [canAdd]="false"
+      [canEdit]="false"
+      [canDelete]="false"
+    ></notes-table>
+  </div>
+</nz-space>

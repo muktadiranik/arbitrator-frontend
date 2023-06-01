@@ -1,0 +1,13 @@
+.calendar {
+  width: 80%;
+}
+
+.arbitrator-container {
+  margin: auto;
+  width: 96%;
+}
+
+::ng-deep .assigned > .ant-badge-status-text,
+::ng-deep .pending > .ant-badge-status-text {
+  font-size: 20px;
+}

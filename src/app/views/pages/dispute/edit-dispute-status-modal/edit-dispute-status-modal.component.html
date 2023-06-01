@@ -1,0 +1,26 @@
+<nz-space nzDirection="vertical" class="w-full">
+  <label class="mb-4 text-base" for=""
+    >Set <b>{{ currentStep.name }}</b> date and mark it as completed</label
+  >
+  <nz-date-picker
+    *nzSpaceItem
+    style="width: 100%"
+    [formControl]="end_date"
+    [nzDisabledDate]="disabledDate"
+    [nzFormat]="dateFormat"
+  ></nz-date-picker>
+
+  <div *nzSpaceItem nz-row nzJustify="end">
+    <button
+      nzBlock
+      [nzLoading]="loading"
+      nz-button
+      nzType="primary"
+      (click)="submit()"
+      [disabled]="!end_date.valid"
+    >
+      Complete
+      <span nz-icon nzType="check-circle" nzTheme="outline"></span>
+    </button>
+  </div>
+</nz-space>

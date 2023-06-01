@@ -1,0 +1,14 @@
+<nz-space nzSize="large" style="width: 100%" nzDirection="vertical">
+  <note
+    #note_comp
+    *nzSpaceItem
+    [noteid]="note.id"
+    [note]="note"
+    (onAddNote)="addNote($event)"
+  ></note>
+  <note-counters-timeline
+    #timeline_comp
+    *nzSpaceItem
+    [noteid]="note.base_proposal"
+  ></note-counters-timeline>
+</nz-space>

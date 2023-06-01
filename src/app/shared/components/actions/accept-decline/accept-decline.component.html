@@ -1,0 +1,49 @@
+<p>
+  <nz-button-group nzSize="small">
+    <dispute-actions
+      [dispute]="dispute"
+      [actor]="actor"
+      name="Approve"
+      value="Accept"
+      class="btn-accept-color"
+      (onAction)="actionTrigger($event)"
+    >
+      <span
+        >&nbsp;
+        <span nz-icon nzType="check"></span>
+        &nbsp;
+      </span>
+    </dispute-actions>
+    <dispute-actions
+      [dispute]="dispute"
+      [actor]="actor"
+      name="Approve"
+      value="Reject"
+      (onAction)="actionTrigger($event)"
+    >
+      &nbsp;
+      <span nz-icon nzType="close"></span>
+      &nbsp;
+    </dispute-actions>
+    <!-- <button
+      style="background: #73ae73; width: 72%"
+      nz-button
+      nzType="primary"
+      (click)="onAction('Approve', 'Accept')"
+    >
+      &nbsp;
+      <span nz-icon nzType="check"></span>
+      &nbsp;
+    </button>
+    <button
+      nz-button
+      nzDanger
+      nzType="primary"
+      (click)="onAction('Approve', 'Reject')"
+    >
+      &nbsp;
+      <span nz-icon nzType="close"></span>
+      &nbsp;
+    </button> -->
+  </nz-button-group>
+</p>

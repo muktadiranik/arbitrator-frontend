@@ -1,0 +1,32 @@
+.signature-container > nz-card {
+  background: #fdfdfd;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.dates {
+  margin-top: 2px;
+}
+
+.dates > p {
+  font-style: italic;
+  margin: 0;
+
+  margin-top: -6px;
+  color: gray;
+}
+
+.signature-input {
+  font-weight: 600;
+  margin-right: 15px;
+  width: 82%;
+  max-width: 275px;
+}
+
+@media print {
+  nz-card {
+    border: none;
+  }
+}

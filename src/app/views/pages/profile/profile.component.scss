@@ -1,0 +1,129 @@
+nz-header {
+  background: #fcfbf9;
+}
+
+nz-sider {
+  background: #f6f6f6;
+  overflow: auto;
+  height: 100%;
+  position: fixed;
+  // left: 0;
+}
+
+nz-content {
+  // margin: 24px 16px 0;
+  overflow: initial;
+}
+
+// .right-layout {
+//   margin-left: 380px;
+// }
+
+// .inner-content {
+//   padding: 24px;
+//   background: #fff;
+//   text-align: center;
+// }
+
+.img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.edit-button {
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+  cursor: pointer;
+}
+
+.edit-button > img {
+  width: 50px;
+  height: 50px;
+}
+
+.container-profile {
+  background-color: white;
+  padding: 10px;
+  // height: auto;
+  // min-height: calc(100vh - 70px);
+  // padding: 50px;
+  // padding-left: 75px;
+}
+
+// input {
+//   padding: 8px 11px;
+//   height: 39px;
+//   background: #ffffff;
+//   border: 1px solid rgb(217, 217, 217);
+//   border-radius: 5px;
+//   font-family: "Lato";
+//   font-style: normal;
+//   font-size: 17px;
+// }
+
+// h3 {
+//   font-family: "Lato";
+//   font-style: normal;
+//   font-weight: 600;
+//   font-size: 48px;
+//   line-height: 58px;
+//   display: flex;
+//   align-items: center;
+//   font-feature-settings: "kern" off, "liga" off;
+//   color: #000000;
+//   margin-bottom: 0;
+// }
+
+// .submit-button {
+//   padding: 10px 20px;
+//   background: #4285f4;
+//   box-shadow: 1px 1px 3px rgb(20 20 20 / 30%);
+//   border-radius: 5px;
+//   font-family: "Lato";
+//   font-style: normal;
+//   font-size: 17px;
+//   display: flex;
+//   align-items: center;
+//   text-align: center;
+//   justify-content: center;
+//   color: white;
+//   height: 40px;
+
+//   width: 100%;
+//   max-width: 220px;
+// }
+
+// .button-container {
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: space-between;
+//   width: 96%;
+// }
+
+// .centered {
+//   justify-content: center;
+// }
+
+// .city-state-zip {
+//   // width: 68% !important;
+//   display: flex;
+//   flex-wrap: nowrap;
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: end;
+// }
+
+// .flex-col {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// a {
+//   font-size: 20px;
+//   font-weight: 300;
+// }

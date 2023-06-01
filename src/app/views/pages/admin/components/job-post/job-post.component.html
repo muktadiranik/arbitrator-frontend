@@ -1,0 +1,199 @@
+<div style="padding-top: 40px; padding-bottom: 40px">
+  <heading [h1]="'Job Post'"></heading>
+  <form
+    style="padding-top: 40px"
+    [formGroup]="jobPostForm"
+    nz-row
+    nzJustify="center"
+    [nzGutter]="[16, 16]"
+  >
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="title">
+          <app-input-label [required]="true">Title</app-input-label>
+        </nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input
+            nzSize="large"
+            style="width: 100%"
+            required="true"
+            nz-input
+            formControlName="title"
+            placeholder="Job title"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="description">
+          <app-input-label [required]="true">Description</app-input-label>
+        </nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <textarea
+            nz-input
+            nzSize="large"
+            style="width: 100%"
+            rows="6"
+            formControlName="description"
+            placeholder="Job Description"
+            required="true"
+          >
+          </textarea>
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-row [nzGutter]="[16, 16]">
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="position">
+              <app-input-label [required]="true">Position</app-input-label>
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <nz-select
+                nzSize="large"
+                formControlName="position"
+                nzPlaceHolder="Position"
+              >
+                <nz-option nzLabel="Remote Work" nzValue="Remote"
+                  >Remote Work</nz-option
+                >
+                <nz-option nzLabel="On-site Work" nzValue="On-site"
+                  >On-site Work</nz-option
+                >
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="employment-type">
+              <app-input-label [required]="true"
+                >Employment type
+              </app-input-label>
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <nz-select
+                nzSize="large"
+                formControlName="employmentType"
+                nzPlaceHolder="Employment-Type"
+              >
+                <nz-option
+                  nzLabel="Full-time Employee"
+                  nzValue="Full-time employee"
+                  >Full-time Employee</nz-option
+                >
+                <nz-option
+                  nzLabel="Independent Contractor"
+                  nzValue="Independent contractor"
+                  >Independent Contractor</nz-option
+                >
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="title">
+          <app-input-label [required]="false">LinkedIn URL</app-input-label>
+        </nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input
+            style="width: 100%"
+            nzSize="large"
+            nz-input
+            formControlName="linkedInUrl"
+            placeholder="LinkedIN URL"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="opportunity">
+          <app-input-label [required]="true">Opportunities</app-input-label>
+        </nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <nz-select
+            nzSize="large"
+            [nzMaxTagCount]="8"
+            nzMode="multiple"
+            formControlName="opportunities"
+            nzPlaceHolder="Opportunity"
+            nzShowSearch
+            nzAllowClear
+            [nzDropdownRender]="renderOpportunity"
+          >
+            >
+            <nz-option
+              *ngFor="let opportunity of opportunities"
+              [nzLabel]="opportunity.text"
+              [nzValue]="opportunity.id"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="requirements">
+          <app-input-label [required]="true">Requirements</app-input-label>
+        </nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <nz-select
+            nzSize="large"
+            [nzMaxTagCount]="8"
+            nzMode="multiple"
+            formControlName="requirements"
+            nzPlaceHolder="Requirements"
+            nzShowSearch
+            nzAllowClear
+            [nzDropdownRender]="renderRequirement"
+          >
+            <nz-option
+              *ngFor="let requirement of requirements"
+              [nzLabel]="requirement.text"
+              [nzValue]="requirement.id"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-row nzJustify="center">
+        <button
+          nzType="primary"
+          nz-button
+          nzBlock
+          nzSize="large"
+          [disabled]="!jobPostForm.valid"
+          (click)="submitForm()"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+
+    <ng-template #renderOpportunity>
+      <nz-divider></nz-divider>
+      <div class="container">
+        <input type="text" nz-input #inputElement />
+        <a class="add-detail" [class.loading]="isAddingOpportunity">
+          <span
+            nz-icon
+            nzType="plus"
+            (click)="addOpportunity(inputElement)"
+          ></span>
+        </a>
+      </div>
+    </ng-template>
+
+    <ng-template #renderRequirement>
+      <nz-divider></nz-divider>
+      <div class="container">
+        <input type="text" nz-input #inputElement />
+        <a class="add-detail" [class.loading]="isAddingRequirement">
+          <span
+            nz-icon
+            nzType="plus"
+            (click)="addRequirement(inputElement)"
+          ></span>
+        </a>
+      </div>
+    </ng-template>
+  </form>
+</div>

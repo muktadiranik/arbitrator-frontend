@@ -1,0 +1,52 @@
+<form nz-form [formGroup]="assignArbitratorForm" (ngSubmit)="onSubmit()">
+  <div nz-row [nzGutter]="[8, 16]">
+    <div nz-col nzSpan="24">
+      <nz-select
+        formControlName="arbitrator_id"
+        nzPlaceHolder="Select Arbitrator"
+        class="w-full"
+      >
+        <nz-option
+          *ngFor="let arbitrator of arbitrators"
+          [nzLabel]="actorUtil.fullname(arbitrator)"
+          [nzValue]="arbitrator.id"
+        ></nz-option>
+      </nz-select>
+    </div>
+    <div nz-col nzSpan="24">
+      <nz-select
+        [nzMode]="'multiple'"
+        nzPlaceHolder="Select Disputes"
+        class="w-full"
+        formControlName="disputes"
+        [nzSuffixIcon]="temp"
+      >
+        <nz-option
+          *ngFor="let dispute of disputes"
+          [nzLabel]="dispute.code"
+          [nzValue]="dispute.id"
+        ></nz-option>
+        <nz-option [nzLabel]="'UI Test 1'" [nzValue]="1"></nz-option>
+        <nz-option [nzLabel]="'UI Test 2'" [nzValue]="2"></nz-option>
+        <nz-option [nzLabel]="'UI Test 3'" [nzValue]="3"></nz-option>
+        <nz-option [nzLabel]="'UI Test 4'" [nzValue]="4"></nz-option>
+      </nz-select>
+    </div>
+    <button
+      nzBlock
+      [nzLoading]="false"
+      nz-button
+      nzType="primary"
+      type="submit"
+      [disabled]="!assignArbitratorForm.valid"
+      [nzLoading]="loading"
+    >
+      {{ loading ? "Assigning Arbitrator" : "Assign Arbitrator" }}
+      <span nz-icon nzType="check-circle" nzTheme="outline"></span>
+    </button>
+  </div>
+</form>
+
+<ng-template #temp>
+  <span nz-icon nzType="step-backward" nzTheme="outline"></span>
+</ng-template>

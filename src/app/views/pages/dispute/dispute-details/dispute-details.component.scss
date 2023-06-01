@@ -1,0 +1,116 @@
+.layout-header {
+  font-size: 30px;
+  color: #1890ff;
+  margin: auto;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.container2 {
+  background: #e5e5e5;
+}
+
+.container-header {
+  justify-content: center !important;
+  margin-top: 10px;
+}
+
+.container-header > h3 {
+  font-size: 40px;
+}
+
+.intro {
+  width: 20%;
+  background: #e5e5e5;
+  min-height: calc(100vh - 70px);
+  padding-top: 45px;
+  justify-content: normal !important;
+}
+
+.desc {
+  min-height: calc(100vh - 70px);
+  width: 80%;
+}
+
+.margin-top {
+  margin-top: 15px;
+}
+
+.email,
+.location {
+  margin-bottom: 0;
+}
+
+.amount-claimed,
+.amount-owned {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 24px;
+  text-align: center;
+  color: #34a853;
+  margin-bottom: 0;
+}
+
+.amount-owned {
+  color: #ea4335;
+}
+
+.desc-body {
+  padding: 0px 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.desc-body > p {
+  text-align: left;
+}
+
+// .evidence-witness {
+//   margin-bottom: 70px;
+// }
+
+// .evidence,
+// .witness {
+//   width: 50%;
+// }
+
+// .files {
+//   margin-top: 25px;
+// }
+
+// .p {
+//   margin-top: 2px !important;
+//   text-align: left !important;
+// }
+
+.desc-body > .p {
+  font-size: 15px !important;
+}
+
+.claimer,
+.respondent {
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: auto !important;
+}
+
+.align-center {
+  text-align: center;
+}
+
+// .h6 {
+//   cursor: pointer;
+// }
+
+.tab-style {
+  font-size: 22px;
+  font-weight: 300;
+}

@@ -1,0 +1,230 @@
+.body > h5,
+.h5 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #141414;
+  margin-bottom: 25px;
+}
+
+.body {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0px 40px;
+  margin-top: 15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.border {
+  border: 1px solid rgba(191 189 189);
+  border-radius: 3px;
+  border-top: 1px solid rgba(191, 189, 189, 0.5);
+  border-left: 1px solid rgba(191, 189, 189, 0.5);
+  border-bottom: 1px solid rgba(191, 189, 189, 0.5);
+  border-right: 1px solid rgba(191, 189, 189, 0.5);
+}
+
+.amount-input {
+  height: 31px;
+  width: 190px;
+  padding-left: 6px;
+}
+
+.img-amount {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.start-claim {
+  background: #4285f4;
+  box-shadow: 1px 1px 3px rgba(20, 20, 20, 0.3);
+  border-radius: 10px;
+  height: 35px;
+  font-size: 16px;
+  margin-top: 25px;
+}
+
+.offers-history {
+  margin-top: 68px;
+  width: 100%;
+}
+
+.offers-history > h5 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+  color: #bfbdbd;
+  margin-bottom: -65px;
+}
+
+.offer-container {
+  width: 100%;
+  text-align: center;
+  max-width: 430px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23BFBDBDFF' stroke-width='2' stroke-dasharray='4%2c 5' stroke-dashoffset='0' stroke-linecap='round'/%3e%3c/svg%3e");
+  border-radius: 10px;
+}
+
+.offer-status {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.percentage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+}
+
+.percentage > h5 {
+  color: #141414;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 29px;
+  margin-bottom: 0;
+}
+
+.message {
+  text-align: center;
+  width: 100%;
+  max-width: 210px;
+}
+
+.message > h5 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 29px;
+  margin-bottom: 0;
+}
+
+.message-no-offer {
+  color: #5f6368;
+}
+
+.messageoffer {
+  color: #141414;
+}
+
+.reply {
+  font-weight: 400 !important;
+  font-size: 20px !important;
+  line-height: 29px !important;
+}
+
+.amount {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.amount-no-offer {
+  color: #bfbdbd;
+}
+
+.amount-offer {
+  color: #34a853;
+}
+
+.amount-offer-red {
+  color: orange;
+}
+
+.img {
+  width: 60px;
+  height: 58px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.button-container {
+  margin-top: 12px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.counter-offer-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.counter-offer-container > h6 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 24px;
+  color: #141414;
+}
+
+.counter-offer-container > input,
+.input {
+  background: #ffffff;
+  font-family: "Lato";
+  font-style: normal;
+  font-size: 18px;
+  width: 206px;
+  height: 44px;
+  border: 1px solid #bfbdbd;
+}
+
+.input {
+  width: 254px;
+  height: 40px;
+  padding: 10px;
+}
+
+.accept-here {
+  background: #ffffff !important;
+  border: 1px solid #bfbdbd !important;
+  border-radius: 5px !important ;
+  background: #ffffff;
+  font-family: "Lato";
+  font-style: normal;
+  font-size: 18px;
+  width: 206px;
+  height: 44px;
+}
+
+:host ::ng-deep .offer-status .ant-progress-text {
+  font-weight: bold;
+}

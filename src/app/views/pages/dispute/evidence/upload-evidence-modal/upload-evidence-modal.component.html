@@ -1,0 +1,40 @@
+<heading [h1]="'Evidence'" [h2]="h2Template"></heading>
+<ng-template #h2Template>
+  Upload your evidence files related to: Contracts, estimates, emails, text,
+  photos & videos.
+</ng-template>
+<div class="body">
+  <h5>Attach your files below</h5>
+  <div class="upload-box border-color">
+    <h5>Upload your files</h5>
+    <h6>Formats allowed: PDF, Word, JPG, PNG, MP4</h6>
+
+    <div class="max-w-[65%] ml-[75px]">
+      <button
+        class="m-2 min-w-[110px]"
+        [ngClass]="{
+          ripple: fileList.length > 0
+        }"
+        nz-button
+        [nzType]="'primary'"
+        [nzLoading]="loading"
+        [disabled]="fileList.length === 0"
+        (click)="uploadEvidence()"
+      >
+        <span nz-icon nzType="upload"></span>
+        {{ loading ? "Uploading" : "Upload" }}
+      </button>
+
+      <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+        <button nz-col class="mr-2" nz-button [disabled]="fileList.length > 0">
+          <span nz-icon nzType="select"></span>
+          Select File
+        </button>
+      </nz-upload>
+    </div>
+  </div>
+  <div class="uploaded-evidences" *ngIf="evidences.length">
+    <h5>Uploaded Evidence</h5>
+    <app-show-evidences [evidences]="evidences"></app-show-evidences>
+  </div>
+</div>

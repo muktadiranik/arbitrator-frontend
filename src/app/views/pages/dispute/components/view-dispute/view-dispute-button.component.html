@@ -1,0 +1,21 @@
+<button
+  nz-button
+  nzType="primary"
+  class="view-dispute"
+  (click)="disputeDetails(dispute)"
+>
+  View Dispute
+</button>
+
+<ng-template #checkIfClaimer>
+  <span *ngIf="authRoleService.userType == 'claimer'">
+    <button
+      nz-button
+      nzType="primary"
+      class="view-dispute"
+      (click)="disputeDetails(dispute)"
+    >
+      Add Claim
+    </button>
+  </span>
+</ng-template>

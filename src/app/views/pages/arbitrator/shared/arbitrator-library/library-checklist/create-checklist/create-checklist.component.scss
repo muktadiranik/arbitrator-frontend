@@ -1,0 +1,62 @@
+.input {
+  width: 100%;
+  border: 1px solid #bfbfbf;
+  border-radius: 4px;
+  height: 45px;
+  padding: 0px 12px;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.input-group {
+  margin-bottom: 5px;
+}
+
+nz-select {
+  width: 100%;
+}
+
+.select {
+  margin-bottom: 15px;
+}
+
+.input-field {
+  margin-bottom: 15px;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid #bfbfbf;
+  border-radius: 4px;
+  height: 45px;
+  padding: 0px 12px;
+  font-size: 16px;
+}
+
+.button-container {
+  margin-top: 15px;
+  margin-bottom: -11px;
+
+  text-align: right;
+}
+
+.add-checklist {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textarea {
+  margin-bottom: 15px;
+}
+
+.add-item {
+  flex: 0 0 auto;
+  padding: 8px;
+  width: 30%;
+}
+
+nz-divider {
+  margin: 4px 0;
+}

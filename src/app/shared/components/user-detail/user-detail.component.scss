@@ -1,0 +1,51 @@
+.left,
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  width: 300px !important;
+}
+
+.right {
+  align-items: flex-end;
+  margin-right: 50px;
+}
+
+.left {
+  align-items: flex-start;
+  margin-left: 50px;
+}
+
+.h5 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 29px;
+  color: #5f6368;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.h4 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  color: #141414;
+  margin-bottom: 0;
+}
+
+.p {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.1;
+  color: #141414;
+  margin-bottom: 0;
+  margin-top: 10px;
+  text-align: center;
+}

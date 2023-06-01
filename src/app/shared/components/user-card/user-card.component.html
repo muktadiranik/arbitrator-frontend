@@ -1,0 +1,32 @@
+<nz-card
+  class="user-card"
+  [nzBorderless]="true"
+  [nzBodyStyle]="{ 'text-align': 'center' }"
+  nzHoverable
+  [nzCover]="coverTemplate"
+>
+  <nz-card-meta
+    [nzTitle]="authRoleService.fullname(actor?.user)"
+    [nzDescription]="descriptionTemplate"
+  ></nz-card-meta>
+</nz-card>
+<ng-template #coverTemplate>
+  <user-avatar
+    [actor]="actor"
+    [showCard]="false"
+    [canEdit]="false"
+    [size]="80"
+  ></user-avatar>
+</ng-template>
+
+<ng-template #descriptionTemplate>
+  <span class="email"
+    ><span class="email-icon" nz-icon nzType="mail" nzTheme="outline"></span
+    >{{ actor?.user.email }}</span
+  >
+
+  <div class="location">
+    <span class="email-icon" nz-icon nzType="environment" nzTheme="fill"></span
+    >{{ authRoleService.primaryCity(actor?.user.address) }}
+  </div>
+</ng-template>

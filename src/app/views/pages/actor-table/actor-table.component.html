@@ -1,0 +1,81 @@
+<nz-skeleton
+  [nzActive]="true"
+  [nzParagraph]="{ rows: 5 }"
+  [nzLoading]="isloading"
+>
+  <nz-table
+    #userTable
+    nzBordered
+    [nzData]="actors"
+    [nzScroll]="{ x: '700px' }"
+    [nzShowPagination]="true"
+    [nzNoResult]="empty"
+  >
+    <thead>
+      <tr>
+        <th nzAlign="center">Username</th>
+        <th nzAlign="center">Name</th>
+        <th nzAlign="center">Email</th>
+        <th nzAlign="center">Phone Number</th>
+        <th nzAlign="center">Company</th>
+        <th nzAlign="center">Sign Up Date</th>
+        <th nzAlign="center" *ngIf="tableName == 'arbitrators'">Disputes</th>
+        <th nzAlign="center" *ngIf="tableName == 'witnesses'">Created By</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let actor of userTable.data">
+        <td nzAlign="center">{{ actor.user.username | titlecase }}</td>
+        <td nzAlign="center">{{ actorUtil.fullname(actor) | titlecase }}</td>
+        <td nzAlign="center">{{ actor.user.email }}</td>
+        <td nzAlign="center">{{ actor.phone_number }}</td>
+        <td nzAlign="center">{{ actor.company ? actor.company : "-" }}</td>
+        <td nzAlign="center">
+          {{ dateUtil.replaceDash(datePipe.transform(actor.signed_up_at)) }}
+        </td>
+        <!-- <td nzAlign="center" *ngIf="tableName == 'arbitrators'">
+          <ng-container
+            *ngIf="actor.disputes && actor.disputes.length > 0; else noDisputes"
+          >
+            <span *ngFor="let dispute of actor.disputes; let last = last">
+              {{ dispute.code }}
+              <br *ngIf="!last" />
+            </span>
+          </ng-container>
+          <ng-template #noDisputes>-</ng-template>
+        </td> -->
+
+        <td nzAlign="center" *ngIf="tableName == 'arbitrators'">
+          <div style="display: flex; flex-direction: column">
+            <ng-container
+              *ngIf="actor.disputes && actor.disputes.length > 0; else hyphen"
+            >
+              <a
+                *ngFor="let code of actor.disputes"
+                [routerLink]="['/dispute', code.id]"
+                >{{ code.code }}</a
+              >
+            </ng-container>
+          </div>
+        </td>
+        <td nzAlign="center" *ngIf="tableName == 'witnesses'">
+          <ng-container
+            *ngIf="actor.creator && actor.creator.type; else hyphen"
+          >
+            <nz-tag
+              class="rounded-[12px]"
+              [nzColor]="getColorByType(actor.creator)"
+            >
+              {{ actor.creator.type | titlecase }}
+            </nz-tag>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <ng-template #hyphen> - </ng-template>
+  <ng-template #empty>
+    <nz-empty nzNotFoundContent="No Data"></nz-empty
+  ></ng-template>
+</nz-skeleton>

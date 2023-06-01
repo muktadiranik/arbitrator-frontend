@@ -1,0 +1,144 @@
+<div class="container">
+  <div class="select-button">
+    <div style="display: flex; width: 100%">
+      <div class="select">
+        <app-select
+          [selectedValue]="optionList[0]"
+          [optionList]="optionList"
+          (selectedValueChange)="selectedValueChange($event)"
+        ></app-select>
+      </div>
+      &nbsp;&nbsp;
+      <div
+        class="multiple-select"
+        *ngIf="selectedVal.name == 'Firm Checklist'"
+        [formGroup]="form"
+      >
+        <nz-select
+          class="multiple"
+          [nzMaxTagCount]="2"
+          nzMode="multiple"
+          nzPlaceHolder="Select firm"
+          formControlName="firm"
+          (ngModelChange)="selectedFirmChange($event)"
+        >
+          <nz-option
+            *ngFor="let firm of firmsList"
+            [nzLabel]="firm.name"
+            [nzValue]="firm"
+          ></nz-option>
+        </nz-select>
+      </div>
+    </div>
+
+    <div class="button">
+      <app-button (addNewItem)="addNewChecklist()">Create checklist</app-button>
+    </div>
+  </div>
+
+  <span
+    ><nz-skeleton
+      [nzActive]="true"
+      [nzParagraph]="{ rows: 5 }"
+      [nzLoading]="isCheckListLoaded"
+    ></nz-skeleton
+  ></span>
+
+  <div class="list-container">
+    <nz-collapse nzAccordion>
+      <nz-collapse-panel
+        style="background: white"
+        *ngFor="let checklist of checkLists; let index = index"
+        [nzHeader]="headerTemplate"
+        [nzActive]="checklist.active"
+        [nzExpandedIcon]="expandedIcon"
+        [nzExtra]="extraIcon"
+        (nzActiveChange)="statusChange(checklist)"
+      >
+        <div>
+          <ul
+            style="padding-left: 20px; list-style: disc"
+            *ngIf="checklist && checklist.items.length; else elsePart"
+          >
+            <li *ngFor="let item of checklist.items">{{ item.text }}</li>
+          </ul>
+        </div>
+
+        <ng-template #elsePart>
+          <p>no items exists</p>
+        </ng-template>
+
+        <ng-template #expandedIcon let-active>
+          <!-- <div class="expanded" (click)="collapse(checklist)">
+            <p style="color: #5c5cff">{{ checklist.title }} item</p>
+          </div> -->
+        </ng-template>
+
+        <ng-template #headerTemplate>
+          <div class="header-container" style="display: flex">
+            <div>
+              <nz-space>
+                <h3 *nzSpaceItem>{{ checklist.name }}</h3>
+
+                <nz-tag *nzSpaceItem [nzColor]="'#2db7f5'">{{
+                  checklist.category ? checklist.category.name : "No Category"
+                }}</nz-tag>
+
+                <p *nzSpaceItem style="color: #5c5cff">
+                  {{ checklist.title }} item
+                </p>
+              </nz-space>
+
+              <p>{{ checklist.description }}</p>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template #extraIcon>
+          <div class="icons">
+            <!-- <span
+              nz-icon
+              nzType="copy"
+              nzTheme="fill"
+              (click)="action('copy', checklist, $event)"
+            ></span
+            > -->
+            <nz-space>
+              <button
+                *nzSpaceItem
+                nz-button
+                [nzLoading]="loading"
+                (click)="action('edit', checklist, index, $event)"
+              >
+                <span nz-icon nzType="edit" nzTheme="fill"></span>
+              </button>
+
+              <button
+                *nzSpaceItem
+                nz-button
+                [nzLoading]="loading"
+                nz-popconfirm
+                nzPopconfirmTitle="Do you want to delete this checklist?"
+                nzPopconfirmPlacement="bottom"
+                nzOkText="Yes"
+                (nzOnConfirm)="action('delete', checklist, index, $event)"
+                (click)="$event.stopPropagation()"
+              >
+                <span
+                  nz-icon
+                  nzType="delete"
+                  nzTheme="twotone"
+                  [nzTwotoneColor]="'#eb2f96'"
+                ></span>
+              </button>
+            </nz-space>
+          </div>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <div *ngIf="checkLists.length == 0 && !isCheckListLoaded">
+      <nz-empty nzNotFoundImage="simple"></nz-empty>
+    </div>
+  </div>
+</div>

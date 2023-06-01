@@ -1,0 +1,277 @@
+<form nz-form [formGroup]="newDisputeForm" class="px-4 py-10">
+  <div nz-row nzJustify="center">
+    <div nz-col nzSpan="24">
+      <div nz-row nzJustify="center">
+        <div nz-col>
+          <heading [h1]="'Start a mediation request'"></heading>
+          <p class="mt-8 text-base text-center">
+            Please write the information about the dispute.<sup>*</sup>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div nz-col nzSpan="24">
+      <div nz-row nzJustify="center">
+        <div nz-col>
+          <textarea
+            rows="4"
+            nz-input
+            class="w-[44rem] h-40"
+            formControlName="description"
+            [nzStatus]="
+              (descriptionControl?.dirty || descriptionControl?.touched) &&
+              descriptionControl?.invalid
+                ? 'error'
+                : ''
+            "
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div nz-col>
+      <div nz-row nzJustify="center" class="mt-8">
+        <div nz-col nzSpan="21">
+          <app-input-label class="mb-5 text-base flex">
+            <heading [h3]="'Claimer Registration:'"></heading>
+          </app-input-label>
+        </div>
+
+        <div nz-col nzSpan="21" nzOffset="1">
+          <div nz-row nzJustify="center" class="first-last-name">
+            <div nz-col nzXs="24" nzSm="12">
+              <nz-form-item>
+                <nz-form-label nzSpan="24" nzFor="first_name">
+                  <ng-container *ngIf="!isCompany; else notFirstName">
+                    <app-input-label [required]="true">
+                      First Name
+                    </app-input-label>
+                  </ng-container>
+                  <ng-template #notFirstName>
+                    <app-input-label> First Name </app-input-label>
+                  </ng-template>
+                  <!-- 
+                  <app-input-label [required]="true">
+                    First Name<sup *ngIf="!isCompany">*</sup>
+                  </app-input-label> -->
+                </nz-form-label>
+                <nz-form-control nzSpan="22">
+                  <input
+                    [nzSize]="'large'"
+                    nz-input
+                    placeholder="Enter your first name"
+                    type="text"
+                    id="first_name"
+                    formControlName="first_name"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="12">
+              <nz-form-item>
+                <nz-form-label nzSpan="24" nzFor="last_name">
+                  <ng-container *ngIf="!isCompany; else notLastName">
+                    <app-input-label [required]="true">
+                      Last Name
+                    </app-input-label>
+                  </ng-container>
+                  <ng-template #notLastName>
+                    <app-input-label> Last Name </app-input-label>
+                  </ng-template>
+                </nz-form-label>
+                <nz-form-control nzSpan="22">
+                  <input
+                    [nzSize]="'large'"
+                    nz-input
+                    placeholder="Enter your last name"
+                    type="text"
+                    id="last_name"
+                    formControlName="last_name"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row nzJustify="center" class="email-phone">
+            <div class="email" nz-col nzXs="24" nzSm="12">
+              <nz-form-item>
+                <nz-form-label nzSpan="24" nzFor="email"
+                  ><app-input-label [required]="true"
+                    >Email</app-input-label
+                  ></nz-form-label
+                >
+                <nz-form-control nzSpan="22" [nzErrorTip]="errorEmail">
+                  <input
+                    [nzSize]="'large'"
+                    nz-input
+                    placeholder="Enter your email"
+                    type="text"
+                    id="email"
+                    formControlName="email"
+                  />
+                </nz-form-control>
+                <ng-template #errorEmail let-control>
+                  <ng-container *ngIf="control.hasError('exists')">
+                    <span class="w-[233px]">
+                      {{ control.getError("exists") }}
+                    </span></ng-container
+                  >
+                  <ng-container *ngIf="control.hasError('email')">
+                    Enter valid email</ng-container
+                  >
+                </ng-template>
+              </nz-form-item>
+            </div>
+
+            <div class="phone" nz-col nzXs="24" nzSm="12">
+              <nz-form-item>
+                <nz-form-label nzSpan="24" nzFor="phone"
+                  ><app-input-label [required]="true"
+                    >Phone Number</app-input-label
+                  ></nz-form-label
+                >
+                <nz-form-control nzSpan="22">
+                  <input
+                    [nzSize]="'large'"
+                    nz-input
+                    placeholder="Phone"
+                    type="number"
+                    id="phone"
+                    formControlName="phone"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row class="type">
+            <div nz-col nzXs="24" nzSm="24">
+              <nz-form-item>
+                <nz-form-label nzSpan="24" nzFor="dispute_type"
+                  ><app-input-label [required]="true"
+                    >Dispute Type</app-input-label
+                  ></nz-form-label
+                >
+                <nz-form-control nzSpan="23">
+                  <nz-select
+                    formControlName="dispute_type"
+                    nzPlaceHolder="Select dispute type"
+                    [nzSize]="'large'"
+                  >
+                    <nz-option nzValue="hearing" nzLabel="Hearing"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row nzJustify="center" class="company">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzSpan="24" nzFor="account"
+                  ><app-input-label [required]="true"
+                    >Account Type</app-input-label
+                  ></nz-form-label
+                >
+                <nz-form-control nzSpan="23">
+                  <nz-select
+                    formControlName="account"
+                    nzPlaceHolder="Select account type"
+                    [nzSize]="'large'"
+                    (ngModelChange)="accTypeChange($event)"
+                  >
+                    <nz-option
+                      nzValue="individual"
+                      nzLabel="Individual"
+                    ></nz-option>
+                    <nz-option
+                      nzValue="organization"
+                      nzLabel="Organization (Must fill)"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row nzJustify="center" class="company">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzSpan="24" nzFor="company">
+                  <ng-container *ngIf="isCompany; else notOrganization">
+                    <app-input-label [required]="true">
+                      Organization
+                    </app-input-label>
+                  </ng-container>
+                  <ng-template #notOrganization>
+                    <app-input-label> Organization </app-input-label>
+                  </ng-template>
+                </nz-form-label>
+                <nz-form-control nzSpan="23" [nzErrorTip]="errorTpl">
+                  <input
+                    [nzSize]="'large'"
+                    nz-input
+                    placeholder="Enter your organization"
+                    id="company"
+                    formControlName="company"
+                  />
+
+                  <ng-template #errorTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')"
+                      >Please enter you organization.</ng-container
+                    >
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row nzJustify="start">
+            <div nz-col nzXs="24" nzSm="23">
+              <app-input-label
+                nzSpan="24"
+                class="mb-5 text-base"
+                [required]="true"
+              >
+                When do want the mediation to take place:
+              </app-input-label>
+              <nz-range-picker
+                [nzStatus]="
+                  rangePickerControl?.dirty && rangePickerControl?.invalid
+                    ? 'error'
+                    : ''
+                "
+                nzBlock
+                [nzSize]="'large'"
+                class="w-full h-[40px]"
+                formControlName="range_picker"
+                [nzFormat]="dateFormat"
+                [nzDisabledDate]="disabledDate"
+              ></nz-range-picker>
+              <p class="mt-6 text-base">
+                You will be assigned a mediator in your date range.
+              </p>
+            </div>
+          </div>
+
+          <div nz-row nzJustify="start">
+            <button
+              [nzSize]="'large'"
+              nz-col
+              nzXs="24"
+              nzSm="23"
+              [disabled]="!newDisputeForm.valid"
+              nz-button
+              nzType="primary"
+              (click)="submitForm()"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

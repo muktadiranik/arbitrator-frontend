@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+
+* {
+  font-family: "Montserrat";
+}
+
+.ant-list-vertical .ant-list-item {
+  background: #ffffff;
+  border: 2px solid #dedede;
+  border-radius: 4px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.ant-list-vertical .ant-list-item-meta {
+  margin-bottom: 0px;
+}
+
+.ant-list-vertical .ant-list-item-action {
+  margin-top: 0px;
+}
+
+::ng-deep .ant-list-vertical .ant-list-item-meta-title {
+  font-weight: 600;
+}
+.heading {
+  // font-family: Montserrat;
+  font-size: 28px;
+  font-weight: 700;
+  text-align: left;
+  margin-bottom: 0px;
+}
+
+.ant-btn-primary {
+  background: #e4f239;
+  border-color: #e4f239;
+  border-radius: 4px;
+  box-shadow: unset;
+}
+
+.ant-btn:not(.ant-btn-link) {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+
+  color: #080808;
+}
+
+.ant-btn-link,
+.career-footer-links {
+  color: #b7c60b; //link color is different from border color!!
+}
+
+.cover-img {
+  // background-image: url("assets/hero-image.svg");
+  height: 360px;
+  background-size: cover;
+  position: relative;
+}
+
+.cover-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+
+  width: 466px;
+}
+.cover-heading {
+  // font-family: Montserrat;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 48px;
+  letter-spacing: 0em;
+  text-align: center;
+
+  // font-size: 40px;
+  // margin-bottom: 12px;
+}
+
+.cover-body {
+  // font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: center;
+
+  color: #474747;
+}
+
+.career-footer {
+  background: #f3f3f3;
+  border-top: 1px solid #dedede;
+  border-bottom: 1px solid #dedede;
+}
+
+.placeholder-icon {
+  width: 17px;
+  height: 17px;
+  margin-right: 3px;
+}

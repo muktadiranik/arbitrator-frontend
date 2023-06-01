@@ -1,0 +1,103 @@
+<div class="desc-modal" [formGroup]="descForm">
+  <div class="heading">
+    <heading [h1]="'Description'" [h2]="h2Template"></heading>
+    <ng-template #h2Template>
+      Tell us as much as you possibly can about the cause of the dispute.
+    </ng-template>
+  </div>
+  <div class="body">
+    <h5 *ngIf="!edit">Add your description below</h5>
+    <h5 *ngIf="edit">Edit your description below</h5>
+    <textarea
+      rows="4"
+      nz-input
+      placeholder="Enter description"
+      class="desc-body border"
+      formControlName="description"
+      [nzStatus]="
+        (descriptionControl?.dirty || descriptionControl?.touched) &&
+        descriptionControl?.invalid
+          ? 'error'
+          : ''
+      "
+    ></textarea>
+    <div
+      *ngIf="
+        descriptionControl?.invalid &&
+        (descriptionControl?.dirty || descriptionControl?.touched)
+      "
+      class="error"
+    >
+      Please enter valid description
+    </div>
+
+    <div class="img-amount">
+      <div class="flex">
+        <nz-space>
+          <span *nzSpaceItem>
+            <img
+              *ngIf="viewType == 'c' && !edit"
+              class="img"
+              src="assets/dispute/dollar-bill-green.svg"
+              alt="dispute-img"
+            />
+          </span>
+
+          <span *nzSpaceItem>
+            <img
+              *ngIf="viewType == 'r' && !edit"
+              class="img"
+              src="assets/dollar/dollar-bill-red.svg"
+              alt="dispute-img"
+            />
+          </span>
+
+          <span *nzSpaceItem>
+            <input
+              *ngIf="!edit"
+              nz-input
+              type="number"
+              nzSize="large"
+              class="amount-input"
+              placeholder="Enter your offer amount"
+              formControlName="amount"
+            />
+          </span>
+        </nz-space>
+        <!-- &nbsp;&nbsp; -->
+      </div>
+
+      <div
+        *ngIf="
+          amountControl?.invalid &&
+          (amountControl?.dirty || amountControl?.touched)
+        "
+        class="error"
+      >
+        Please enter valid amount
+      </div>
+    </div>
+
+    <button
+      *ngIf="!edit"
+      nz-button
+      nzType="primary"
+      [disabled]="descForm.invalid"
+      (click)="startClaim()"
+      [nzLoading]="loading"
+    >
+      Start claim
+    </button>
+
+    <button
+      *ngIf="edit"
+      nz-button
+      nzType="primary"
+      [disabled]="descriptionControl?.invalid"
+      (click)="updateDescription()"
+      [nzLoading]="loading"
+    >
+      Save
+    </button>
+  </div>
+</div>

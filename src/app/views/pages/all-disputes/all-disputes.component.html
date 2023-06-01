@@ -1,0 +1,12 @@
+<div class="table-styling my-5">
+  <span class="flex items-center justify-end mb-[10px]">
+    <button nz-button nzType="primary" (click)="createMultipleDisputes()">
+      Create Multiple Disputes
+    </button>
+  </span>
+  <dispute-table
+    [tableName]="'waiting-for-sign-up'"
+    [tableData]="disputes"
+    [showEllipsis]="false"
+  ></dispute-table>
+</div>

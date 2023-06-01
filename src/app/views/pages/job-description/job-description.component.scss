@@ -1,0 +1,164 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+
+* {
+  font-family: "Montserrat" !important;
+}
+
+:host ::ng-deep .ant-list-bordered.ant-list-lg .ant-list-item {
+  padding: 13px 15px;
+  border: 2px solid #007bb6;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+.heading {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 25px;
+  color: #080808;
+  padding-top: 30px;
+}
+
+.description {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #474747;
+}
+
+.list {
+  list-style-type: disc;
+  margin-left: 25px;
+  margin-top: 12px;
+}
+
+.linkedin {
+  background: #007bb6;
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  height: 56px;
+}
+
+.checkbox-font {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.yellow-button {
+  background: #e4f239;
+  border: 1px solid #e4f239;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.ant-btn[disabled],
+.ant-btn[disabled]:hover,
+.ant-btn[disabled]:focus,
+.ant-btn[disabled]:active {
+  color: unset !important;
+}
+
+// .ant-input,
+// .ant-list-bordered {
+//   border-color: #007bb6;
+// }
+::ng-deep .ant-picker-suffix {
+  color: rgba(183, 198, 11, 1) !important;
+}
+
+:host ::ng-deep .ant-list-item-action {
+  width: 52px;
+  height: 45px;
+}
+
+.ant-list-bordered.ant-list-lg .ant-list-item {
+  padding: 13px 15px;
+}
+
+.ant-list-bordered {
+  border: none;
+  border-radius: 0px;
+}
+
+.experience-index-badge {
+  background-color: #007bb6;
+  color: white;
+  font-size: 18px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding: 3px 12px;
+}
+
+.list-job-title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+
+  color: #080808;
+}
+
+.list-company {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  color: #007bb6;
+}
+
+.list-date {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  color: #838383;
+}
+
+.list-description {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  color: #474747;
+}
+
+.list-bar {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+
+  color: #474747;
+}
+
+.button-font {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+
+  color: #080808;
+}
+
+::ng-deep .checkbox-color > .ant-checkbox > .ant-checkbox-inner {
+  border-color: yellow !important;
+  border-radius: 0;
+  background-color: #007bb6;
+}
+
+.cover {
+  background: #f3f3f3;
+  height: 254px;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+::ng-deep .inputlabel {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  font-family: "Montserrat" !important;
+}

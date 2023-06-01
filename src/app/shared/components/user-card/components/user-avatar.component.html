@@ -1,0 +1,51 @@
+<div *ngIf="!showCard; else showCardAvatar" [formGroup]="userAvatarForm">
+  <nz-badge [nzCount]="iconTemplate" [nzOffset]="[-20, size - size / 8]">
+    <nz-avatar
+      [nzSize]="size"
+      [nzShape]="shape"
+      [nzText]="text"
+      [nzSrc]="
+        actor?.display_picture
+          ? actor?.display_picture
+          : 'assets/profile_img.png'
+      "
+    ></nz-avatar>
+  </nz-badge>
+
+  <ng-template #iconTemplate>
+    <span *ngIf="canEdit">
+      <img
+        [style.width.px]="editSize"
+        class="inner"
+        src="assets/edit/edit-pencil.svg"
+        alt="edit"
+        (click)="uploadImage()"
+      />
+
+      <input
+        #inputImage
+        type="file"
+        style="display: none"
+        formControlName="file"
+        (change)="onProfilePicChange($event)"
+      />
+    </span>
+  </ng-template>
+</div>
+
+<ng-template #showCardAvatar>
+  <nz-avatar
+    nz-col
+    [nzSize]="size"
+    [nzSrc]="actor?.display_picture ?? 'assets/profile_img.png'"
+    [nz-tooltip]="userCardTemplate"
+    nzTooltipPlacement="bottom"
+    nzTooltipColor="white"
+    [routerLink]="['/profile']"
+  >
+  </nz-avatar>
+
+  <ng-template #userCardTemplate>
+    <user-card [actor]="actor"></user-card>
+  </ng-template>
+</ng-template>

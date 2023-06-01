@@ -1,0 +1,24 @@
+<nz-spin [nzSpinning]="loading">
+  <nz-space nzSize="large" style="width: 100%" nzDirection="vertical">
+    <nz-divider
+      *nzSpaceItem
+      nzPlain
+      nzText="Note Counter's Timeline"
+    ></nz-divider>
+    <nz-timeline *nzSpaceItem>
+      <ng-container *ngIf="note?.counter_proposals?.length">
+        <nz-timeline-item [nzLabel]="'Origin Proposal'">{{
+          note.text
+        }}</nz-timeline-item>
+        <nz-timeline-item
+          *ngFor="let counter_proposal of note.counter_proposals"
+          [nzLabel]="counter_proposal.created_at.substr(0, 10)"
+          >{{ counter_proposal.text }}</nz-timeline-item
+        >
+      </ng-container>
+      <ng-container *ngIf="!note || note?.counter_proposals?.length == 0">
+        <nz-empty [nzNotFoundContent]="'No Counter Notes'"></nz-empty>
+      </ng-container>
+    </nz-timeline>
+  </nz-space>
+</nz-spin>

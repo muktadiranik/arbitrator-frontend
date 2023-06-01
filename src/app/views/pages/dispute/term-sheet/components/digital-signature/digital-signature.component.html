@@ -1,0 +1,44 @@
+<div class="signature-container" [formGroup]="signatures">
+  <nz-card [nzTitle]="headingTemplate">
+    <div class="input-field" [formGroup]="signatures">
+      <div
+        formArrayName="items"
+        *ngFor="let item of getItemsControls(); let i = index"
+      >
+        <div [formGroupName]="i">
+          <nz-input-group class="input-group">
+            <input
+              nz-input
+              class="signature-input"
+              [class.noprint]="!isLast(i)"
+              placeholder="Digital Signature"
+              formControlName="text"
+            />
+
+            <div class="dates">
+              <p>{{ getSignatureDate(i) }}</p>
+              <p>{{ getSignatureTime(i) }}</p>
+            </div>
+
+            <button
+              *ngIf="enableButton(i)"
+              nz-button
+              nzType="primary"
+              class="noprint"
+              [disabled]="!checkValidity(i)"
+              style="margin-left: 10px; margin-top: 5px"
+              [nzLoading]="isButtonLoading"
+              (click)="addSignature(i)"
+            >
+              <span nz-icon nzType="plus-circle" nzTheme="fill"></span>
+            </button>
+          </nz-input-group>
+        </div>
+      </div>
+    </div>
+  </nz-card>
+
+  <ng-template class="heading-container" #headingTemplate>
+    <h3>Digital Signatures</h3>
+  </ng-template>
+</div>

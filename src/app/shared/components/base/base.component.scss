@@ -1,0 +1,61 @@
+.header {
+  height: 70px;
+  background: #fcfbf9;
+  padding: 0 40px;
+  //fixed
+  position: fixed;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  min-height: 70px;
+}
+
+img {
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+}
+
+.user-name {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 19px;
+  text-align: right;
+  margin: 0;
+  color: #141414;
+}
+
+.user-email {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 19px;
+  text-align: right;
+  margin: 0;
+  color: #141414;
+}
+
+.search-input {
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 25px;
+  margin-left: 15px;
+  height: 35px;
+}
+
+.search-input > input {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #5f6368;
+}
+
+nz-avatar {
+  cursor: pointer;
+}

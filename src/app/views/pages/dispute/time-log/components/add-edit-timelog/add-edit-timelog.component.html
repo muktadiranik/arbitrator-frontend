@@ -1,0 +1,90 @@
+<div>
+  <form nz-form [formGroup]="timeLogForm">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email"
+            >Date</nz-form-label
+          >
+          <nz-form-control
+            [nzSm]="14"
+            [nzXs]="24"
+            nzErrorTip="Please select valid date!"
+          >
+            <nz-date-picker formControlName="date"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="start_time"
+            >Start Time</nz-form-label
+          >
+          <nz-form-control
+            [nzSm]="14"
+            [nzXs]="24"
+            nzErrorTip="Please select valid time!"
+          >
+            <nz-time-picker
+              style="width: 156px"
+              formControlName="start_time"
+            ></nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="end_time"
+            >End Time</nz-form-label
+          >
+          <nz-form-control
+            [nzSm]="14"
+            [nzXs]="24"
+            nzErrorTip="Please select valid time!"
+          >
+            <nz-time-picker
+              style="width: 156px"
+              formControlName="end_time"
+            ></nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="note"
+            >Note</nz-form-label
+          >
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <textarea
+              nz-input
+              placeholder="Enter note"
+              [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+              formControlName="note"
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+
+  <nz-divider> </nz-divider>
+
+  <div class="button-container">
+    <nz-space>
+      <button
+        *nzSpaceItem
+        nz-button
+        nzType="default"
+        nzDanger
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+      <button *nzSpaceItem nz-button nzType="primary" (click)="submit()">
+        Submit
+      </button>
+    </nz-space>
+  </div>
+</div>

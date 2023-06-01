@@ -1,0 +1,15 @@
+nz-content {
+  min-height: calc(100vh - 200px);
+
+  & > div {
+    padding: 10px 0;
+  }
+}
+
+nz-header {
+  margin-bottom: 12px;
+}
+
+nz-layout {
+  padding: 8px;
+}

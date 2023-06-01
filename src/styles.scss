@@ -1,0 +1,207 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Override base SVG style to work with Ant Design */
+svg {
+  vertical-align: initial;
+}
+
+//
+.blue-heading {
+  color: #4285f4 !important;
+}
+
+//removing number arrows from input field
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield !important;
+}
+
+// .ant-table-thead .ant-table-cell {
+//     background: #F6F6F6;
+//     color: #5F6368;
+//   }
+///////////////////////////// AUTH //////////////////////////////////////////
+.auth-container {
+  background-color: white;
+  display: flex;
+  height: auto;
+  align-items: center;
+  min-height: calc(100vh - 70px);
+  justify-content: center;
+  // padding-left: 20px;
+}
+.heading-1 {
+  // font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 58px;
+  display: flex;
+  align-items: center;
+  font-feature-settings: "kern" off, "liga" off;
+  color: #000000;
+  margin-bottom: 0;
+}
+
+.heading-2 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+}
+
+.auth-link {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  // line-height: 24px;
+  // display: flex;
+  // align-items: center;
+  // text-decoration-line: underline;
+  color: #5f6368;
+}
+///////////////////////////// AUTH /////////////////////////////////////////
+
+// input {
+//   padding: 8px 11px;
+//   height: 45px;
+//   background: #ffffff;
+//   border: 1px solid #bfbdbd;
+//   border-radius: 5px;
+//   font-family: "Lato";
+//   font-style: normal;
+//   font-size: 18px;
+// }
+
+.app-container {
+  background-color: white;
+  height: auto;
+  min-height: calc(100vh - 70px) !important;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.start-icon {
+  position: absolute !important;
+  top: 28px !important;
+  left: 42px !important;
+}
+
+.finish-icon {
+  position: absolute !important;
+  top: 29px !important;
+  left: 19px !important;
+}
+
+// .ant-steps-item-icon {
+//   position: absolute !important;
+//   top: -34px !important;
+//   left: -25px !important;
+// }
+
+// .ant-steps-item-title {
+//   font-family: "Lato";
+//   font-style: normal;
+//   font-weight: 700;
+//   font-size: 24px;
+//   line-height: 29px;
+//   text-align: center;
+//   color: #141414;
+
+//   position: absolute;
+//   top: 50px;
+//   left: 1px;
+// }
+
+// .ant-steps-item-description {
+//   position: absolute !important;
+//   top: 128px !important;
+//   left: 35px !important;
+// }
+
+// nz-select-top-control {
+//   padding: 2px 11px !important;
+//   height: 45px !important;
+//   background: #ffffff !important;
+//   border: 1px solid #bfbdbd !important;
+//   border-radius: 5px !important;
+//   font-family: "Lato" !important;
+//   font-style: normal !important;
+//   font-size: 18px !important;
+// }
+
+nz-select-top-control {
+  align-items: center !important;
+}
+
+//ant-tree
+// .ant-tree-title {
+//   margin-left: 7px !important;
+// }
+
+// .ant-tree-treenode {
+//   font-size: 18px !important;
+//   height: 36px !important;
+// }
+
+// .ant-tree-treenode-switcher-open,
+// .ant-tree-treenode-switcher-close {
+//   font-size: 20px !important;
+//   height: 40px !important;
+// }
+
+//attribute selector
+span[nz-icon] {
+  cursor: pointer;
+}
+
+.claimer-tabs > .ant-tabs-nav,
+.ant-tabs > div > .ant-tabs-nav .dispute-tabs > .ant-tabs-nav,
+.ant-tabs > div > .ant-tabs-nav {
+  margin-bottom: 0px !important;
+}
+
+@media print {
+  .noprint {
+    display: none !important;
+  }
+
+  .ant-input {
+    color: black !important;
+    border: none !important;
+  }
+}
+
+//tabs
+.ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap {
+  // background-color: #f6f6f6;
+  // border: 1px solid #d7d5d5;
+}
+
+.dispute-table-tabs {
+  background-color: #f6f6f6;
+  border: 1px solid #d7d5d5;
+  border-bottom: none;
+}

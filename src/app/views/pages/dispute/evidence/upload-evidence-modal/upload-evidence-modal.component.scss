@@ -1,0 +1,101 @@
+.body {
+  margin-top: 60px;
+}
+
+.body > h5 {
+  justify-content: center !important;
+
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #141414;
+}
+
+.upload-box {
+  max-width: 403px;
+
+  margin: 0 auto;
+  margin-top: 25px;
+
+  border-style: dashed !important;
+}
+
+.upload-box > h5 {
+  justify-content: center;
+  margin-top: 10px;
+
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #141414;
+}
+
+.upload-box > h6 {
+  justify-content: center;
+
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #141414;
+}
+
+.uploaded-evidences {
+  padding: 0 40px;
+  margin-top: 45px;
+}
+
+.uploaded-evidences > h5 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+  color: #bfbdbd;
+  margin-bottom: 25px;
+}
+
+.submit-input {
+  width: 100%;
+  text-align: center;
+}
+
+:host {
+  --ripple-color: 194, 194, 194;
+}
+
+.ripple {
+  cursor: pointer;
+  animation: ripple 1.3s linear infinite;
+  transition: all 0.7s ease;
+}
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--ripple-color), 0.8),
+      0 0 0 1px rgba(var(--ripple-color), 0.8),
+      0 0 0 0px rgba(var(--ripple-color), 0.8),
+      0 0 0 1px rgba(var(--ripple-color), 0.8);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--ripple-color), 0.8),
+      0 0 0 0px rgba(var(--ripple-color), 0.8),
+      0 0 0 5px rgba(var(--ripple-color), 0),
+      0 0 0 10px rgba(var(--ripple-color), 0);
+  }
+}

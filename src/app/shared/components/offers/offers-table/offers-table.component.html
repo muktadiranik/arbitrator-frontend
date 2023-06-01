@@ -1,0 +1,61 @@
+<nz-table
+  class="w-full"
+  #headerTable
+  [nzData]="offers"
+  [nzShowPagination]="false"
+  [nzScroll]="{ x: '700px' }"
+  [nzNoResult]="empty"
+>
+  <thead>
+    <tr>
+      <th nzAlign="center">Offer Date</th>
+      <th nzAlign="center">Claim Amount</th>
+      <th nzAlign="center">Amount Offered</th>
+      <th nzAlign="center">Last Update</th>
+      <th nzAlign="center">Status</th>
+      <th nzAlign="center" *ngIf="authRoleService.userType == 'claimer'"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr
+      *ngFor="let offer of headerTable.data"
+      [class]="
+        offer.status == 'pending' && authRoleService.userType == 'claimer'
+          ? 'bg-[#a7ff9a33]'
+          : ''
+      "
+    >
+      <td nzAlign="center">
+        {{ dateUtil.replaceDash(offer.created_at | mm_dd_yyyy) }}
+      </td>
+      <td nzAlign="center">
+        {{ offer.claimed_amount ? "$" + offer.claimed_amount : "-" }}
+      </td>
+      <td nzAlign="center">
+        {{ offer.offered_amount ? "$" + offer.offered_amount : "-" }}
+      </td>
+      <td nzAlign="center">
+        {{ dateUtil.replaceDash(offer.updated_at | mm_dd_yyyy) }}
+      </td>
+      <td nzAlign="center">
+        <app-show-status
+          [animation]="
+            offer.status == 'pending' && authRoleService.userType == 'claimer'
+              ? 'ripple'
+              : ''
+          "
+          [animationColor]="'yellow'"
+          [status]="offer.status"
+        ></app-show-status>
+      </td>
+      <td nzAlign="center" *ngIf="authRoleService.userType == 'claimer'">
+        <view-offer [offer]="offer"></view-offer>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<ng-template #empty>
+  <nz-empty nzNotFoundContent="No Offers"></nz-empty
+></ng-template>

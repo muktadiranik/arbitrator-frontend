@@ -1,0 +1,359 @@
+<nz-table
+  #headerTable
+  [nzData]="tableData"
+  [nzShowPagination]="true"
+  nzSize="middle"
+  [nzScroll]="{ x: '1100px' }"
+  [nzLoading]="loading"
+>
+  <thead>
+    <tr *ngIf="table == 'waiting-for-sign-up'">
+      <th nzAlign="center">Dispute</th>
+      <th nzAlign="center">Type</th>
+      <th nzAlign="center">Created</th>
+      <th nzAlign="center" *ngIf="tableForSuperAdmin == 'Assigned'">
+        Arbitrator
+      </th>
+      <th nzAlign="center">Claimer</th>
+      <th nzAlign="center">Respondent</th>
+      <th nzAlign="center">Claim Amount</th>
+      <th nzAlign="center">Claimer Sign&nbsp;Up</th>
+      <th nzAlign="center">Respondent Sign&nbsp;Up</th>
+      <th nzWidth="17%"></th>
+    </tr>
+
+    <tr *ngIf="table == 'in-progress'">
+      <th nzAlign="center">Dispute</th>
+      <th nzAlign="center">Type</th>
+      <th nzAlign="center">Claimer</th>
+      <th nzAlign="center">Respondent</th>
+      <th nzAlign="center">Claim Amount</th>
+      <th nzAlign="center">Last Update</th>
+      <th nzAlign="center">Claimer Sign&nbsp;Up</th>
+      <th nzAlign="center">Respondent Sign&nbsp;Up</th>
+      <th></th>
+    </tr>
+
+    <tr *ngIf="table == 'resolved'">
+      <th nzAlign="center">Dispute</th>
+      <th nzAlign="center">Type</th>
+      <th nzAlign="center">Arbitrator</th>
+      <th nzAlign="center">Claimer</th>
+      <th nzAlign="center">Respondent</th>
+      <th nzAlign="center">Claim Amount</th>
+      <th nzAlign="center">Decision</th>
+      <th nzAlign="center">Last Updated</th>
+      <th nzAlign="center">Settled Amount</th>
+      <th></th>
+    </tr>
+
+    <tr *ngIf="table == 'unresolved'">
+      <th nzAlign="center">Dispute</th>
+      <th nzAlign="center">Type</th>
+      <th nzAlign="center">Created</th>
+      <th nzAlign="center">Arbitrator</th>
+      <th nzAlign="center">Claimer</th>
+      <th nzAlign="center">Respondent</th>
+      <th nzAlign="center">Claim Amount</th>
+      <th nzAlign="center">Claimer Sign&nbsp;Up Date</th>
+      <th nzAlign="center">Respondent Sign&nbsp;Up Date</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="table == 'waiting-for-sign-up'">
+    <ng-template ngFor let-data [ngForOf]="headerTable.data">
+      <tr [ngClass]="{ 'resolved-row': data.status === 'resolved' }">
+        <td
+          nzAlign="center"
+          nzShowExpand
+          [(nzExpand)]="data.expand"
+          (nzExpandChange)="getWitnesses($event, data)"
+        >
+          {{ data.code }}
+        </td>
+        <td nzAlign="center">
+          {{ data.type.charAt(0).toUpperCase() + data.type.slice(1) }}
+        </td>
+        <td nzAlign="center">
+          {{ dateUtil.replaceDash(data.created_at | mm_dd_yyyy) }}
+        </td>
+        <td nzAlign="center" *ngIf="tableForSuperAdmin == 'Assigned'">
+          {{ actorUtil.fullname(data.arbitrator) }}
+        </td>
+        <td nzAlign="center">
+          <b>{{ actorUtil.fullname(data.claimer) }}</b>
+        </td>
+        <td nzAlign="center">
+          <b *ngIf="data.respondent; else resNotFound">{{
+            actorUtil.fullname(data.respondent)
+          }}</b>
+          <ng-template #resNotFound>
+            <a
+              nz-button
+              nzType="link"
+              style="padding: 0"
+              class="underline"
+              (click)="registerRespondent(data)"
+              >Register</a
+            >
+          </ng-template>
+        </td>
+        <td nzAlign="center" style="color: #34a853; font-weight: 500">
+          {{ amountUtil.appendCurrency(data.claim, "claimed_amount") }}
+        </td>
+        <td nzAlign="center">
+          <app-show-status
+            type="claimer"
+            [dispute]="data"
+            [status]="data.claimer_invitation_status"
+          ></app-show-status>
+        </td>
+
+        <td nzAlign="center">
+          <app-show-status
+            type="respondent"
+            [dispute]="data"
+            [status]="data.respondent_invitation_status"
+          ></app-show-status>
+        </td>
+
+        <td nzAlign="center">
+          <dispute-accept-decline
+            *ngIf="actions.includes('dispute-accept-decline')"
+            [dispute]="data"
+            [actor]="actor"
+            [actions]="allowedActions"
+            (onAction)="actionTrigger($event)"
+          ></dispute-accept-decline>
+
+          <view-dispute-button [dispute]="data"></view-dispute-button>
+          <div *ngIf="authRoleService.isSuperUser" class="mt-[10px]">
+            <view-settlement [disputeId]="data.id"></view-settlement>
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="!witnessLoading" [nzExpand]="data.expand">
+        <div
+          *ngIf="!disputeWitnesses[data.id]; else witnessTable"
+          nz-row
+          nzJustify="center"
+        >
+          <h1 class="blue-heading text-2xl m-0">No Witness</h1>
+        </div>
+
+        <ng-template #witnessTable>
+          <app-witness-table
+            [witnesses]="disputeWitnesses[data.id]"
+            [loading]="witnessLoading"
+          ></app-witness-table>
+        </ng-template>
+      </tr>
+    </ng-template>
+  </tbody>
+
+  <tbody *ngIf="table == 'in-progress'">
+    <ng-template ngFor let-data [ngForOf]="headerTable.data">
+      <tr>
+        <td
+          nzAlign="center"
+          nzShowExpand
+          [(nzExpand)]="data.expand"
+          (nzExpandChange)="getWitnesses($event, data)"
+        >
+          {{ data.code }}
+        </td>
+        <td nzAlign="center">
+          {{ data.type.charAt(0).toUpperCase() + data.type.slice(1) }}
+        </td>
+        <td nzAlign="center">
+          <b>{{ actorUtil.fullname(data.claimer) }}</b>
+        </td>
+        <td nzAlign="center">
+          <b>{{ actorUtil.fullname(data.respondent) }}</b>
+        </td>
+        <td nzAlign="center" style="color: #34a853; font-weight: 500">
+          {{ amountUtil.appendCurrency(data.claim, "claimed_amount") }}
+        </td>
+        <td nzAlign="center">
+          {{
+            data.claim
+              ? dateUtil.replaceDash(data.claim.updated_at | mm_dd_yyyy)
+              : "-"
+          }}
+        </td>
+        <td nzAlign="center">
+          <app-show-status
+            [status]="data.claimer_invitation_status"
+          ></app-show-status>
+        </td>
+
+        <td nzAlign="center">
+          <app-show-status
+            [status]="data.respondent_invitation_status"
+          ></app-show-status>
+        </td>
+
+        <td nzAlign="center">
+          <view-dispute-button [dispute]="data"></view-dispute-button>
+        </td>
+      </tr>
+      <tr *ngIf="!witnessLoading" [nzExpand]="data.expand">
+        <div
+          *ngIf="!disputeWitnesses[data.id]; else witnessTable"
+          nz-row
+          nzJustify="center"
+        >
+          <h1 class="blue-heading text-2xl m-0">No Witness</h1>
+        </div>
+
+        <ng-template #witnessTable>
+          <app-witness-table
+            [witnesses]="disputeWitnesses[data.id]"
+            [loading]="witnessLoading"
+          ></app-witness-table>
+        </ng-template>
+      </tr>
+    </ng-template>
+  </tbody>
+
+  <tbody *ngIf="table == 'resolved'">
+    <ng-template ngFor let-data [ngForOf]="headerTable.data">
+      <tr>
+        <td
+          nzAlign="center"
+          nzShowExpand
+          [(nzExpand)]="data.expand"
+          (nzExpandChange)="getWitnesses($event, data)"
+        >
+          {{ data.code }}
+        </td>
+        <td nzAlign="center">
+          {{ data.type.charAt(0).toUpperCase() + data.type.slice(1) }}
+        </td>
+        <td nzAlign="center">
+          <b>{{ actorUtil.fullname(data.creator) }}</b>
+        </td>
+        <td nzAlign="center">
+          <b>
+            {{ actorUtil.fullname(data.claimer) }}
+          </b>
+        </td>
+        <td nzAlign="center">
+          <b>{{ actorUtil.fullname(data.respondent) }}</b>
+        </td>
+        <td nzAlign="center">
+          {{ amountUtil.appendCurrency(data.claim, "claimed_amount") }}
+        </td>
+        <td nzAlign="center" style="text-align: left !important">
+          <span *ngFor="let item of data.decision"
+            ><app-show-status [status]="item"></app-show-status> <br />
+          </span>
+        </td>
+        <td nzAlign="center">
+          {{
+            data.claim
+              ? dateUtil.replaceDash(data.claim.updated_at | mm_dd_yyyy)
+              : "-"
+          }}
+        </td>
+        <td nzAlign="center" style="color: #34a853; font-weight: 500">
+          {{ data.settledAmount ? "$" + data.settledAmount : "-" }}
+        </td>
+        <td nzAlign="center">
+          <view-dispute-button [dispute]="data"></view-dispute-button>
+        </td>
+      </tr>
+      <tr *ngIf="!witnessLoading" [nzExpand]="data.expand">
+        <div
+          *ngIf="!disputeWitnesses[data.id]; else witnessTable"
+          nz-row
+          nzJustify="center"
+        >
+          <h1 class="blue-heading text-2xl m-0">No Witness</h1>
+        </div>
+
+        <ng-template #witnessTable>
+          <app-witness-table
+            [witnesses]="disputeWitnesses[data.id]"
+            [loading]="witnessLoading"
+          ></app-witness-table>
+        </ng-template>
+      </tr>
+    </ng-template>
+  </tbody>
+
+  <tbody *ngIf="table == 'unresolved'">
+    <ng-template ngFor let-data [ngForOf]="headerTable.data">
+      <tr>
+        <td
+          nzAlign="center"
+          nzShowExpand
+          [(nzExpand)]="data.expand"
+          (nzExpandChange)="getWitnesses($event, data)"
+        >
+          {{ data.code }}
+        </td>
+        <td nzAlign="center">
+          {{ data.type.charAt(0).toUpperCase() + data.type.slice(1) }}
+        </td>
+        <td nzAlign="center">
+          {{ dateUtil.replaceDash(data.created_at | mm_dd_yyyy) }}
+        </td>
+        <td nzAlign="center">
+          {{
+            data.creator?.user.first_name + " " + data.creator?.user.last_name
+          }}
+        </td>
+        <td nzAlign="center">
+          {{
+            data.claimer?.user.first_name + " " + data.claimer?.user.last_name
+          }}
+        </td>
+        <td nzAlign="center">
+          {{
+            data.respondent?.user.first_name +
+              " " +
+              data.respondent?.user.last_name
+          }}
+        </td>
+        <td nzAlign="center" style="color: #34a853; font-weight: 500">
+          {{ data.claim ? "$" + data.claim.claimed_amount : "-" }}
+        </td>
+        <td nzAlign="center">
+          {{
+            data.claimer
+              ? dateUtil.replaceDash(data.claimer.created_at | mm_dd_yyyy)
+              : "-"
+          }}
+        </td>
+        <td nzAlign="center">
+          {{
+            data.respondent
+              ? dateUtil.replaceDash(data.respondent.created_at | mm_dd_yyyy)
+              : "-"
+          }}
+        </td>
+        <td nzAlign="center">
+          <view-dispute-button [dispute]="data"></view-dispute-button>
+        </td>
+      </tr>
+      <tr nzAlign="center" *ngIf="!witnessLoading" [nzExpand]="data.expand">
+        <div
+          *ngIf="!disputeWitnesses[data.id]; else witnessTable"
+          nz-row
+          nzJustify="center"
+        >
+          <h1 class="blue-heading text-2xl m-0">No Witness</h1>
+        </div>
+
+        <ng-template #witnessTable>
+          <app-witness-table
+            [witnesses]="disputeWitnesses[data.id]"
+            [loading]="witnessLoading"
+          ></app-witness-table>
+        </ng-template>
+      </tr>
+    </ng-template>
+  </tbody>
+</nz-table>

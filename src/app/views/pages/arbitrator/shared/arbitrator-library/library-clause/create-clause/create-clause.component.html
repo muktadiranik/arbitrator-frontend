@@ -1,0 +1,91 @@
+<div [formGroup]="clauseForm">
+  <div class="select">
+    <nz-form-label [nzSpan]="24">
+      <app-input-label>Category</app-input-label>
+    </nz-form-label>
+    <nz-select
+      nzSize="large"
+      nzShowSearch
+      nzAllowClear
+      [nzDropdownRender]="renderTemplate"
+      nzPlaceHolder="Select Cateogry"
+      formControlName="category"
+    >
+      <nz-option
+        *ngFor="let category of categoryList"
+        [nzLabel]="category.name"
+        [nzValue]="category.id"
+      ></nz-option>
+    </nz-select>
+    <ng-template #renderTemplate>
+      <nz-divider></nz-divider>
+      <div class="">
+        <input
+          type="text"
+          nz-input
+          placeholder="Category name"
+          #inputElement
+          style="width: 80%"
+        />
+        <a class="add-item" (click)="addCategoryItem()">
+          <span nz-icon nzType="plus"></span>
+          Add item
+        </a>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="input-field">
+    <nz-form-label [nzSpan]="24">
+      <app-input-label>Title</app-input-label>
+    </nz-form-label>
+    <input
+      nz-input
+      nzSize="large"
+      type="text"
+      placeholder="Title"
+      formControlName="title"
+    />
+  </div>
+
+  <div class="firm-select" *ngIf="firmsList.length">
+    <nz-form-label [nzSpan]="24">
+      <app-input-label>Firm</app-input-label>
+    </nz-form-label>
+    <app-select
+      placeholder="Select firm"
+      [selectedValue]="firmControlValue()"
+      [optionList]="firmsList"
+      (selectedValueChange)="selectedFirmChange($event)"
+    ></app-select>
+  </div>
+
+  <div class="textarea">
+    <!-- <textarea
+      nz-input
+      placeholder="Enter clause"
+      [nzAutosize]="{ minRows: 4, maxRows: 8 }"
+      style="font-size: 16px"
+      
+    ></textarea> -->
+    <nz-form-label [nzSpan]="24">
+      <app-input-label>Description</app-input-label>
+    </nz-form-label>
+    <div [ngxSummernote]="editorConfig" formControlName="content"></div>
+  </div>
+
+  <div class="button-container">
+    <button nz-button nzType="default" nzDanger (click)="destroyModal()">
+      Cancel
+    </button>
+    &nbsp;
+    <button
+      nz-button
+      nzType="primary"
+      (click)="submitForm()"
+      [disabled]="clauseForm.invalid"
+    >
+      Submit
+    </button>
+  </div>
+</div>

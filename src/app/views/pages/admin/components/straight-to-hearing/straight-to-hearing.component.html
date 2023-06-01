@@ -1,0 +1,20 @@
+<nz-tabset
+  (nzSelectedIndexChange)="onTabChange($event)"
+  [nzTabBarExtraContent]="assign_btn"
+>
+  <nz-tab *ngFor="let tab of tabs; let i = index" [nzTitle]="tab | titlecase">
+    <dispute-table
+      [tableName]="'waiting-for-sign-up'"
+      [tableData]="disputes"
+      [showEllipsis]="false"
+      [loading]="loading"
+      [tableForSuperAdmin]="tab"
+    ></dispute-table>
+  </nz-tab>
+</nz-tabset>
+
+<ng-template #assign_btn>
+  <button nz-button nzType="primary" (click)="openStatusEditModal()">
+    Assign Arbitrator
+  </button>
+</ng-template>

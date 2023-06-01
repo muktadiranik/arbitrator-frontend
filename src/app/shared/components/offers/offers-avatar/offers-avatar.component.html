@@ -1,0 +1,34 @@
+<nz-spin
+  [nzTip]="
+    viewType == 'c' ? 'Loading Received Offer...' : 'Loading Amount Offered ...'
+  "
+  [nzSpinning]="loading"
+>
+  <div nz-row nzJustify="center">
+    <!-- Animation colors: blue,green,yellow,orange,red -->
+    <app-multi-direction-card
+      nz-col
+      nzSpan="24"
+      (click)="respondToOffer()"
+      style="cursor: pointer"
+      [imgClass]="'settlement-image'"
+      [imageURL]="'assets/settlement.svg'"
+      [alt]="'offer'"
+      [title]="viewType == 'c' ? 'Offer Received' : 'Amount Offered'"
+      [description]="amountUtil.appendCurrency(offer, 'offered_amount')"
+      [animation]="
+        offer && offer.status == 'pending' && viewType == 'c' ? 'ripple' : ''
+      "
+      [animationColor]="'blue'"
+    ></app-multi-direction-card>
+    <div *ngIf="offer && offer.status != 'pending'" nz-col>
+      <nz-tag
+        class="rounded-full"
+        [nzColor]="offer && offer.status == 'accepted' ? 'green' : 'red'"
+        >{{
+          offer && offer.status == "accepted" ? "Accepted" : "Rejected"
+        }}</nz-tag
+      >
+    </div>
+  </div>
+</nz-spin>

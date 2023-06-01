@@ -1,0 +1,38 @@
+::ng-deep .witness-card .ant-card-meta-detail > div:not(:last-child) {
+  margin-bottom: unset;
+}
+
+.witness-list {
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.files {
+  width: 50% !important;
+  max-width: 400px !important;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 35px !important;
+}
+
+.drag-img {
+  height: 18px;
+  width: 10px;
+  /* font-size: 10px; */
+  align-self: center;
+  margin-top: 2px;
+}
+
+.doc-img {
+  width: 30px;
+  height: 37px;
+  align-self: self-end;
+}
+
+.ellipsis-img {
+  font-size: 20px;
+  cursor: pointer;
+  color: black;
+  opacity: 0.8;
+}

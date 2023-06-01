@@ -1,0 +1,48 @@
+.term-sheet-container {
+  padding: 0 100px;
+  padding-top: 30px;
+}
+
+.heading {
+  text-align: center;
+  color: #1890ff;
+}
+
+.open-template-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 0;
+}
+
+.save-button {
+  color: #fff;
+  border-color: #1890ff;
+  background: #1890ff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+
+.term-sheet-print-heading {
+  display: none;
+}
+
+@media print {
+  .term-sheet-print-heading {
+    display: inline;
+  }
+
+  .term-sheet-container {
+    padding: unset;
+    margin: 10px;
+    margin-left: 50px;
+    // margin-right: 45px;
+  }
+}
+
+@media (max-width: 660px) {
+  .term-sheet-container {
+    padding: 0 15px;
+    padding-top: 30px;
+  }
+}

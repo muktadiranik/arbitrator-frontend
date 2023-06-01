@@ -1,0 +1,55 @@
+<div style="margin-top: 25px">
+  <nz-table
+    #basicTable
+    [nzData]="tableData"
+    #virtualTable
+    [nzVirtualItemSize]="54"
+    [nzFrontPagination]="false"
+    [nzShowPagination]="false"
+    [nzScroll]="{ x: '253px', y: '300px' }"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="120px">Date</th>
+        <th *ngIf="showCreatedBy" nzWidth="130px">Created By</th>
+        <th nzWidth="120px">Start</th>
+        <th nzWidth="120px">End</th>
+        <th nzWidth="110px">Total</th>
+        <th nzWidth="110px">Note</th>
+        <th nzWidth="90px"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data; let ind = index">
+        <td>{{ dateUtil.replaceDash(data.date | mm_dd_yyyy) }}</td>
+        <td *ngIf="showCreatedBy">{{ getCreatedBy() }}</td>
+        <td>{{ transformTime(data.start_time) }}</td>
+        <td>{{ transformTime(data.end_time) }}</td>
+        <td>{{ transformDuration(data.duration) }}</td>
+        <td>{{ data.note }}</td>
+        <td>
+          <span
+            nz-icon
+            nzType="edit"
+            nzTheme="twotone"
+            [nzTwotoneColor]="'gray'"
+            nz-tooltip="Edit"
+            (click)="editTimeLog(data)"
+          ></span>
+          &nbsp;
+          <span
+            nz-icon
+            nzType="delete"
+            nzTheme="outline"
+            nzTheme="twotone"
+            [nzTwotoneColor]="'gray'"
+            nz-tooltip="Delete"
+            nz-popconfirm
+            nzPopconfirmTitle="Sure to delete?"
+            (nzOnConfirm)="deleteTimeLog(data)"
+          ></span>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
